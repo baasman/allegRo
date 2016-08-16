@@ -19,4 +19,7 @@ True or False, denoting whether delete was successful
 \description{
 Delete a Repository
 }
+\examples{
+deleteRepository(service,catalogid = "root",repositoryid = "repotodelete")
+}
 

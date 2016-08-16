@@ -25,7 +25,14 @@ createRepository(service, catalogid = "root", repositoryid = "testFromR2",
 
 \item{nocommit}{...}
 }
+\value{
+An object with the response and given url
+}
 \description{
 createRepository
+}
+\examples{
+createRepository(service,catalogid = "root",repositoryid = "test",
+expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 }
 

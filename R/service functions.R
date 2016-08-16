@@ -52,10 +52,12 @@ listRepositories = function(service,catalogid = "root"){
 #' @param restore Restore the repository
 #' @param nocommit ...
 #'
-#' @return
+#' @return An object with the response and given url
 #' @export
 #'
 #' @examples
+#' createRepository(service,catalogid = "root",repositoryid = "test",
+#' expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 createRepository = function(service,catalogid = "root",repositoryid = "testFromR2",
                              expectedSize = NULL,index = NULL,override = c("true","false","if-not-open"),
                              restore = NULL,nocommit = c("1","0")){
@@ -110,74 +112,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testfromr5")
   return(ag_get(service,url,NULL,NULL))
 }
 
-#                      /  [NS] post put delete
 
-listScripts = function(service,catalogid = "root",repositoryid = "testfromr5"){
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/scripts")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/scripts")
-  }
-  return(ag_get(service,url,NULL))
-}
-
-#                     /  [PATH*] get put delete
-
-#                  / uuid get
-
-get.UUID = function(service,catalogid,repositoryid){
-  url = paste0(service@url,"catalogs/",catalogid,"/repositories/",repositoryid,"/uuid")
-  return(ag_get(service,url))
-}
-
-#                 / warmstandby get put delete
-
-#get
-get.WarmStandBy = function(service,catalogid,repositoryid){
-  url = paste0(service@url,"catalogs/",catalogid,"/repositories/",repositoryid,"/warmstandby")
-  return(ag_get(service,url))
-}
-
-                      #/ startServer post
-                      #/ switchRole post
-
-#  configfile get
-
-get.ConfigFile = function(service){
-  url = paste0(service@url,"configfile")
-  return(ag_get(s,url))
-}
-
-#  googleKey get put
-
-#get
-get.googleKey = function(service){
-  url = paste0(service@url,"googleKey")
-  return(ag_get(s,url))
-}
-
-#  initfile get put delete
-
-#get
-get.InitFile = function(service){
-  url = paste0(service@url,"initfile")
-  return(ag_get(url))
-}
-
-
-#  jobs get delete
-
-#  largeOperationWarning get put
-
-#  logfile get
-
-
-###############################BACK END########################
-
-#  catalogs/ [CATNAME] /repositories/ [REPONAME] get post
-
-
-#       / access get
 
 getRepoAcess = function(service,catalogid = "root",repositoryid){
   if(catalogid == "root"){
@@ -190,35 +125,6 @@ getRepoAcess = function(service,catalogid = "root",repositoryid){
   return(ag_get(service,url))
 }
 
-#       / begin post
-#       / blankNodes post
-#       / bulkMode get put delete
-#       / callimachus post
-#       / commit post
-#       / contexts get
-#       / createSecondaryIndices get put delete
-
-#       / encodedIds post
-#         / prefixes get post delete
-#          / hasAny get
-#          / isInUse get
-#          / isRegistered get
-#       / eval post
-#       / freetext get post
-#         / indices get
-#          /  [INDEXNAME] get post put delete
-#          / borderChars get
-#          / indexFields get
-#          / indexLiterals get
-
-#.....
-
-#       / sparql get post
-
-#.....
-
-#       / statement put
-#       / statements post put delete
 
 file = "C:/Users/baasman/Documents/testtrips.nq"
 
@@ -241,10 +147,6 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
   invisible(ag_put)
 }
 
-
-#.....
-
-#       / query get post
 
 query = "prefix emt:<http://montefiore.org/terminology#>
 prefix upper:<http://montefiore.org/upper#>
