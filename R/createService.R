@@ -9,8 +9,8 @@
 #' @return S3 Object of type "service", which states the url, username, and password for the user
 #' @export
 #' @examples
-#' createService("localhost","user","password")
-createService = function(url,user = NULL,password = NULL){
+#' createService("localhost","user","password",testConnection = FALSE)
+createService = function(url,user = NULL,password = NULL,testConnection = FALSE){
 
   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
   if(!is.na(user) & !is.character(user)) stop("user should be a character value")
@@ -20,7 +20,7 @@ createService = function(url,user = NULL,password = NULL){
     url = paste0(url,"/")
   }
 
-  structure(
+  obj = structure(
          list(
           url = url,
           user = user,
@@ -29,6 +29,11 @@ createService = function(url,user = NULL,password = NULL){
         class = c("service","list")
     )
 
+  if(testConnection){
+    testConnection(obj)
+  }
+
+  return(obj)
 }
 
 ###method declarations
@@ -40,7 +45,7 @@ testConnection = function(x) UseMethod("testConnection",x)
 
 #' Summary of service object
 #'
-#' @param x Object of type service
+#' @param object Object of type service
 #' @param ...
 #'
 #' @return Print statement showing all elements of service
@@ -51,11 +56,11 @@ testConnection = function(x) UseMethod("testConnection",x)
 #' service = createService("localhost","user","password")
 #' summary(service)
 #' }
-summary.service = function(x, ...){
+summary.service = function(object, ...){
   cat("Service specifications: \n")
-  print(x["url"])
-  print(x["user"])
-  print(x["password"])
+  print(object["url"])
+  print(object["user"])
+  print(object["password"])
 }
 
 #' testConnection

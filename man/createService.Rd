@@ -4,7 +4,7 @@
 \alias{createService}
 \title{Create a service object}
 \usage{
-createService(url, user = NULL, password = NULL)
+createService(url, user = NULL, password = NULL, testConnection = FALSE)
 }
 \arguments{
 \item{url}{The url for your AllegroGraph server}
@@ -22,6 +22,6 @@ S3 Object of type "service", which states the url, username, and password for th
 Create a service object
 }
 \examples{
-createService("localhost","user","password")
+createService("localhost","user","password",testConnection = FALSE)
 }
 

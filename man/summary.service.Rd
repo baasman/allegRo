@@ -4,10 +4,10 @@
 \alias{summary.service}
 \title{Summary of service object}
 \usage{
-\method{summary}{service}(x, ...)
+\method{summary}{service}(object, ...)
 }
 \arguments{
-\item{x}{Object of type service}
+\item{object}{Object of type service}
 
 \item{...}{}
 }
