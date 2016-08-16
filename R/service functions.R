@@ -5,6 +5,7 @@
 #' @return ag object
 #' @export
 #' @examples
+#' service = createService("localhost","user","password")
 #' listCatalogs(service)
 listCatalogs = function(service){
   url = paste0(service$url,"catalogs")
@@ -18,6 +19,7 @@ listCatalogs = function(service){
 #' @return ag object
 #' @export
 #' @examples
+#' service = createService("localhost","user","password")
 #' findProtocol(service)
 findProtocol = function(service, catalogid = "root"){
   url = paste0(service$url,"catalogs/",catalogid,"/protocol")
@@ -30,6 +32,7 @@ findProtocol = function(service, catalogid = "root"){
 #' @return ag object
 #' @export
 #' @examples
+#' service = createService("localhost","user","password")
 #' listCatalogs(service)
 listRepositories = function(service,catalogid = "root"){
   if(catalogid == "root"){
@@ -43,19 +46,20 @@ listRepositories = function(service,catalogid = "root"){
 
 #' createRepository
 #'
-#' @param service Service object containing service url, username, and password
-#' @param catalogid Id for catalog of interest
-#' @param repositoryid Id for repository of interest
-#' @param expectedSize Specifies the expected size of the repository
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param expectedSize Specifies the expected size of the repository.
 #' @param index Can be specified mulitple times. Should hold index names, and is used to configure the set of indices created for the store.
-#' @param override Override repository, 1 or 0
-#' @param restore Restore the repository
+#' @param override Override repository, 1 or 0.
+#' @param restore Restore the repository.
 #' @param nocommit ...
 #'
-#' @return An object with the response and given url
+#' @return An object of ag with the response and given url.
 #' @export
 #'
 #' @examples
+#' service = createService("localhost","user","password")
 #' createRepository(service,catalogid = "root",repositoryid = "test",
 #' expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 createRepository = function(service,catalogid = "root",repositoryid = "testFromR2",
@@ -81,53 +85,78 @@ createRepository = function(service,catalogid = "root",repositoryid = "testFromR
 
 #' Delete a Repository
 #'
-#' @param service Service object containing service url, username, and password
-#' @param catalogid Id for catalog of interest
-#' @param repositoryid Id for repository of interest
-#' @return True or False, denoting whether delete was successful
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @return True or False, denoting whether delete was successful.
 #' @export
 #'
 #' @examples
+#' service = createService("localhost","user","password")
 #' deleteRepository(service,catalogid = "root",repositoryid = "repotodelete")
-deleteRepository = function(service, catalogid = "root",repositoryid = "new_test2"){
+deleteRepository = function(service, catalogid = "root",repositoryid){
 
   queryargs = NULL
+
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid)
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid)
   }
   body = NULL
-  return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+
+  invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
-#get
-listNameSpaces = function(service,catalogid= "root",repositoryid = "testfromr5"){
+
+#' listNameSpaces
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#'
+#' @return An ag object that includes the list of namespaces used in the specified repository.
+#' @export
+#'
+#' @examples
+#' service = createService("localhost","user","password")
+#' listNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithParsa"){
+
+  queryargs = NULL
+
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid,"/namespaces")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces")
   }
-  return(ag_get(service,url,NULL,NULL))
+
+  body = NULL
+
+  return(ag_get(service,url,queryargs,body))
 }
 
 
+#file = "C:/Users/baasman/Documents/testtrips.nq"
 
-getRepoAcess = function(service,catalogid = "root",repositoryid){
-  if(catalogid == "root"){
-    url = paste0(service@url,"repositories/",repositoryid,"/access")
-  } else{
-    url = paste0(service@url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/access")
-  }
-
-  return(ag_get(service,url))
-}
-
-
-file = "C:/Users/baasman/Documents/testtrips.nq"
-
+#' addStatementsFromFile
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param file File that contains your triples
+#' @param baseURI ...
+#' @param context ...
+#' @param commitEvery ...
+#'
+#' @return an ag object that says whether or not the push was successful.
+#' @export
+#'
+#' @examples
+#' service = createService("localhost","user","password")
+#' addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
+#' file = "path/to/file/mytriples.nq")
 addStatementsFromFile = function(service,catalogid = "root",repositoryid = "testQueries",
                                   file,baseURI = NULL,context=NULL,commitEvery = NULL){
 
@@ -144,42 +173,46 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
 
   body = quote(upload_file(file,type = "text/plain"))
 
-  invisible(ag_put)
+  invisible(ag_put(service,url,queryargs,body))
 }
 
 
-query = "prefix emt:<http://montefiore.org/terminology#>
-prefix upper:<http://montefiore.org/upper#>
-prefix cdm:<http://montefiore.org/cdm#>
-SELECT ?encounter (str(?hr) as ?hrv) ?timestamp
-WHERE {   ?encounter a emt:InpatientEncounter .
-?encounter cdm:measurement ?value .
-?value upper:valueOf emt:Heartrate ;
-upper:value ?hr ;
-cdm:timeStamp/upper:value ?timestamp .   filter(?timestamp <= '2016-05-18T00:00:00-04:00'^^<http://www.w3.org/2001/XMLSchema#dateTime> && ?timestamp > '2016-05-17T00:00:00-04:00'^^<http://www.w3.org/2001/XMLSchema#dateTime> ) .
+#query = "select ?x ?y ?z {?x ?y ?z}"
 
-}"
 
-query1 = "prefix emt:<http://montefiore.org/terminology#>
-prefix upper:<http://montefiore.org/upper#>
-prefix cdm:<http://montefiore.org/cdm#>
-SELECT ?encounter (str(?hr) as ?hrv) ?timestamp
-WHERE {   ?encounter a emt:InpatientEncounter .
-?encounter cdm:measurement ?value .
-?value upper:valueOf emt:Heartrate ;
-upper:value ?hr ;
-cdm:timeStamp/upper:value ?timestamp .   filter(?timestamp <= '2016-05-18T00:00:00-04:00'^^<http://www.w3.org/2001/XMLSchema#dateTime> && ?timestamp > '2016-05-17T00:00:00-04:00'^^<http://www.w3.org/2001/XMLSchema#dateTime> ) .
-
-} limit 10000"
-
-queryrdf = "select ?x ?y ?z { ?x ?y ?z} limit 10000"
-
-evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,infer = NULL,context = NULL,
+#' evalQuery
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param query Sparql query to evaluate
+#' @param infer ...
+#' @param context ...
+#' @param namedContext ...
+#' @param callback ...
+#' @param bindings ...
+#' @param planner ...
+#' @param checkVariables ...
+#' @param count ...
+#' @param accept ...
+#' @param limit ...
+#'
+#' @return an ag object, which includes the triples in matrix format
+#' @export
+#'
+#' @examples
+#' query = "select ?s ?p ?o {?s ?p ?o}"
+#' service = createService("localhost","user","password")
+#' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
+evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,returnType = c("matrix","dataframe","list"),infer = NULL,context = NULL,
                      namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
                      count = FALSE,accept = NULL,limit = 100){
 
+  returnType = match.arg(returnType)
+  print(returnType)
+
   queryargs = list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
-                   planner = planner, checkVariables = checkVariables)
+                     planner = planner, checkVariables = checkVariables)
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid)
@@ -188,7 +221,9 @@ evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",quer
                  "/repositories/",repositoryid)
   }
 
-  invisible(ag_get(service = service,url = url,queryargs = queryargs,wantDF = 1))
+  body = NULL
+
+  invisible(ag_data(service = service,url = url,queryargs,body,returnType))
 }
 
 

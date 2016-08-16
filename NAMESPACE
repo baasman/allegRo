@@ -2,9 +2,11 @@
 
 S3method(summary,service)
 S3method(testConnection,service)
+export(addStatementsFromFile)
 export(createRepository)
 export(createService)
 export(deleteRepository)
 export(findProtocol)
 export(listCatalogs)
+export(listNameSpaces)
 export(listRepositories)

@@ -76,7 +76,7 @@ testConnection.service = function(x, ...){
   if(!http_error(GET(url = paste0(x["url"],"catalogs")))){
     print("Connection is successful, proceed...")
   } else{
-    stop("error: connection failed. Check your service specifications and ssh connection")
+    stop("error: connection failed. Check your service specifications and/or ssh connection")
   }
 }
 

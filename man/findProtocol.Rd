@@ -18,6 +18,7 @@ ag object
 List all catalogs
 }
 \examples{
+service = createService("localhost","user","password")
 findProtocol(service)
 }
 

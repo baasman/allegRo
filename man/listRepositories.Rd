@@ -18,6 +18,7 @@ ag object
 List all repositories in chosen catalog
 }
 \examples{
+service = createService("localhost","user","password")
 listCatalogs(service)
 }
 

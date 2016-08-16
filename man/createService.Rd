@@ -12,6 +12,8 @@ createService(url, user = NULL, password = NULL, testConnection = FALSE)
 \item{user}{Username for user accessing store, if necessary}
 
 \item{password}{Password for user accessing store, if necessary}
+
+\item{testConnection}{Should the connection be tested? Defaults to FALSE}
 }
 \value{
 S3 Object of type "service", which states the url, username, and password for the user
