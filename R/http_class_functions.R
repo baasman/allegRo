@@ -87,6 +87,11 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
 }
 
 
+print.ag_data = function(x, ...){
+  cat("Retrieved from AllegroGraph Server \n \n")
+  print(head(x["return"],10))
+}
+
 
 
 
@@ -116,18 +121,12 @@ ag_put = function(service, url,queryargs,body){
   )
 }
 
-### method declarations
+### methods
 
 summary.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
   x["return"]
 }
-
-
-### methods
-
-
-
 
 
 

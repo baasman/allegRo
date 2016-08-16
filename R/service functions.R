@@ -8,23 +8,12 @@
 #' service = createService("localhost","user","password")
 #' listCatalogs(service)
 listCatalogs = function(service){
+  queryargs = NULL
   url = paste0(service$url,"catalogs")
-  return(ag_get(service = service,url = url,queryargs = NULL))
+  body = NULL
+  return(ag_get(service = service,url = url,queryargs,body))
 }
 
-
-#' List all catalogs
-#' @param service Service object containing service url, username, and password
-#' @param catalogid id for catalog of interest
-#' @return ag object
-#' @export
-#' @examples
-#' service = createService("localhost","user","password")
-#' findProtocol(service)
-findProtocol = function(service, catalogid = "root"){
-  url = paste0(service$url,"catalogs/",catalogid,"/protocol")
-  return(ag_get(service,url,NULL))
-}
 
 #' List all repositories in chosen catalog
 #' @param service Service object containing service url, username, and password
@@ -157,10 +146,10 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' service = createService("localhost","user","password")
 #' addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
 #' file = "path/to/file/mytriples.nq")
-addStatementsFromFile = function(service,catalogid = "root",repositoryid = "testQueries",
-                                  file,baseURI = NULL,context=NULL,commitEvery = NULL){
+addStatementsFromFile = function(service,catalogid = "root",repositoryid = "testWithParsa2",
+                                  filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
 
-  if(missing(file)) stop("must supply path of file to be uploaded")
+  if(missing(filepath)) stop("must supply path of file to be uploaded")
 
   queryargs = list(context = context,baseURI = baseURI,commit = commitEvery)
 
@@ -171,7 +160,7 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
                  "/repositories/",repositoryid,"/statements")
   }
 
-  body = quote(upload_file(file,type = "text/plain"))
+  body = quote(upload_file(path = filepath,type = "text/plain"))
 
   invisible(ag_put(service,url,queryargs,body))
 }
@@ -209,7 +198,6 @@ evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",quer
                      count = FALSE,accept = NULL,limit = 100){
 
   returnType = match.arg(returnType)
-  print(returnType)
 
   queryargs = list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
                      planner = planner, checkVariables = checkVariables)
