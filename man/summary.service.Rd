@@ -18,7 +18,9 @@ Print statement showing all elements of service
 Summary of service object
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 summary(service)
+}
 }
 

@@ -18,7 +18,9 @@ ag object
 List all repositories in chosen catalog
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 listCatalogs(service)
+}
 }
 

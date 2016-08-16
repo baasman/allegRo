@@ -20,7 +20,9 @@ An ag object that includes the list of namespaces used in the specified reposito
 listNameSpaces
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 listNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+}
 }
 

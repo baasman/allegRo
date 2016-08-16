@@ -5,8 +5,11 @@
 #' @return ag object
 #' @export
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' listCatalogs(service)
+#' }
+#' @import httr
 listCatalogs = function(service){
   queryargs = NULL
   url = paste0(service$url,"catalogs")
@@ -21,8 +24,11 @@ listCatalogs = function(service){
 #' @return ag object
 #' @export
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' listCatalogs(service)
+#' }
+#' @import httr
 listRepositories = function(service,catalogid = "root"){
   if(catalogid == "root"){
     url = paste0(service$url,"repositories")
@@ -48,9 +54,12 @@ listRepositories = function(service,catalogid = "root"){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' createRepository(service,catalogid = "root",repositoryid = "test",
 #' expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
+#' }
+#' @import httr
 createRepository = function(service,catalogid = "root",repositoryid = "testFromR2",
                              expectedSize = NULL,index = NULL,override = c("true","false","if-not-open"),
                              restore = NULL,nocommit = c("1","0")){
@@ -81,8 +90,11 @@ createRepository = function(service,catalogid = "root",repositoryid = "testFromR
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' deleteRepository(service,catalogid = "root",repositoryid = "repotodelete")
+#' }
+#' @import httr
 deleteRepository = function(service, catalogid = "root",repositoryid){
 
   queryargs = NULL
@@ -109,8 +121,11 @@ deleteRepository = function(service, catalogid = "root",repositoryid){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' listNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+#' }
+#' @import httr
 listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithParsa"){
 
   queryargs = NULL
@@ -134,7 +149,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repositoryid Id for repository of interest.
-#' @param file File that contains your triples
+#' @param filepath File that contains your triples
 #' @param baseURI ...
 #' @param context ...
 #' @param commitEvery ...
@@ -143,9 +158,12 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' @export
 #'
 #' @examples
+#'\dontrun{
 #' service = createService("localhost","user","password")
 #' addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
 #' file = "path/to/file/mytriples.nq")
+#' }
+#' @import httr
 addStatementsFromFile = function(service,catalogid = "root",repositoryid = "testWithParsa2",
                                   filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
 
@@ -166,7 +184,6 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
 }
 
 
-#query = "select ?x ?y ?z {?x ?y ?z}"
 
 
 #' evalQuery
@@ -190,9 +207,12 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' query = "select ?s ?p ?o {?s ?p ?o}"
 #' service = createService("localhost","user","password")
 #' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
+#' }
+#' @import httr
 evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,returnType = c("matrix","dataframe","list"),infer = NULL,context = NULL,
                      namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
                      count = FALSE,accept = NULL,limit = 100){

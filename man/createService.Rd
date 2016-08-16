@@ -4,7 +4,7 @@
 \alias{createService}
 \title{Create a service object}
 \usage{
-createService(url, user = NULL, password = NULL, testConnection = FALSE)
+createService(url, user = NULL, password = NULL)
 }
 \arguments{
 \item{url}{The url for your AllegroGraph server}

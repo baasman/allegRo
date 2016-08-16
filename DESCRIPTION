@@ -4,8 +4,8 @@ Title: This package provides an interface for interacting with an Allegro Graph 
 Version: 0.1.0
 Author: Boudewijn Aasman
 Maintainer: Boudewijn Aasman <boudeyz@gmail.com>
-Description: To be added
-License: MIT
+Description: This is an API for allegrograph. It uses the REST interface to perform actions such as creating repositories, evaluating sparql queries, and handling the server.
+License: GNU General Public License
 LazyData: TRUE
 RoxygenNote: 5.0.1
 URL: https://github.com/baasman/allegRo
@@ -14,3 +14,4 @@ Imports: httr,
         jsonlite,
         stringr
 Suggests: testthat
+

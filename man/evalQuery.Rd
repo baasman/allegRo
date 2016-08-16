@@ -46,8 +46,10 @@ an ag object, which includes the triples in matrix format
 evalQuery
 }
 \examples{
+\dontrun{
 query = "select ?s ?p ?o {?s ?p ?o}"
 service = createService("localhost","user","password")
 evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
+}
 }
 

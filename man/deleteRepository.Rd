@@ -20,7 +20,9 @@ True or False, denoting whether delete was successful.
 Delete a Repository
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 deleteRepository(service,catalogid = "root",repositoryid = "repotodelete")
+}
 }
 

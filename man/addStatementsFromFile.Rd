@@ -15,13 +15,13 @@ addStatementsFromFile(service, catalogid = "root",
 
 \item{repositoryid}{Id for repository of interest.}
 
+\item{filepath}{File that contains your triples}
+
 \item{baseURI}{...}
 
 \item{context}{...}
 
 \item{commitEvery}{...}
-
-\item{file}{File that contains your triples}
 }
 \value{
 an ag object that says whether or not the push was successful.
@@ -30,8 +30,10 @@ an ag object that says whether or not the push was successful.
 addStatementsFromFile
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
 file = "path/to/file/mytriples.nq")
+}
 }
 

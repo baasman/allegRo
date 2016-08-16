@@ -16,7 +16,9 @@ ag object
 List all catalogs
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 listCatalogs(service)
+}
 }
 

@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' createService("localhost","user","password")
-createService = function(url,user = NULL,password = NULL,testConnection = FALSE){
+createService = function(url,user = NULL,password = NULL){
 
   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
   if(!is.na(user) & !is.character(user)) stop("user should be a character value")
@@ -20,20 +20,15 @@ createService = function(url,user = NULL,password = NULL,testConnection = FALSE)
     url = paste0(url,"/")
   }
 
-  obj = structure(
+  structure(
          list(
           url = url,
           user = user,
           password = password
           ),
         class = c("service","list")
-        )
+    )
 
-  if(testConnection){
-    testConnection(obj)
-  }
-
-  return(obj)
 }
 
 ###method declarations
@@ -52,8 +47,10 @@ testConnection = function(x) UseMethod("testConnection",x)
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' summary(service)
+#' }
 summary.service = function(x, ...){
   cat("Service specifications: \n")
   print(x["url"])
@@ -70,8 +67,10 @@ summary.service = function(x, ...){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' testConnection(service)
+#' }
 testConnection.service = function(x, ...){
   if(!http_error(GET(url = paste0(x["url"],"catalogs")))){
     print("Connection is successful, proceed...")

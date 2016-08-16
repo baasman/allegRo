@@ -18,7 +18,9 @@ Statement that states whether or not you can proceed with service object
 testConnection
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 testConnection(service)
+}
 }
 

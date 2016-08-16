@@ -32,8 +32,10 @@ An object of ag with the response and given url.
 createRepository
 }
 \examples{
+\dontrun{
 service = createService("localhost","user","password")
 createRepository(service,catalogid = "root",repositoryid = "test",
 expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
+}
 }
 
