@@ -23,3 +23,24 @@ createService = function(url,user = NULL,password = NULL){
     class = "service"
   )
 }
+
+
+#' Summary of service object
+#'
+#' @param x Object of type service
+#' @param ...
+#'
+#' @return Print statement showing all elements of service
+#' @export
+#'
+#' @examples
+#' service = createService("localhost","user","password")
+#' summary(service)
+summary.service = function(x, ...){
+  cat("Service specifications: \n")
+  print(x["url"])
+  print(x["user"])
+  print(x["password"])
+}
+
+
