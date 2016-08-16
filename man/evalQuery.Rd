@@ -19,6 +19,8 @@ evalQuery(service, catalogid = "root", repositoryid = "testfromr5", query,
 
 \item{query}{Sparql query to evaluate}
 
+\item{returnType}{In what format should the triples be returned. Can choose between "dataframe","matrix","list". Defaults to "list}
+
 \item{infer}{...}
 
 \item{context}{...}

@@ -42,20 +42,6 @@ testConnection = function(x) UseMethod("testConnection",x)
 
 ###methods
 
-
-#' Summary of service object
-#'
-#' @param object Object of type service
-#' @param ...
-#'
-#' @return Print statement showing all elements of service
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' service = createService("localhost","user","password")
-#' summary(service)
-#' }
 summary.service = function(object, ...){
   cat("Service specifications: \n")
   print(object["url"])
@@ -63,19 +49,6 @@ summary.service = function(object, ...){
   print(object["password"])
 }
 
-#' testConnection
-#'
-#' @param x Your service object
-#' @param ...
-#'
-#' @return Statement that states whether or not you can proceed with service object
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' service = createService("localhost","user","password")
-#' testConnection(service)
-#' }
 testConnection.service = function(x, ...){
   if(!http_error(GET(url = paste0(x["url"],"catalogs")))){
     print("Connection is successful, proceed...")
