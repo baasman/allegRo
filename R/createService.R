@@ -42,11 +42,24 @@ testConnection = function(x) UseMethod("testConnection",x)
 
 ###methods
 
-summary.service = function(object, ...){
+#' Summary.service
+#'
+#' @param x The service object
+#' @param ...
+#'
+#' @return Printout statement of your service parameters
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' summary(service)
+#' }
+summary.service = function(x, ...){
   cat("Service specifications: \n")
-  print(object["url"])
-  print(object["user"])
-  print(object["password"])
+  print(x["url"])
+  print(x["user"])
+  print(x["password"])
 }
 
 #' testConnection
