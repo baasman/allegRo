@@ -14,7 +14,7 @@ listCatalogs = function(service){
   queryargs = NULL
   url = paste0(service$url,"catalogs")
   body = NULL
-  return(ag_get(service = service,url = url,queryargs,body))
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
@@ -30,13 +30,16 @@ listCatalogs = function(service){
 #' }
 #' @import httr
 listRepositories = function(service,catalogid = "root"){
+
+  queryargs = NULL
+
   if(catalogid == "root"){
     url = paste0(service$url,"repositories")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories")
   }
   body = NULL
-  return(ag_get(service,url,NULL,NULL))
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
@@ -75,8 +78,9 @@ createRepository = function(service,catalogid = "root",repositoryid = "testFromR
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid)
   }
   body = NULL
+  filepath = NULL
 
-  return(ag_put(service,url,queryargs,body))
+  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
 
@@ -139,7 +143,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 
   body = NULL
 
-  return(ag_get(service,url,queryargs,body))
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
@@ -165,7 +169,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' file = "path/to/file/mytriples.nq")
 #' }
 #' @import httr
-addStatementsFromFile = function(service,catalogid = "root",repositoryid = "testWithParsa2",
+addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
                                   filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
 
   if(missing(filepath)) stop("must supply path of file to be uploaded")
@@ -181,7 +185,7 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "test
 
   body = quote(upload_file(path = filepath,type = "text/plain"))
 
-  invisible(ag_put(service,url,queryargs,body))
+  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
 
@@ -233,7 +237,7 @@ evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",quer
 
   body = NULL
 
-  invisible(ag_data(service = service,url = url,queryargs,body,returnType))
+  invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType))
 }
 
 

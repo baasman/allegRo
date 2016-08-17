@@ -31,7 +31,7 @@ password = "mypassword"
 service = createService(url,user,password,testConnection = TRUE)
 
 #to view the specifications, look at the summary
-summary(servive)
+summary(service)
 ```
 
 If you receive the message saying you can safely move on, we can proceed with the actual work.

@@ -4,9 +4,8 @@
 \alias{addStatementsFromFile}
 \title{addStatementsFromFile}
 \usage{
-addStatementsFromFile(service, catalogid = "root",
-  repositoryid = "testWithParsa2", filepath, baseURI = NULL,
-  context = NULL, commitEvery = NULL)
+addStatementsFromFile(service, catalogid = "root", repositoryid = "",
+  filepath, baseURI = NULL, context = NULL, commitEvery = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}

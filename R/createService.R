@@ -40,21 +40,8 @@ createService = function(url,user = NULL,password = NULL,testConnection = FALSE)
 
 testConnection = function(x) UseMethod("testConnection",x)
 
-###methods
 
-#' Summary.service
-#'
-#' @param x The service object
-#' @param ...
-#'
-#' @return Printout statement of your service parameters
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' service = createService("localhost","user","password")
-#' summary(service)
-#' }
 summary.service = function(x, ...){
   cat("Service specifications: \n")
   print(x["url"])

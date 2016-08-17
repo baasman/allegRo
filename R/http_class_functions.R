@@ -36,18 +36,7 @@ ag_get = function(service, url,queryargs,body){
 
 
 
-#' Print
-#'
-#' @param x The response from functions that receive info from the server
-#' @param ...
-#'
-#' @return The first 10 results from the request
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' print(service)
-#' }
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   print(head(x["return"],10))
@@ -100,7 +89,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
   )
 }
 
-
+#' @export
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   print(head(x["return"],10))
@@ -114,7 +103,7 @@ print.ag_data = function(x, ...){
 
 
 
-ag_put = function(service, url,queryargs,body){
+ag_put = function(service, url,queryargs,body,filepath){
 
   resp = PUT(url,authenticate(service$user,service$password),body = eval(body),query = queryargs)
 
@@ -137,6 +126,7 @@ ag_put = function(service, url,queryargs,body){
 
 ### methods
 
+#' @export
 summary.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
   x["return"]
