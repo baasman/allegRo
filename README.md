@@ -1,6 +1,6 @@
 # allegRo
 An API for the semantic graph database, AllegroGraph. As of right now, the package is very limited in terms of functionality, but I'm hoping to periodically
-add as much functionality to it as time allows me to.
+add as much functionality to it as time will allow me to.
 
 To use this package, you'll need to install your own AllegroGraph server. To install a free version, follow this [link](http://franz.com/agraph/downloads/)
 and follow the installation instructions.
@@ -20,8 +20,7 @@ devtools::install_github("baasman/allegRo")
 
 ### Getting started
 
-We'll start off with creating a connection to the server, and specifying our credentials. My server is located on "localhost:10059", so that is where
-I'll be pointing it too. By specifying the testConnection = TRUE we can perform a simple get command to ensure we a receiving a response from the server.
+We'll start off with creating a connection to the server, and specifying our credentials. For example, my test server is located on "localhost:10059", so that is where I'll be pointing it too. By specifying the testConnection = TRUE we can perform a simple get command to ensure we a receiving a response from the server.
 
 ```r
 url = "http://localhost:10035/"
@@ -65,7 +64,7 @@ predicate = "<http://test.com/tmp#hasItem>"
 objects = c("<http://test.com/tmp#sword>","<http://test.com/tmp#shield>")
 
 for(i in 1:2){
-  addStatement(service,catalogid = "root",repositoryid = "testfromr5",subj = subject,pred = predicate,
+  addStatement(service,catalogid = "root",repositoryid = "testRepo",subj = subject,pred = predicate,
                obj = objects[i],context = NULL)
 }
 
@@ -77,7 +76,7 @@ Finally, we can evaluate sparql queries on this test store. I already forgot wha
 returnType = "dataframe"
 query = "select ?items {<http://test.com/tmp#person> <http://test.com/tmp#hasItem> ?items }"
 
-evalQuery(service,catalogid = "root",repositoryid = "testfromr5",returnType = "dataframe",
+evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = "dataframe",
           query = query,limit = 10)
 
 ```
