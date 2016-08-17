@@ -49,6 +49,19 @@ summary.service = function(object, ...){
   print(object["password"])
 }
 
+#' testConnection
+#'
+#' @param x The service object
+#' @param ...
+#'
+#' @return Print message stating whether or not the test was succesful
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' testConnection(service)
+#' }
 testConnection.service = function(x, ...){
   if(!http_error(GET(url = paste0(x["url"],"catalogs")))){
     print("Connection is successful, proceed...")
