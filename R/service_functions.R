@@ -35,7 +35,8 @@ listRepositories = function(service,catalogid = "root"){
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories")
   }
-  return(ag_get(service,url,NULL))
+  body = NULL
+  return(ag_get(service,url,NULL,NULL))
 }
 
 

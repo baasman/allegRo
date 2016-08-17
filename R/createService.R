@@ -75,7 +75,7 @@ summary.service = function(x, ...){
 #' service = createService("localhost","user","password")
 #' testConnection(service)
 #' }
-testConnection.service = function(x, ...){
+testConnection = function(x, ...){
   if(!http_error(GET(url = paste0(x["url"],"catalogs")))){
     print("Connection is successful, proceed...")
   } else{

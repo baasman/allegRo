@@ -10,7 +10,9 @@ LazyData: TRUE
 RoxygenNote: 5.0.1
 URL: https://github.com/baasman/allegRo
 BugReports: https://github.com/baasman/allegRo/issues
-Imports: httr,
+Depends: httr
+Imports:
+        httr,
         jsonlite,
         stringr
 Suggests: testthat
