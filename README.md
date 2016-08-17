@@ -36,3 +36,23 @@ summary(servive)
 
 If you receive the message saying you can safely move on, we can proceed with the actual work.
 
+Lets take a look at the different catalogs and repositories on this server. 
+
+```r
+listCatalogs(service)
+
+listRepositories(service,catalogid = "root")
+```
+
+We could easily create a new repository and add some triples to it.
+
+```{r}
+catalogid = "root"
+repositoryid = "repoTest"
+expectedSize = 100
+
+#to get a full list of arguments, look at the help documentation
+createRepository(service = service,catalogid = catalogid, repositoryid = repositoryid, expectedSize = expectedSize)
+
+```
+

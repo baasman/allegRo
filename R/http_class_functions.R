@@ -34,6 +34,20 @@ ag_get = function(service, url,queryargs,body){
 
 ### methods belonging to ag_get
 
+
+
+#' Print
+#'
+#' @param x The response from functions that receive info from the server
+#' @param ...
+#'
+#' @return The first 10 results from the request
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' print(service)
+#' }
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   print(head(x["return"],10))
