@@ -2,8 +2,9 @@
 
 S3method(print,ag_data)
 S3method(print,ag_get)
-S3method(summary,ag_put)
+S3method(print,ag_put)
 S3method(summary,service)
+export(addStatement)
 export(addStatementsFromFile)
 export(createRepository)
 export(createService)

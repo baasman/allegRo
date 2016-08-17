@@ -24,7 +24,7 @@ We'll start off with creating a connection to the server, and specifying our cre
 I'll be pointing it too. By specifying the testConnection = TRUE we can perform a simple get command to ensure we a receiving a response from the server.
 
 ```r
-url = "http://localhost:10059/"
+url = "http://localhost:10035/"
 user = "baasman"
 password = "mypassword"
 
@@ -44,7 +44,7 @@ listCatalogs(service)
 listRepositories(service,catalogid = "root")
 ```
 
-We could easily create a new repository and add some triples to it.
+We could easily create a new repository and add some triples to it. First, we'll create a new repository under root called "repoTest"
 
 ```{r}
 catalogid = "root"
@@ -53,6 +53,33 @@ expectedSize = 100
 
 #to get a full list of arguments, look at the help documentation
 createRepository(service = service,catalogid = catalogid, repositoryid = repositoryid, expectedSize = expectedSize)
+```
+
+Secondly, suppose that want to add some triples to this store. There are multiple ways we could go about this, but for now, the easiest methods are either 
+adding straight from a flat text file, or using a loop and dynamically changing the subject, predicate, or object.
+
+```{r}
+
+subject = "<http://test.com/tmp#person>"
+predicate = "<http://test.com/tmp#hasItem>"
+objects = c("<http://test.com/tmp#sword>","<http://test.com/tmp#shield>")
+
+for(i in 1:2){
+  addStatement(service,catalogid = "root",repositoryid = "testfromr5",subj = subject,pred = predicate,
+               obj = objects[i],context = NULL)
+}
 
 ```
+
+Finally, we can evaluate sparql queries on this test store. I already forgot what items our person has.
+
+```{r}
+returnType = "dataframe"
+query = "select ?items {<http://test.com/tmp#person> <http://test.com/tmp#hasItem> ?items }"
+
+evalQuery(service,catalogid = "root",repositoryid = "testfromr5",returnType = "dataframe",
+          query = query,limit = 10)
+
+```
+
 

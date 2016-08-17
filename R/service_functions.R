@@ -147,6 +147,51 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 }
 
 
+
+#' addStatement
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param subj valid url
+#' @param pred valid url
+#' @param obj valid url
+#' @param context context of triple
+#'
+#' @return Return: successful push or not
+#' @export
+#'
+#' @examples
+#' \donotrun{
+#' service = createService("localhost","user","password")
+#' subj = "<www.test.com/tmp#person>"
+#' pred = "<www.test.com/tmp#hasItem>"
+#' obj= "<www.test.com/tmp#sword>"
+#' addStatement(service,catalogid = "root",reposirepositoryid = "testRepo",
+#' subj = subj,pred = pred,obj = obj)
+#' }
+addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
+                        pred = "o",obj = "p", context = NULL){
+
+  queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/statement")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,
+                 "/repositories/",repositoryid,"/statement")
+  }
+
+  body = NULL
+  filepath = NULL
+
+  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
+
+
+
+
+
 #file = "C:/Users/baasman/Documents/testtrips.nq"
 
 #' addStatementsFromFile

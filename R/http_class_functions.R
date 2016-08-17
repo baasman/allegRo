@@ -65,6 +65,8 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
 
     parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
 
+    if(length(parsed$values)==0) stop("Query did not return any results")
+
     if(returnType == "dataframe"){
       ret = as.data.frame(parsed$values,col.names = parsed$names)
       colnames(ret) = parsed$names
@@ -127,10 +129,12 @@ ag_put = function(service, url,queryargs,body,filepath){
 ### methods
 
 #' @export
-summary.ag_put = function(x, ...){
+print.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
+
   x["return"]
 }
+
 
 
 
