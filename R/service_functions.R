@@ -11,9 +11,12 @@
 #' }
 #' @import httr
 listCatalogs = function(service){
+
   queryargs = NULL
-  url = paste0(service$url,"catalogs")
   body = NULL
+
+  url = paste0(service$url,"catalogs")
+
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
@@ -32,13 +35,14 @@ listCatalogs = function(service){
 listRepositories = function(service,catalogid = "root"){
 
   queryargs = NULL
+  body = NULL
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories")
   }
-  body = NULL
+
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
@@ -71,14 +75,15 @@ createRepository = function(service,catalogid = "root",repositoryid = "testFromR
   if(missing(override)) override = NULL
   if(missing(nocommit)) nocommit = NULL
 
+  body = NULL
+  filepath = NULL
+
   queryargs = list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit)
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid)
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid)
   }
-  body = NULL
-  filepath = NULL
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
@@ -103,13 +108,13 @@ createRepository = function(service,catalogid = "root",repositoryid = "testFromR
 deleteRepository = function(service, catalogid = "root",repositoryid){
 
   queryargs = NULL
+  body = NULL
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid)
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid)
   }
-  body = NULL
 
   invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
@@ -134,14 +139,13 @@ deleteRepository = function(service, catalogid = "root",repositoryid){
 listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithParsa"){
 
   queryargs = NULL
+  body = NULL
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid,"/namespaces")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces")
   }
-
-  body = NULL
 
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
@@ -174,6 +178,8 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
                         pred = "o",obj = "p", context = NULL){
 
   queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
+  body = NULL
+  filepath = NULL
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid,"/statement")
@@ -182,9 +188,6 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
                  "/repositories/",repositoryid,"/statement")
   }
 
-  body = NULL
-  filepath = NULL
-
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
@@ -192,7 +195,6 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
 
 
 
-#file = "C:/Users/baasman/Documents/testtrips.nq"
 
 #' addStatementsFromFile
 #'
@@ -220,6 +222,7 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
   if(missing(filepath)) stop("must supply path of file to be uploaded")
 
   queryargs = list(context = context,baseURI = baseURI,commit = commitEvery)
+  body = quote(upload_file(path = filepath,type = "text/plain"))
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid,"/statements")
@@ -227,8 +230,6 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
     url = paste0(service$url,"catalogs/",catalogid,
                  "/repositories/",repositoryid,"/statements")
   }
-
-  body = quote(upload_file(path = filepath,type = "text/plain"))
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
@@ -264,11 +265,12 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 #' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
 #' }
 #' @import httr
-evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,returnType = c("matrix","dataframe","list"),infer = NULL,context = NULL,
+evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,returnType = c("dataframe","matrix","list"),infer = NULL,context = NULL,
                      namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
                      count = FALSE,accept = NULL,limit = 100){
 
   returnType = match.arg(returnType)
+  body = NULL
 
   queryargs = list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
                      planner = planner, checkVariables = checkVariables)
@@ -279,8 +281,6 @@ evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",quer
     url = paste0(service$url,"catalogs/",catalogid,
                  "/repositories/",repositoryid)
   }
-
-  body = NULL
 
   invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType))
 }
