@@ -2,7 +2,7 @@
 % Please edit documentation in R/createService.R
 \name{createService}
 \alias{createService}
-\title{Create a service object}
+\title{createService}
 \usage{
 createService(url, user = NULL, password = NULL, testConnection = FALSE)
 }
@@ -13,13 +13,13 @@ createService(url, user = NULL, password = NULL, testConnection = FALSE)
 
 \item{password}{Password for user accessing store, if necessary}
 
-\item{testConnection}{Should the connection be tested? Defaults to FALSE}
+\item{testConnection}{Should the connection be tested? It can be tested seperately as well. Defaults to FALSE}
 }
 \value{
 S3 Object of type "service", which states the url, username, and password for the user
 }
 \description{
-Create a service object
+createService
 }
 \examples{
 createService("localhost","user","password",testConnection = FALSE)

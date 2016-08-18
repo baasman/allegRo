@@ -34,8 +34,6 @@ ag_get = function(service, url,queryargs,body){
 
 ### methods belonging to ag_get
 
-
-
 #' @export
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
@@ -93,12 +91,10 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
 
 #' @export
 print.ag_data = function(x, ...){
-  cat("Retrieved from AllegroGraph Server \n \n")
+  cat("Retrieved from AllegroGraph Server \n")
+  cat("First 10 results...")
   print(head(x["return"],10))
 }
-
-
-
 
 
 
@@ -131,7 +127,6 @@ ag_put = function(service, url,queryargs,body,filepath){
 #' @export
 print.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
-
   x["return"]
 }
 
@@ -152,10 +147,16 @@ ag_delete = function(service, url,queryargs,body){
 
   structure(
     list(
-      response = content(resp),
+      return = content(resp),
       url = url
     ),
     class = "ag_delete"
   )
+}
+
+#' @export
+print.ag_delete = function(x, ...){
+  cat("Response from AllegroGraph server \n \n")
+  x["return"]
 }
 

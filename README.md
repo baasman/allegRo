@@ -23,7 +23,7 @@ devtools::install_github("baasman/allegRo")
 We'll start off with creating a connection to the server, and specifying our credentials. For example, my test server is located on "localhost:10059", so that is where I'll be pointing it too. By specifying the testConnection = TRUE we can perform a simple get command to ensure we a receiving a response from the server.
 
 ```r
-url = "http://localhost:10035/"
+url = "http://localhost:10059/"
 user = "baasman"
 password = "mypassword"
 
@@ -70,13 +70,13 @@ for(i in 1:2){
 
 ```
 
-Finally, we can evaluate sparql queries on this test store. I already forgot what items our person has.
+Finally, we can evaluate sparql queries on this test store. I already forgot what items our person has!
 
 ```{r}
-returnType = "dataframe"
+returnType = "dataframe" # can also be matrix or list
 query = "select ?items {<http://test.com/tmp#person> <http://test.com/tmp#hasItem> ?items }"
 
-evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = "dataframe",
+evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = returnType,
           query = query,limit = 10)
 
 ```
