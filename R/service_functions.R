@@ -121,6 +121,11 @@ deleteRepository = function(service, catalogid = "root",repositoryid){
 
 
 
+
+
+
+
+
 #' listNameSpaces
 #'
 #' @param service Service object containing service url, username, and password.
@@ -150,6 +155,79 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
+#' deleteNameSpaces
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param reset Boolean, If 1, then the namespaces are reset to the default namespaces of the server.
+#'
+#' @return An ag delete object that states whether delete was successful or not
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' deleteNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+#' }
+#' @import httr
+deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testWithParsa",reset = c(0,1,"0","1")){
+
+  if(!missing(reset)) reset = match.arg(reset)
+  if(is.numeric(reset)) reset = as.character(reset)
+
+  queryargs = list(reset = reset)
+
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/namespaces")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces")
+  }
+
+  return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+}
+
+
+
+#' addNameSpace
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param prefix Prefix
+#' @param nsURI Namespace URI
+#'
+#' @return ag put object
+#' @export
+#'
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
+#'              nsURI = "<http://test.com/tmp#>)
+#' }
+#' @import httr
+addNameSpace = function(service,catalogid = "root",repositoryid = "newTest",prefix, nsURI){
+
+  queryargs = NULL
+  body = nsURI
+  filepath = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/namespaces/",prefix)
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces/",prefix)
+  }
+
+ return(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = NULL))
+}
+
+
+
+
+
+
 
 
 #' addStatement
@@ -166,7 +244,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' @export
 #'
 #' @examples
-#' \donotrun{
+#' \dontrun{
 #' service = createService("localhost","user","password")
 #' subj = "<www.test.com/tmp#person>"
 #' pred = "<www.test.com/tmp#hasItem>"
@@ -174,6 +252,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPars
 #' addStatement(service,catalogid = "root",reposirepositoryid = "testRepo",
 #' subj = subj,pred = pred,obj = obj)
 #' }
+#' @import httr
 addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
                         pred = "o",obj = "p", context = NULL){
 

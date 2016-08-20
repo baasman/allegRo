@@ -29,7 +29,7 @@ Return: successful push or not
 addStatement
 }
 \examples{
-\\donotrun{
+\dontrun{
 service = createService("localhost","user","password")
 subj = "<www.test.com/tmp#person>"
 pred = "<www.test.com/tmp#hasItem>"

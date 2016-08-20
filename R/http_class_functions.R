@@ -37,7 +37,11 @@ ag_get = function(service, url,queryargs,body){
 #' @export
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
-  print(head(x["return"],10))
+  if(length(x["return"])>0){
+    print(head(x["return"],10))
+  } else{
+    print("Successful call but no content found")
+  }
 }
 
 
@@ -126,8 +130,8 @@ ag_put = function(service, url,queryargs,body,filepath){
 
 #' @export
 print.ag_put = function(x, ...){
-  cat("Response from AllegroGraph server \n \n")
-  x["return"]
+  cat("Response from AllegroGraph server \n")
+  print(x$return)
 }
 
 
@@ -145,9 +149,12 @@ ag_delete = function(service, url,queryargs,body){
     )
   }
 
+  ret = content(resp)
+  if(is.null(content(resp))) ret = "Nothing to delete"
+
   structure(
     list(
-      return = content(resp),
+      return = ret,
       url = url
     ),
     class = "ag_delete"
@@ -157,6 +164,6 @@ ag_delete = function(service, url,queryargs,body){
 #' @export
 print.ag_delete = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
-  x["return"]
+  print(x["return"])
 }
 

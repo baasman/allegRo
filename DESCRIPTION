@@ -12,7 +12,6 @@ URL: https://github.com/baasman/allegRo
 BugReports: https://github.com/baasman/allegRo/issues
 Depends: httr
 Imports:
-        httr,
         jsonlite,
         stringr
 Suggests: testthat

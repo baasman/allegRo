@@ -5,7 +5,7 @@
 \title{evalQuery}
 \usage{
 evalQuery(service, catalogid = "root", repositoryid = "testfromr5", query,
-  returnType = c("matrix", "dataframe", "list"), infer = NULL,
+  returnType = c("dataframe", "matrix", "list"), infer = NULL,
   context = NULL, namedContext = NULL, callback = NULL, bindings = NULL,
   planner = NULL, checkVariables = NULL, count = FALSE, accept = NULL,
   limit = 100)

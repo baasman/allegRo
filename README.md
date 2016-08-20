@@ -1,6 +1,5 @@
 # allegRo
-An API for the semantic graph database, AllegroGraph. As of right now, the package is very limited in terms of functionality, but I'm hoping to periodically
-add as much functionality to it as time will allow me to.
+An API for the semantic graph database, AllegroGraph.
 
 To use this package, you'll need to install your own AllegroGraph server. To install a free version, follow this [link](http://franz.com/agraph/downloads/)
 and follow the installation instructions.
