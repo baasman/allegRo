@@ -24,6 +24,7 @@ listRepositories = function(service,catalogid = "root"){
 }
 
 
+
 #' createRepository
 #'
 #' @param service Service object containing service url, username, and password.
@@ -46,8 +47,8 @@ listRepositories = function(service,catalogid = "root"){
 #' }
 #' @import httr
 createRepository = function(service,catalogid = "root",repositoryid = "testFromR2",
-                             expectedSize = NULL,index = NULL,override = c("true","false","if-not-open"),
-                             restore = NULL,nocommit = c("1","0")){
+                            expectedSize = NULL,index = NULL,override = c("true","false","if-not-open"),
+                            restore = NULL,nocommit = c("1","0")){
 
   if(missing(override)) override = NULL
   if(missing(nocommit)) nocommit = NULL
@@ -95,11 +96,6 @@ deleteRepository = function(service, catalogid = "root",repositoryid){
 
   invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
-
-
-
-
-
 
 
 
@@ -197,7 +193,7 @@ addNameSpace = function(service,catalogid = "root",repositoryid = "newTest",pref
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces/",prefix)
   }
 
- return(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = NULL))
+  return(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = NULL))
 }
 
 
@@ -273,7 +269,7 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
 #' }
 #' @import httr
 addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
-                                  filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
+                                 filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
 
   if(missing(filepath)) stop("must supply path of file to be uploaded")
 
@@ -347,14 +343,3 @@ evalQuery = function(service,catalogid = "root",repositoryid = "test",query,retu
 
   invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp))
 }
-
-
-
-
-
-
-
-
-
-
-
