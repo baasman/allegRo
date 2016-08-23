@@ -38,7 +38,8 @@ ag_get = function(service, url,queryargs,body){
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   if(length(x["return"])>0){
-    print(head(x["return"],10))
+    cat("Only printing first 10 results... \n \n")
+    print(x[["return"]][1:10,])
   } else{
     print("Successful call but no content found")
   }
@@ -103,7 +104,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n")
   cat("First 10 results... \n \n")
-  print(head(x["return"],10))
+  print(x[["return"]][1:10,])
 }
 
 

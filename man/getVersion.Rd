@@ -7,7 +7,7 @@
 getVersion(service)
 }
 \arguments{
-\item{service}{}
+\item{service}{Service object containing service url, username, and password}
 }
 \value{
 Version of allegroGraph
