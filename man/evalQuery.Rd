@@ -4,11 +4,11 @@
 \alias{evalQuery}
 \title{evalQuery}
 \usage{
-evalQuery(service, catalogid = "root", repositoryid = "testfromr5", query,
-  returnType = c("dataframe", "matrix", "list"), infer = NULL,
-  context = NULL, namedContext = NULL, callback = NULL, bindings = NULL,
-  planner = NULL, checkVariables = NULL, count = FALSE, accept = NULL,
-  limit = 100)
+evalQuery(service, catalogid = "root", repositoryid = "test", query,
+  returnType = c("data.table", "dataframe", "matrix", "list"), infer = NULL,
+  context = NULL, cleanUp = FALSE, namedContext = NULL, callback = NULL,
+  bindings = NULL, planner = NULL, checkVariables = NULL, count = FALSE,
+  accept = NULL, limit = 100)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -24,6 +24,8 @@ evalQuery(service, catalogid = "root", repositoryid = "testfromr5", query,
 \item{infer}{...}
 
 \item{context}{...}
+
+\item{cleanUp}{If TRUE, removes the XML types of all variables. Currently for this to work, the return type needs to be a data.table. However, this is recommended either way.}
 
 \item{namedContext}{...}
 
@@ -51,7 +53,8 @@ evalQuery
 \dontrun{
 query = "select ?s ?p ?o {?s ?p ?o}"
 service = createService("localhost","user","password")
-evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
+evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, returnType = "data.table",
+cleanUp = TRUE, limit = 10)
 }
 }
 
