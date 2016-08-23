@@ -4,10 +4,10 @@
 \alias{testConnection}
 \title{testConnection}
 \usage{
-testConnection(x, ...)
+testConnection(s, ...)
 }
 \arguments{
-\item{x}{The service object}
+\item{s}{The service object}
 
 \item{...}{}
 }
