@@ -1,4 +1,3 @@
-#' @export
 removeXMLSchema = function(df){
 
   if(!("data.table" %in% class(df))) stop("To return as literals, please return as data.table for optimal performance")

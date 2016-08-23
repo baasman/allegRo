@@ -24,7 +24,7 @@ getInitFile = function(service){
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' addInitFile(service,filepath = "path/to/directory/initFile.txt")
+#' setInitFile(service,filepath = "path/to/directory/initFile.txt")
 #' }
 #' @import httr
 setInitFile = function(service,filepath,restart = "0"){
@@ -41,7 +41,7 @@ setInitFile = function(service,filepath,restart = "0"){
 
 #' getVersion
 #'
-#' @param service
+#' @param service Service object containing service url, username, and password
 #'
 #' @return Version of allegroGraph
 #' @export
