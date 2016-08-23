@@ -73,7 +73,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
       ret = data.table::as.data.table(parsed$values,col.names = parsed$names)
       colnames(ret) = parsed$names
     } else if(returnType == "dataframe"){
-      ret = as.data.frame(parsed$values,col.names = parsed$names)
+      ret = as.data.frame(parsed$values,stringsAsFactors = FALSE)
       colnames(ret) = parsed$names
     } else if(returnType == "matrix"){
       ret = as.matrix(parsed$values)
@@ -137,6 +137,7 @@ ag_put = function(service, url,queryargs,body,filepath){
 #' @export
 print.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n")
+
   print(x$return)
 }
 

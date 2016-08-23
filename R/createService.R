@@ -32,6 +32,7 @@ createService = function(url,user = NULL,password = NULL,testConnection = FALSE)
 
   if(testConnection){
     testConnection(obj)
+    cat("Successful connection")
   }
 
   return(obj)
