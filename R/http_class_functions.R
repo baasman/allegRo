@@ -48,7 +48,7 @@ print.ag_get = function(x, ...){
 
 
 
-ag_data = function(service, url,queryargs,body,returnType = NULL){
+ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 
   resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs )
 
@@ -69,7 +69,10 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
 
     if(length(parsed$values)==0) stop("Query did not return any results")
 
-    if(returnType == "dataframe"){
+    if(returnType == "data.table"){
+      ret = data.table::as.data.table(parsed$values,col.names = parsed$names)
+      colnames(ret) = parsed$names
+    } else if(returnType == "dataframe"){
       ret = as.data.frame(parsed$values,col.names = parsed$names)
       colnames(ret) = parsed$names
     } else if(returnType == "matrix"){
@@ -82,6 +85,9 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
     parsed = content(resp,"text")
   }
 
+  if(cleanUp){
+    ret = removeXMLSchema(ret)
+  }
 
   structure(
     list(
@@ -96,7 +102,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL){
 #' @export
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n")
-  cat("First 10 results...")
+  cat("First 10 results... \n \n")
   print(head(x["return"],10))
 }
 

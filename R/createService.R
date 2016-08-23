@@ -49,7 +49,6 @@ print.service = function(x, ...){
 #' testConnection
 #'
 #' @param s The service object
-#' @param ...
 #'
 #' @return Print message stating whether or not the test was succesful
 #' @export
@@ -59,7 +58,7 @@ print.service = function(x, ...){
 #' service = createService("localhost","user","password")
 #' testConnection(service)
 #' }
-testConnection = function(s, ...){
+testConnection = function(s){
   if(http_error(GET(url = paste0(s["url"],"catalogs")))) stop("error: connection failed.
                                                               Check your service specifications
                                                               and/or ssh connection")

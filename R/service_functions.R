@@ -323,6 +323,7 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 #' @param repositoryid Id for repository of interest.
 #' @param query Sparql query to evaluate
 #' @param returnType In what format should the triples be returned. Can choose between "dataframe","matrix","list". Defaults to "list
+#' @param cleanUp If TRUE, removes the XML types of all variables. Currently for this to work, the return type needs to be a data.table. However, this is recommended either way.
 #' @param infer ...
 #' @param context ...
 #' @param namedContext ...
@@ -341,18 +342,24 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 #' \dontrun{
 #' query = "select ?s ?p ?o {?s ?p ?o}"
 #' service = createService("localhost","user","password")
-#' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, limit = 10)
+#' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, returnType = "data.table",
+#' cleanUp = TRUE, limit = 10)
 #' }
 #' @import httr
-evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",query,returnType = c("dataframe","matrix","list"),infer = NULL,context = NULL,
-                     namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
+#' @import data.table
+evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),infer = NULL,context = NULL,
+                     cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
                      count = FALSE,accept = NULL,limit = 100){
 
   returnType = match.arg(returnType)
+  if(returnType=="data.table"){
+    if( !("data.table" %in% installed.packages()[,"Package"])) stop("data.table is not installed")
+  }
+
   body = NULL
 
   queryargs = list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
-                     planner = planner, checkVariables = checkVariables)
+                   planner = planner, checkVariables = checkVariables)
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid)
@@ -361,8 +368,13 @@ evalQuery = function(service,catalogid = "root",repositoryid = "testfromr5",quer
                  "/repositories/",repositoryid)
   }
 
-  invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType))
+  invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp))
 }
+
+
+
+
+
 
 
 

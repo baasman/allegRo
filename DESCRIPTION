@@ -13,6 +13,7 @@ BugReports: https://github.com/baasman/allegRo/issues
 Depends: httr
 Imports:
         jsonlite,
-        stringr
+        stringr,
+        data.table
 Suggests: testthat
 

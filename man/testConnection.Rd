@@ -4,12 +4,10 @@
 \alias{testConnection}
 \title{testConnection}
 \usage{
-testConnection(s, ...)
+testConnection(s)
 }
 \arguments{
 \item{s}{The service object}
-
-\item{...}{}
 }
 \value{
 Print message stating whether or not the test was succesful
