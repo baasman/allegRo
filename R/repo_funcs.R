@@ -229,59 +229,41 @@ getSize = function(service,catalogid= "root",repositoryid = "test"){
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
-#' addStatement
-#'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
-#' @param subj valid url
-#' @param pred valid url
-#' @param obj valid url
-#' @param context context of triple
-#'
-#' @return Return: successful push or not
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' service = createService("localhost","user","password")
-#' subj = "<www.test.com/tmp#person>"
-#' pred = "<www.test.com/tmp#hasItem>"
-#' obj= "<www.test.com/tmp#sword>"
-#' }
-#' @import httr
-getStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
-                        pred = "o",obj = "p", context = NULL,infer = "false",callback = NULL,
-                        limit = NULL, tripleIDs = "false",count = "false"){
 
-  if(missing(subj) | missing(pred) | missing(obj)) stop("subj,pred, and obj must all be included in call")
-  if(missing(subj) & missing(pred) & missing(obj)){
-    if(catalogid == "root"){
-      url = paste0(service$url,"repositories/",repositoryid,"/statements")
-    } else{
-      url = paste0(service$url,"catalogs/",catalogid,
-                   "/repositories/",repositoryid,"/statements")
-    }
-    body = NULL
-    queryargs = NULL
-    return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
-  }
 
-  queryargs = list(subj = subj, pred = pred, obj = obj,context = context,infer = infer,callback = callback,
-                   limit = limit,tripleIDs = tripleIDs,count = count)
-
-  body = NULL
-  filepath = NULL
-
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements/query")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements/query")
-  }
-
-  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-}
+#add roxygen once finished
+# getStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
+#                         pred = "o",obj = "p", context = NULL,infer = "false",callback = NULL,
+#                         limit = NULL, tripleIDs = "false",count = "false"){
+#
+#   if(missing(subj) | missing(pred) | missing(obj)) stop("subj,pred, and obj must all be included in call")
+#   if(missing(subj) & missing(pred) & missing(obj)){
+#     if(catalogid == "root"){
+#       url = paste0(service$url,"repositories/",repositoryid,"/statements")
+#     } else{
+#       url = paste0(service$url,"catalogs/",catalogid,
+#                    "/repositories/",repositoryid,"/statements")
+#     }
+#     body = NULL
+#     queryargs = NULL
+#     return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+#   }
+#
+#   queryargs = list(subj = subj, pred = pred, obj = obj,context = context,infer = infer,callback = callback,
+#                    limit = limit,tripleIDs = tripleIDs,count = count)
+#
+#   body = NULL
+#   filepath = NULL
+#
+#   if(catalogid == "root"){
+#     url = paste0(service$url,"repositories/",repositoryid,"/statements/query")
+#   } else{
+#     url = paste0(service$url,"catalogs/",catalogid,
+#                  "/repositories/",repositoryid,"/statements/query")
+#   }
+#
+#   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+# }
 
 
 
@@ -402,7 +384,6 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 #' }
 #' @import httr
 #' @import data.table
-#' @importFrom utils, installed.packages
 evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),infer = NULL,context = NULL,
                      cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
                      count = FALSE,accept = NULL,limit = 100){

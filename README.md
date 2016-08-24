@@ -46,7 +46,7 @@ We could easily create a new repository and add some triples to it. First, we'll
 
 ```{r}
 catalogid = "root"
-repositoryid = "repoTest"
+repositoryid = "testRepo"
 expectedSize = 100
 
 #to get a full list of arguments, look at the help documentation

@@ -104,7 +104,11 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n")
   cat("First 10 results... \n \n")
-  print(x[["return"]][1:10,])
+  if(is.list(x[["return"]])){
+    print(x[["return"]][["values"]][1:length(x[["return"]][["values"]])])
+  } else{
+    print(x[["return"]][1:10,])
+  }
 }
 
 
