@@ -51,6 +51,7 @@ print.ag_get = function(x, ...){
 
 ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 
+
   resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs )
 
   if (!(http_type(resp) %in% c("application/json","text/plain"))) {
@@ -78,8 +79,9 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
       colnames(ret) = parsed$names
     } else if(returnType == "matrix"){
       ret = as.matrix(parsed$values)
+      colnames(ret) = parsed$names
     } else{
-      ret = parsed
+      ret = parsed$values
     }
 
   } else if(http_type(resp) == "text/plain"){
@@ -107,7 +109,7 @@ print.ag_data = function(x, ...){
   if(is.list(x[["return"]])){
     print(x[["return"]][["values"]][1:length(x[["return"]][["values"]])])
   } else{
-    print(x[["return"]][1:10,])
+    print(x[["return"]][1:length(x[["return"]]),])
   }
 }
 
