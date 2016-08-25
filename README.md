@@ -69,6 +69,16 @@ for(i in 1:2){
 
 ```
 
+To add them from a text file, we can use the following function:
+
+```{r}
+
+addStatementsFromFile(service = service,catalogid = "root",repositoryid = "testRepo",
+                      filepath = paste0(path.package("allegRo"),"/inst/extdata/testtrips.nq"),
+                      context = "<testing>")
+
+```
+
 Finally, we can evaluate sparql queries on this test store. I already forgot what items our person has!
 
 ```{r}
