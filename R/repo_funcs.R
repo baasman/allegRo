@@ -235,6 +235,36 @@ getSize = function(service,catalogid= "root",repositoryid = "testRepo"){
 
 
 
+#' getAccess
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#'
+#' @return An ag get object shows the kind of access the user has on this repository
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' getAccess(service,catalogid = "root",repositoryid = "testRepo")
+#' }
+#' @import httr
+getAccess = function(service,catalogid= "root",repositoryid = "testRepo"){
+
+  queryargs = NULL
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/access")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/access")
+  }
+
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
+
+
 
 #' getContexts
 #'

@@ -60,7 +60,6 @@ getVersion = function(service){
 }
 
 
-
 #' List all catalogs
 #' @param service Service object containing service url, username, and password
 #' @return ag object

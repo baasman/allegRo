@@ -19,7 +19,7 @@ addNameSpace(service, catalogid = "root", repositoryid = "newTest", prefix,
 \item{nsURI}{Namespace URI}
 }
 \value{
-ag put object
+ag put object that states whether or not push was successful
 }
 \description{
 addNameSpace

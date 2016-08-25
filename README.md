@@ -28,8 +28,8 @@ password = "mypassword"
 
 service = createService(url,user,password,testConnection = TRUE)
 
-#to view the specifications, look at the summary
-summary(service)
+#to view the specifications
+print(service)
 ```
 
 If you receive the message saying you can safely move on, we can proceed with the actual work.
@@ -91,4 +91,5 @@ evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = retu
 
 ```
 
+As of right now, it only supports SPARQL functions.
 

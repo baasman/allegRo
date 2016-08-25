@@ -5,7 +5,7 @@
 \title{addStatement}
 \usage{
 addStatement(service, catalogid = "root", repositoryid = "testRepo",
-  subj = "s", pred = "o", obj = "p", context = NULL)
+  subj = "<s>", pred = "<o>", obj = "<p>", context = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}

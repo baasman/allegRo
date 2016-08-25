@@ -4,8 +4,8 @@
 \alias{deleteNameSpaces}
 \title{deleteNameSpaces}
 \usage{
-deleteNameSpaces(service, catalogid = "root",
-  repositoryid = "testWithParsa", reset = c(0, 1, "0", "1"))
+deleteNameSpaces(service, catalogid = "root", repositoryid = "testRepo",
+  reset = c(0, 1, "0", "1"))
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
