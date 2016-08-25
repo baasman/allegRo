@@ -176,14 +176,17 @@ deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPa
 #'
 #' @return ag put object
 #' @export
-#'
 #' \dontrun{
 #' service = createService("localhost","user","password")
 #' addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
-#'              nsURI = "<http://test.com/tmp#>)
+#'              nsURI = "http://test.com/tmp#)
 #' }
 #' @import httr
-addNameSpace = function(service,catalogid = "root",repositoryid = "newTest",prefix, nsURI){
+addNameSpace = function(service,
+                        catalogid = "root",
+                        repositoryid = "newTest",
+                        prefix,
+                        nsURI){
 
   queryargs = NULL
   body = nsURI
@@ -195,7 +198,7 @@ addNameSpace = function(service,catalogid = "root",repositoryid = "newTest",pref
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/namespaces/",prefix)
   }
 
-  return(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = NULL))
+  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = NULL))
 }
 
 

@@ -39,7 +39,12 @@ print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   if(length(x["return"])>0){
     cat("Only printing first 10 results... \n \n")
-    print(x[["return"]][1:10,])
+    if(is.null(nrow(x[["return"]]))){
+      print(x[["return"]])
+    } else{
+      print(x$return[1:nrow(x$return),1:ncol(x$return)])
+    }
+
   } else{
     print("Successful call but no content found")
   }
@@ -106,10 +111,12 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n")
   cat("First 10 results... \n \n")
-  if(is.list(x[["return"]])){
-    print(x[["return"]][["values"]][1:length(x[["return"]][["values"]])])
+  if(is.data.table(x[["return"]])){
+    print(x[["return"]])
+  } else if(nrow(x[["return"]])>10){
+   print(x[["return"]][1:10,1:ncol(x[["return"]])])
   } else{
-    print(x[["return"]][1:length(x[["return"]]),])
+    print(x[["return"]])
   }
 }
 
@@ -143,9 +150,9 @@ ag_put = function(service, url,queryargs,body,filepath){
 
 #' @export
 print.ag_put = function(x, ...){
-  cat("Response from AllegroGraph server \n")
+  cat("Response from AllegroGraph server \n \n")
 
-  print(x$return)
+  x$return
 }
 
 
