@@ -146,7 +146,7 @@ listNameSpaces = function(service,catalogid= "root",repositoryid = "test"){
 #' deleteNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
 #' }
 #' @import httr
-deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testWithParsa",reset = c(0,1,"0","1")){
+deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testRepo",reset = c(0,1,"0","1")){
 
   if(!missing(reset)) reset = match.arg(reset)
   if(is.numeric(reset)) reset = as.character(reset)
@@ -174,8 +174,9 @@ deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testWithPa
 #' @param prefix Prefix
 #' @param nsURI Namespace URI
 #'
-#' @return ag put object
+#' @return ag put object that states whether or not push was successful
 #' @export
+#'
 #' \dontrun{
 #' service = createService("localhost","user","password")
 #' addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
@@ -218,7 +219,7 @@ addNameSpace = function(service,
 #' getSize(service,catalogid = "root",repositoryid = "testRepo")
 #' }
 #' @import httr
-getSize = function(service,catalogid= "root",repositoryid = "test"){
+getSize = function(service,catalogid= "root",repositoryid = "testRepo"){
 
   queryargs = NULL
   body = NULL
@@ -231,6 +232,39 @@ getSize = function(service,catalogid= "root",repositoryid = "test"){
 
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
+
+
+
+
+#' getContexts
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#'
+#' @return An ag get objects that displays all context id's
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' getSize(service,catalogid = "root",repositoryid = "testRepo")
+#' }
+#' @import httr
+getContexts = function(service,catalogid= "root",repositoryid = "testRepo"){
+
+  queryargs = NULL
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/contexts")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/contexts")
+  }
+
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
+
 
 
 
@@ -293,8 +327,8 @@ getSize = function(service,catalogid= "root",repositoryid = "test"){
 #' subj = subj,pred = pred,obj = obj)
 #' }
 #' @import httr
-addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
-                        pred = "o",obj = "p", context = NULL){
+addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "<s>",
+                        pred = "<o>",obj = "<p>", context = NULL){
 
   queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
   body = NULL

@@ -72,11 +72,12 @@ for(i in 1:2){
 Finally, we can evaluate sparql queries on this test store. I already forgot what items our person has!
 
 ```{r}
-returnType = "dataframe" # can also be matrix or list
+returnType = "data.table" # can also be dataframe, matrix, list or plain vector
 query = "select ?items {<http://test.com/tmp#person> <http://test.com/tmp#hasItem> ?items }"
+cleanUp = TRUE #will remove all XMLSchema, convert appropriate types to R types.
 
 evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = returnType,
-          query = query,limit = 10)
+          query = query,limit = 10,cleanUp = cleanUp)
 
 ```
 

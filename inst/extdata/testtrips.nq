@@ -1,0 +1,3 @@
+<http://montefiore.org/test#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://montefiore.org/test#object1> .
+<http://montefiore.org/test#object1> <http://montefiore.org/test#hasitem> <http://montefiore.org/test#item1> .
+<http://montefiore.org/test#object1> <http://montefiore.org/test#hasitem> <http://montefiore.org/test#item2> .
