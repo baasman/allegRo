@@ -55,6 +55,60 @@ print.ag_get = function(x, ...){
 
 
 
+ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp = FALSE){
+
+
+  resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs)
+
+  if (!(http_type(resp) %in% c("application/json","text/plain"))) {
+    stop("API did not return proper format", call. = FALSE)
+  }
+
+  if (http_error(resp) ) {
+    stop(
+      print(content(resp)),
+      call. = FALSE
+    )
+  }
+
+  if(http_type(resp) == "application/json"){
+
+    parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
+
+    if(returnType == "data.table"){
+      ret = data.table::as.data.table(parsed)
+      colnames(ret) = paste0("v",1:ncol(ret))
+    } else if(returnType == "dataframe"){
+      ret = as.data.frame(parsed,stringsAsFactors = FALSE)
+      colnames(ret) = paste0("v",1:ncol(ret))
+    } else if(returnType == "matrix"){
+      ret = as.matrix(parsed)
+      colnames(ret) = paste0("v",1:ncol(ret))
+    } else{
+      ret = parsed
+    }
+
+  } else if(http_type(resp) == "text/plain"){
+    ret = content(resp,"text")
+  }
+
+
+  if(cleanUp){
+    ret = removeXMLSchema(ret)
+  }
+
+  structure(
+    list(
+      return = ret,
+      url = url,
+      response = resp
+    ),
+    class = c("ag_statements","ag_data")
+  )
+}
+
+
+
 ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 
 
@@ -112,6 +166,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
 print.ag_data = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n")
   cat("First 10 results... \n \n")
+
   if(is.data.table(x[["return"]])){
     print(x[["return"]])
   } else if(nrow(x[["return"]])>10){

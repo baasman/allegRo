@@ -28,7 +28,9 @@
 #' @import httr
 getStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = NULL,
                          pred = NULL,obj = NULL, context = NULL,infer = "false",
-                         limit = NULL, tripleIDs = "false",count = "false"){
+                         limit = NULL, tripleIDs = "false",count = "false",
+                         returnType = c("data.table","dataframe","matrix","list"),
+                         cleanUp = TRUE){
 
   if(missing(subj) & missing(pred) & missing(obj)){
     body = NULL
@@ -63,7 +65,7 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
                  "/repositories/",repositoryid,"/statements")
   }
 
-  invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  invisible(ag_statements(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp))
 }
 
 
