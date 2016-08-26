@@ -177,10 +177,11 @@ deleteNameSpaces = function(service,catalogid= "root",repositoryid = "testRepo",
 #' @return ag put object that states whether or not push was successful
 #' @export
 #'
+#' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
 #' addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
-#'              nsURI = "http://test.com/tmp#)
+#'              nsURI = "http://test.com/tmp#")
 #' }
 #' @import httr
 addNameSpace = function(service,
@@ -296,126 +297,6 @@ getContexts = function(service,catalogid= "root",repositoryid = "testRepo"){
 }
 
 
-
-
-#add roxygen once finished
-# getStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = "s",
-#                         pred = "o",obj = "p", context = NULL,infer = "false",callback = NULL,
-#                         limit = NULL, tripleIDs = "false",count = "false"){
-#
-#   if(missing(subj) | missing(pred) | missing(obj)) stop("subj,pred, and obj must all be included in call")
-#   if(missing(subj) & missing(pred) & missing(obj)){
-#     if(catalogid == "root"){
-#       url = paste0(service$url,"repositories/",repositoryid,"/statements")
-#     } else{
-#       url = paste0(service$url,"catalogs/",catalogid,
-#                    "/repositories/",repositoryid,"/statements")
-#     }
-#     body = NULL
-#     queryargs = NULL
-#     return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
-#   }
-#
-#   queryargs = list(subj = subj, pred = pred, obj = obj,context = context,infer = infer,callback = callback,
-#                    limit = limit,tripleIDs = tripleIDs,count = count)
-#
-#   body = NULL
-#   filepath = NULL
-#
-#   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repositoryid,"/statements/query")
-#   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,
-#                  "/repositories/",repositoryid,"/statements/query")
-#   }
-#
-#   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-# }
-
-
-
-#' addStatement
-#'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
-#' @param subj valid url
-#' @param pred valid url
-#' @param obj valid url
-#' @param context context of triple
-#'
-#' @return Return: successful push or not
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' service = createService("localhost","user","password")
-#' subj = "<www.test.com/tmp#person>"
-#' pred = "<www.test.com/tmp#hasItem>"
-#' obj= "<www.test.com/tmp#sword>"
-#' addStatement(service,catalogid = "root",reposirepositoryid = "testRepo",
-#' subj = subj,pred = pred,obj = obj)
-#' }
-#' @import httr
-addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "<s>",
-                        pred = "<o>",obj = "<p>", context = NULL){
-
-  queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
-  body = NULL
-  filepath = NULL
-
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statement")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statement")
-  }
-
-  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-}
-
-
-
-
-
-
-#' addStatementsFromFile
-#'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
-#' @param filepath File that contains your triples
-#' @param baseURI ...
-#' @param context ...
-#' @param commitEvery ...
-#'
-#' @return an ag object that says whether or not the push was successful.
-#' @export
-#'
-#' @examples
-#'\dontrun{
-#' service = createService("localhost","user","password")
-#' addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
-#' file = "path/to/file/mytriples.nq")
-#' }
-#' @import httr
-addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
-                                 filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
-
-  if(missing(filepath)) stop("must supply path of file to be uploaded")
-
-  queryargs = list(context = context,baseURI = baseURI,commit = commitEvery)
-  body = quote(upload_file(path = filepath,type = "text/plain"))
-
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements")
-  }
-
-  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-}
 
 
 #' getDuplicates

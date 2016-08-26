@@ -4,10 +4,12 @@
 \alias{getVersion}
 \title{getVersion}
 \usage{
-getVersion(service)
+getVersion(service, complex = TRUE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password}
+
+\item{complex}{Default TRUE. Will return all version related info. If FALSE, will just return version number}
 }
 \value{
 Version of allegroGraph

@@ -24,4 +24,11 @@ ag put object that states whether or not push was successful
 \description{
 addNameSpace
 }
+\examples{
+\dontrun{
+service = createService("localhost","user","password")
+addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
+             nsURI = "http://test.com/tmp#")
+}
+}
 
