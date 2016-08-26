@@ -418,6 +418,66 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 }
 
 
+#' getDuplicates
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#'
+#' @return A matrix containing all duplicate statements
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' print(getDuplicates(service,repositoryid = "testRepo"))
+#' }
+getDuplicates = function(service,catalogid = "root",repositoryid = "testRepo"){
+
+  queryargs = NULL
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/statements/duplicates")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,
+                 "/repositories/",repositoryid,"/statements/duplicates")
+  }
+
+  invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
+
+#' deleteDuplicates
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param mode A string (default: spog)
+#' @param commit A string
+#'
+#' @return An ag delete object
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' deleteDuplicates(service,repositoryid = "testRepo")
+#' }
+deleteDuplicates = function(service,catalogid = "root",repositoryid = "testRepo",mode = NULL,commit = NULL){
+
+  queryargs = list(mode = mode,commit = commit)
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/statements/duplicates")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,
+                 "/repositories/",repositoryid,"/statements/duplicates")
+  }
+
+  invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+}
+
 
 
 #' evalQuery
@@ -446,7 +506,8 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 #' \dontrun{
 #' query = "select ?s ?p ?o {?s ?p ?o}"
 #' service = createService("localhost","user","password")
-#' evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, returnType = "data.table",
+#' evalQuery(service,catalogid = "root",repositoryid = "testRepo",
+#' query = query, returnType = "data.table",
 #' cleanUp = TRUE, limit = 10)
 #' }
 #' @import httr

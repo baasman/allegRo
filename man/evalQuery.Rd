@@ -53,7 +53,8 @@ evalQuery
 \dontrun{
 query = "select ?s ?p ?o {?s ?p ?o}"
 service = createService("localhost","user","password")
-evalQuery(service,catalogid = "root",repositoryid = "testRepo", query = query, returnType = "data.table",
+evalQuery(service,catalogid = "root",repositoryid = "testRepo",
+query = query, returnType = "data.table",
 cleanUp = TRUE, limit = 10)
 }
 }
