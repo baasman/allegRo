@@ -1,7 +1,8 @@
 #creates return object for get functions, and error checks the get request
 ag_get = function(service, url,queryargs,body){
 
-  resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs )
+
+  resp = GET(url,authenticate = c(service$user,service$password),body = eval(body), query = queryargs )
 
   if (!(http_type(resp) %in% c("application/json","text/plain"))) {
     stop("API did not return proper format", call. = FALSE)
@@ -38,7 +39,7 @@ ag_get = function(service, url,queryargs,body){
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   if(length(x["return"])>0){
-    cat("Matrix contains ",nrow(x[["return"]])," rows and ",ncol(x[["return"]])," columns \n \n")
+    if(!is.null(nrow(x[['return']]))) cat("Matrix contains ",nrow(x[["return"]])," rows and ",ncol(x[["return"]])," columns \n \n")
     if(is.null(nrow(x[["return"]]))){
       print(x[["return"]])
     } else{

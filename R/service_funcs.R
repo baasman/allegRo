@@ -42,6 +42,7 @@ setInitFile = function(service,filepath,restart = "0"){
 #' getVersion
 #'
 #' @param service Service object containing service url, username, and password
+#' @param complex Default TRUE. Will return all version related info. If FALSE, will just return version number
 #'
 #' @return Version of allegroGraph
 #' @export
@@ -52,10 +53,15 @@ setInitFile = function(service,filepath,restart = "0"){
 #' getVersion(service)
 #' }
 #' @import httr
-getVersion = function(service){
+getVersion = function(service, complex = TRUE){
   queryargs = NULL
   body = NULL
-  url = paste0(service$url,"version/info")
+  if(complex){
+    url = paste0(service$url,"version/info")
+  } else{
+    url = paste0(service$url,"version")
+  }
+
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 

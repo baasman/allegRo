@@ -14,8 +14,8 @@
 createService = function(url,user = NULL,password = NULL,testConnection = FALSE){
 
   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
-  if(!is.na(user) & !is.character(user)) stop("user should be a character value")
-  if(!is.na(password) & !is.character(password)) stop("password should be a character value")
+  if(!missing(user) & !is.character(user)) stop("user should be a character value")
+  if(!missing(password) & !is.character(password)) stop("password should be a character value")
 
   if(stringr::str_sub(url,start = -1) != "/"){
     url = paste0(url,"/")
