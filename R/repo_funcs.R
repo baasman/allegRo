@@ -420,6 +420,9 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 
 #' getDuplicates
 #'
+#' @section Warning:
+#' This is slow on large repositories, even if no duplicates exits.
+#'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repositoryid Id for repository of interest.
@@ -512,9 +515,9 @@ deleteDuplicates = function(service,catalogid = "root",repositoryid = "testRepo"
 #' }
 #' @import httr
 #' @import data.table
-evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),infer = NULL,context = NULL,
-                     cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,checkVariables = NULL,
-                     count = FALSE,accept = NULL,limit = 100){
+evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),
+                     infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,
+                     checkVariables = NULL, count = FALSE,accept = NULL,limit = 100){
 
   returnType = match.arg(returnType)
   if(returnType=="data.table"){

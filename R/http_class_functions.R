@@ -38,7 +38,7 @@ ag_get = function(service, url,queryargs,body){
 print.ag_get = function(x, ...){
   cat("Retrieved from AllegroGraph Server \n \n")
   if(length(x["return"])>0){
-    cat("Only printing first 10 results... \n \n")
+    cat("Matrix contains ",nrow(x[["return"]])," rows and ",ncol(x[["return"]])," columns \n \n")
     if(is.null(nrow(x[["return"]]))){
       print(x[["return"]])
     } else{

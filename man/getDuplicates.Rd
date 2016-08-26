@@ -19,6 +19,10 @@ A matrix containing all duplicate statements
 \description{
 getDuplicates
 }
+\section{Warning}{
+
+This is slow on large repositories, even if no duplicates exits.
+}
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
