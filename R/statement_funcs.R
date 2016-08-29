@@ -30,7 +30,7 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
                          pred = NULL,obj = NULL, context = NULL,infer = "false",
                          limit = NULL, tripleIDs = "false",count = "false",
                          returnType = c("data.table","dataframe","matrix","list"),
-                         cleanUp = TRUE){
+                         cleanUp = FALSE){
 
   if(missing(subj) & missing(pred) & missing(obj)){
     body = NULL
@@ -107,6 +107,75 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
   }
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
+
+
+
+#' deleteStatements
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repositoryid Id for repository of interest.
+#' @param subj valid url
+#' @param pred valid url
+#' @param obj valid url
+#' @param context context of triple
+#'
+#' @return Return: successful push or not
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' subj = "<www.test.com/tmp#person>"
+#' pred = "<www.test.com/tmp#hasItem>"
+#' obj= "<www.test.com/tmp#sword>"
+#' deleteStatements(service,catalogid = "root",reposirepositoryid = "testRepo",
+#' subj = subj,pred = pred,obj = obj)
+#' }
+#' @import httr
+deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = NULL,
+                        pred = NULL,obj = NULL, context = NULL){
+
+  if(missing(subj) & missing(pred) & missing(obj)){
+    if(
+      readlines("Since no patterns were specified, all statements will be deleted. \n
+                Is this what you wanted? Type yes or no: ") == "yes"){
+      body = NULL
+      queryargs = NULL
+      if(catalogid == "root"){
+        url = paste0(service$url,"repositories/",repositoryid,"/statements")
+      } else{
+        url = paste0(service$url,"catalogs/",catalogid,
+                     "/repositories/",repositoryid,"/statements")
+      }
+      body = NULL
+      queryargs = NULL
+      return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+    } else{
+      stop("Enter a pattern")
+    }
+  }
+
+  subjEnd = predEnd = objEnd = NULL
+  if(!missing(subj)) subjEnd = subj
+  if(!missing(pred)) predEnd = pred
+  if(!missing(obj)) objEnd = obj
+
+
+  queryargs = list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,infer = infer,
+                   limit = limit,tripleIDs = tripleIDs,count = count)
+
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,
+                 "/repositories/",repositoryid,"/statements")
+  }
+
+  invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
