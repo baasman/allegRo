@@ -397,7 +397,6 @@ deleteDuplicates = function(service,catalogid = "root",repositoryid = "testRepo"
 #' }
 #' @import httr
 #' @import data.table
-#' @importFrom utils installed.packages
 evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),
                      infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,
                      checkVariables = NULL, count = FALSE,accept = NULL,limit = 100,convert = FALSE){
