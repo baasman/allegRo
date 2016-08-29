@@ -8,7 +8,7 @@ getStatements(service, catalogid = "root", repositoryid = "testRepo",
   subj = NULL, pred = NULL, obj = NULL, context = NULL,
   infer = "false", limit = NULL, tripleIDs = "false", count = "false",
   returnType = c("data.table", "dataframe", "matrix", "list"),
-  cleanUp = TRUE)
+  cleanUp = FALSE, convert = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -32,6 +32,12 @@ getStatements(service, catalogid = "root", repositoryid = "testRepo",
 \item{tripleIDs}{...}
 
 \item{count}{...}
+
+\item{returnType}{What type the return value should be. Best performance achieved with matrix.}
+
+\item{cleanUp}{Should the xml schemas be removed. Has to be true for converting to R types to work}
+
+\item{convert}{Convert variable to appropriate R type}
 }
 \value{
 Triples based on the specified pattern

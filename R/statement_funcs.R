@@ -15,6 +15,9 @@
 #' @param limit How many triples should be returned
 #' @param tripleIDs ...
 #' @param count ...
+#' @param returnType What type the return value should be. Best performance achieved with matrix.
+#' @param cleanUp Should the xml schemas be removed. Has to be true for converting to R types to work
+#' @param convert Convert variable to appropriate R type
 #'
 #' @return Triples based on the specified pattern
 #' @export
@@ -30,7 +33,7 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
                          pred = NULL,obj = NULL, context = NULL,infer = "false",
                          limit = NULL, tripleIDs = "false",count = "false",
                          returnType = c("data.table","dataframe","matrix","list"),
-                         cleanUp = FALSE){
+                         cleanUp = FALSE,convert = FALSE){
 
   if(missing(subj) & missing(pred) & missing(obj)){
     body = NULL
@@ -65,7 +68,7 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
                  "/repositories/",repositoryid,"/statements")
   }
 
-  invisible(ag_statements(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp))
+  invisible(ag_statements(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp,convert = convert))
 }
 
 
@@ -139,8 +142,7 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
 
   if(missing(subj) & missing(pred) & missing(obj)){
     if(
-      readlines("Since no patterns were specified, all statements will be deleted. \n
-                Is this what you wanted? Type yes or no: ") == "yes"){
+      readline("Since no patterns were specified, all statements will be deleted. Is this what you wanted? Type yes or no: ") == "yes"){
       body = NULL
       queryargs = NULL
       if(catalogid == "root"){
@@ -149,11 +151,9 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
         url = paste0(service$url,"catalogs/",catalogid,
                      "/repositories/",repositoryid,"/statements")
       }
-      body = NULL
-      queryargs = NULL
-      return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+      invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
     } else{
-      stop("Enter a pattern")
+      stop("To delete matching statements, include either the subject, predicate, object, or graph")
     }
   }
 
@@ -163,8 +163,7 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
   if(!missing(obj)) objEnd = obj
 
 
-  queryargs = list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,infer = infer,
-                   limit = limit,tripleIDs = tripleIDs,count = count)
+  queryargs = list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd,context = context)
 
   body = NULL
 

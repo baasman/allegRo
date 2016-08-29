@@ -8,7 +8,7 @@ evalQuery(service, catalogid = "root", repositoryid = "test", query,
   returnType = c("data.table", "dataframe", "matrix", "list"), infer = NULL,
   context = NULL, cleanUp = FALSE, namedContext = NULL, callback = NULL,
   bindings = NULL, planner = NULL, checkVariables = NULL, count = FALSE,
-  accept = NULL, limit = 100)
+  accept = NULL, limit = 100, convert = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -42,6 +42,8 @@ evalQuery(service, catalogid = "root", repositoryid = "test", query,
 \item{accept}{...}
 
 \item{limit}{...}
+
+\item{convert}{Convert variable to R type}
 }
 \value{
 an ag object, which includes the triples in matrix format

@@ -382,6 +382,7 @@ deleteDuplicates = function(service,catalogid = "root",repositoryid = "testRepo"
 #' @param count ...
 #' @param accept ...
 #' @param limit ...
+#' @param convert Convert variable to R type
 #'
 #' @return an ag object, which includes the triples in matrix format
 #' @export
@@ -396,9 +397,10 @@ deleteDuplicates = function(service,catalogid = "root",repositoryid = "testRepo"
 #' }
 #' @import httr
 #' @import data.table
+#' @importFrom utils installed.packages
 evalQuery = function(service,catalogid = "root",repositoryid = "test",query,returnType = c("data.table","dataframe","matrix","list"),
                      infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,
-                     checkVariables = NULL, count = FALSE,accept = NULL,limit = 100){
+                     checkVariables = NULL, count = FALSE,accept = NULL,limit = 100,convert = FALSE){
 
   returnType = match.arg(returnType)
   if(returnType=="data.table"){
@@ -417,5 +419,5 @@ evalQuery = function(service,catalogid = "root",repositoryid = "test",query,retu
                  "/repositories/",repositoryid)
   }
 
-  invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp))
+  invisible(ag_data(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp,convert = convert))
 }

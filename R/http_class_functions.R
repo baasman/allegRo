@@ -55,7 +55,7 @@ print.ag_get = function(x, ...){
 
 
 
-ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp = FALSE){
+ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp = FALSE,convert = FALSE){
 
 
   resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs)
@@ -94,7 +94,7 @@ ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp =
 
 
   if(cleanUp){
-    ret = removeXMLSchema(ret)
+    ret = removeXMLSchema(ret,convert = convert)
   }
 
   structure(
@@ -109,7 +109,7 @@ ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp =
 
 
 
-ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
+ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp,convert = FALSE){
 
 
   resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs )
@@ -149,7 +149,7 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp){
   }
 
   if(cleanUp){
-    ret = removeXMLSchema(ret)
+    ret = removeXMLSchema(ret,convert = convert)
   }
 
   structure(
