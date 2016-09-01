@@ -5,7 +5,8 @@
 \title{addStatement}
 \usage{
 addStatement(service, catalogid = "root", repositoryid = "testRepo",
-  subj = "<s>", pred = "<o>", obj = "<p>", context = NULL)
+  subj = "<s>", pred = "<o>", obj = "<p>", context = NULL,
+  session = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -21,6 +22,9 @@ addStatement(service, catalogid = "root", repositoryid = "testRepo",
 \item{obj}{valid url}
 
 \item{context}{context of triple}
+
+\item{session}{Your session object. If specified, this function will only make changes within the session.
+You'll need to use sessionCommit() to integrate your additions.}
 }
 \value{
 Return: successful push or not

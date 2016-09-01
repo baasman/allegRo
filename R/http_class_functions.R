@@ -208,7 +208,7 @@ ag_put = function(service, url,queryargs,body,filepath){
 print.ag_put = function(x, ...){
   cat("Response from AllegroGraph server \n \n")
 
-  x$return
+  print(x[["return"]])
 }
 
 
@@ -227,7 +227,7 @@ ag_delete = function(service, url,queryargs,body){
   }
 
   ret = content(resp)
-  if(is.null(content(resp))) ret = "Nothing to delete"
+  if(is.null(content(resp))) ret = TRUE
 
   structure(
     list(
@@ -244,3 +244,35 @@ print.ag_delete = function(x, ...){
   print(x["return"])
 }
 
+
+
+
+ag_post = function(service, url,queryargs,body,filepath){
+
+  resp = POST(url,authenticate(service$user,service$password),body = eval(body),query = queryargs)
+
+  if (http_error(resp) ) {
+    stop(
+      paste(content(resp))
+      ,
+      call. = FALSE
+    )
+  }
+
+  structure(
+    list(
+      return = content(resp),
+      url = url
+    ),
+    class = c("ag_post","list")
+  )
+}
+
+### methods
+
+#' @export
+print.ag_post = function(x, ...){
+  cat("Response from AllegroGraph server \n \n")
+
+  print(x[["return"]])
+}

@@ -81,6 +81,8 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
 #' @param pred valid url
 #' @param obj valid url
 #' @param context context of triple
+#' @param session Your session object. If specified, this function will only make changes within the session.
+#'                You'll need to use sessionCommit() to integrate your additions.
 #'
 #' @return Return: successful push or not
 #' @export
@@ -96,17 +98,28 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
 #' }
 #' @import httr
 addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "<s>",
-                        pred = "<o>",obj = "<p>", context = NULL){
+                        pred = "<o>",obj = "<p>", context = NULL,session = NULL){
 
   queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
   body = NULL
   filepath = NULL
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statement")
+  if(is.null(session)){
+    if(catalogid == "root"){
+      url = paste0(service$url,"repositories/",repositoryid,"/statement")
+    } else{
+      url = paste0(service$url,"catalogs/",catalogid,
+                   "/repositories/",repositoryid,"/statement")
+    }
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statement")
+    port = gsub(".*:\\s*|/.*","",session$return)
+    uid = stringr::str_split_fixed(session$return,"/",5)[5]
+    if(catalogid == "root"){
+      url = paste0(service$url,"repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/statement")
+    } else{
+      url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/statement")
+
+    }
   }
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
@@ -205,8 +218,51 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 
   if(missing(filepath)) stop("must supply path of file to be uploaded")
 
+
   queryargs = list(context = context,baseURI = baseURI,commit = commitEvery)
-  body = quote(upload_file(path = filepath,type = "text/plain"))
+
+  if(grepl("nq",filepath) | grepl("nt",filepath)) {
+    body = quote(upload_file(path = filepath,type = "text/plain"))
+  } else if(grepl("rdf",filepath) | grepl("xml",filepath)){
+    body = quote(upload_file(path = filepath,type = "application/rdf+xml"))
+  }
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,
+                 "/repositories/",repositoryid,"/statements")
+  }
+
+  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
+
+
+### testing bulk loader
+
+
+agLoad = function(service,catalogid = "root",repositoryid = "",
+
+                    url = NULL,
+                    filepath,
+                    bulkLoad = NULL,
+                    bulkLoaders = NULL,
+                    externalReferences = NULL,
+                    baseURI = NULL,
+                    context = NULL
+                    ){
+
+  if(missing(filepath)) stop("must supply path of file to be uploaded")
+
+  queryargs = list(url = url,filepath = filepath,bulkLoad = bulkLoad,bulkLoaders = bulkLoaders,
+                   externalReferences = externalReferences,
+                   baseURI = baseURI,context = context,useAgload = "1")
+
+  if(grepl("nq",filepath) | grepl("nt",filepath)) {
+    body = quote(upload_file(path = filepath,type = "text/plain"))
+  } else if(grepl("rdf",filepath) | grepl("xml",filepath)){
+    body = quote(upload_file(path = filepath,type = "application/rdf+xml"))
+  }
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repositoryid,"/statements")
