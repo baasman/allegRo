@@ -4,7 +4,7 @@
 \alias{getSize}
 \title{getSize}
 \usage{
-getSize(service, catalogid = "root", repositoryid = "testRepo")
+getSize(service, catalogid = "root", repositoryid = "", session = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -12,6 +12,8 @@ getSize(service, catalogid = "root", repositoryid = "testRepo")
 \item{catalogid}{Id for catalog of interest.}
 
 \item{repositoryid}{Id for repository of interest.}
+
+\item{session}{If working in a session, specify response of createSession call}
 }
 \value{
 An ag get object that shows how many triples are in the repository

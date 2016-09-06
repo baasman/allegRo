@@ -35,42 +35,60 @@ startSession = function(service,catalogid = "root",repositoryid = "testFromR2",
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session")
   }
 
-  invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+  return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
 
-closeSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
+commit = function(service,catalogid = "root",repositoryid = "",session = NULL){
 
   body = NULL
   filepath = NULL
   queryargs = NULL
 
-  port = gsub(".*:\\s*|/.*","",session$return)
-  uid = stringr::str_split_fixed(session$return,"/",5)[5]
-
-
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/close")
+    url = paste0(service$url,"commit")
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/close")
+    url = paste0(service$url,"catalogs/",catalogid,"/commit")
   }
 
-
-  invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+  return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
-getDescSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
 
-  body = NULL
-  queryargs = NULL
 
-  port = gsub(".*:\\s*|/.*","",s)
-
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/session/",)
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/description")
-  }
-
-  invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
-}
+#
+# closeSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
+#
+#   body = NULL
+#   filepath = NULL
+#   queryargs = NULL
+#
+#   port = gsub(".*:\\s*|/.*","",session$return)
+#   uid = stringr::str_split_fixed(session$return,":",3)[3]
+#
+#
+#   if(catalogid == "root"){
+#     url = paste0(service$url,"repositories/",repositoryid,"/session/",uid,"/close")
+#   } else{
+#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/",uid,"/close")
+#   }
+#
+#
+#   invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+# }
+#
+# getDescSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
+#
+#   body = NULL
+#   queryargs = NULL
+#
+#   port = gsub(".*:\\s*|/.*","",s)
+#
+#   if(catalogid == "root"){
+#     url = paste0(service$url,"repositories/",repositoryid,"/session/",)
+#   } else{
+#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/description")
+#   }
+#
+#   invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+# }

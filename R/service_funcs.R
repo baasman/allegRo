@@ -39,6 +39,7 @@ setInitFile = function(service,filepath,restart = "0"){
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
+
 #' getVersion
 #'
 #' @param service Service object containing service url, username, and password

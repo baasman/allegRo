@@ -99,7 +99,26 @@ deleteRepository = function(service, catalogid = "root",repositoryid){
   invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
 
-
+#' getInitFile
+#' @param service Service object containing service url, username, and password
+#' @return ag get object containing init file
+#' @export
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' getInitFile(service)
+#' }
+#' @import httr
+listScripts = function(service,catalogid = "root",repositoryid = ""){
+  queryargs = NULL
+  body = NULL
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repositoryid,"/scripts")
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/scripts")
+  }
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
 
 #' listNameSpaces
 #'
@@ -210,6 +229,7 @@ addNameSpace = function(service,
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repositoryid Id for repository of interest.
+#' @param session If working in a session, specify response of createSession call
 #'
 #' @return An ag get object that shows how many triples are in the repository
 #' @export
@@ -220,15 +240,19 @@ addNameSpace = function(service,
 #' getSize(service,catalogid = "root",repositoryid = "testRepo")
 #' }
 #' @import httr
-getSize = function(service,catalogid= "root",repositoryid = "testRepo"){
+getSize = function(service,catalogid= "root",repositoryid = "",session = NULL){
 
   queryargs = NULL
   body = NULL
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/size")
+  if(is.null(session)){
+    if(catalogid == "root"){
+      url = paste0(service$url,"repositories/",repositoryid,"/size")
+    } else{
+      url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/size")
+    }
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/size")
+    url = paste0(service$url,"session/",stringr::str_split_fixed(s$return,":",3)[,3],"/size")
   }
 
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
