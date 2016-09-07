@@ -64,7 +64,7 @@ objects = c("<http://test.com/tmp#sword>","<http://test.com/tmp#shield>")
 
 for(i in 1:2){
   addStatement(service,catalogid = "root",repositoryid = "testRepo",subj = subject,pred = predicate,
-               obj = objects[i],context = NULL)
+               obj = objects[i],context = "<testing>")
 }
 
 ```
@@ -88,8 +88,15 @@ cleanUp = TRUE #will remove all XMLSchema, convert appropriate types to R types.
 
 evalQuery(service,catalogid = "root",repositoryid = "testRepo",returnType = returnType,
           query = query,limit = 10,cleanUp = cleanUp)
+          
 
 ```
 
-As of right now, it only supports SPARQL functions.
+Another efficient way to return these triples is to match part of the triple pattern. Since all added triples are under the
+"<testing>" context, we can return all statements in which the context == "<testing>"
+```{r}
+getStatements(service,repo = "testRepo",context = "<testing>", returnType = returnType, limit = 10, cleanUp = cleanUp)
+```
+
+As of right now, you could return triples by SPARQL queries, statement matching, and text indices.
 

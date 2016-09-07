@@ -4,14 +4,14 @@
 \alias{getAccess}
 \title{getAccess}
 \usage{
-getAccess(service, catalogid = "root", repositoryid = "testRepo")
+getAccess(service, catalogid = "root", repo = "testRepo")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 An ag get object shows the kind of access the user has on this repository
@@ -22,7 +22,7 @@ getAccess
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getAccess(service,catalogid = "root",repositoryid = "testRepo")
+getAccess(service,catalogid = "root",repo = "testRepo")
 }
 }
 

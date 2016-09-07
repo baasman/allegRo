@@ -4,7 +4,7 @@
 \alias{deleteStatements}
 \title{deleteStatements}
 \usage{
-deleteStatements(service, catalogid = "root", repositoryid = "testRepo",
+deleteStatements(service, catalogid = "root", repo = "testRepo",
   subj = NULL, pred = NULL, obj = NULL, context = NULL)
 }
 \arguments{
@@ -12,7 +12,7 @@ deleteStatements(service, catalogid = "root", repositoryid = "testRepo",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{subj}{valid url}
 
@@ -34,7 +34,7 @@ service = createService("localhost","user","password")
 subj = "<www.test.com/tmp#person>"
 pred = "<www.test.com/tmp#hasItem>"
 obj= "<www.test.com/tmp#sword>"
-deleteStatements(service,catalogid = "root",reposirepositoryid = "testRepo",
+deleteStatements(service,catalogid = "root",reposirepo = "testRepo",
 subj = subj,pred = pred,obj = obj)
 }
 }

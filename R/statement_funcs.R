@@ -6,7 +6,7 @@
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #' @param subj Subject triple pattern you want to match - optional
 #' @param pred Predicate of triple pattern you want to match - optional
 #' @param obj Object of triple pattern you want to match - optional
@@ -25,11 +25,11 @@
 #' @examples
 #'\dontrun{
 #' service = createService("localhost","user","password")
-#' getStatements(service,catalogid = "root",repositoryid = "testRepo",
+#' getStatements(service,catalogid = "root",repo = "testRepo",
 #' pred = "<http://test.org/pred>", limit = 10)
 #' }
 #' @import httr
-getStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = NULL,
+getStatements = function(service,catalogid = "root",repo = "testRepo", subj = NULL,
                          pred = NULL,obj = NULL, context = NULL,infer = "false",
                          limit = NULL, tripleIDs = "false",count = "false",
                          returnType = c("data.table","dataframe","matrix","list"),
@@ -39,10 +39,10 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
     body = NULL
     queryargs = NULL
     if(catalogid == "root"){
-      url = paste0(service$url,"repositories/",repositoryid,"/statements")
+      url = paste0(service$url,"repositories/",repo,"/statements")
     } else{
       url = paste0(service$url,"catalogs/",catalogid,
-                   "/repositories/",repositoryid,"/statements")
+                   "/repositories/",repo,"/statements")
     }
     body = NULL
     queryargs = NULL
@@ -62,10 +62,10 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
   filepath = NULL
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+    url = paste0(service$url,"repositories/",repo,"/statements")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements")
+                 "/repositories/",repo,"/statements")
   }
 
   invisible(ag_statements(service = service,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp,convert = convert))
@@ -76,7 +76,7 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #' @param subj valid url
 #' @param pred valid url
 #' @param obj valid url
@@ -93,12 +93,12 @@ getStatements = function(service,catalogid = "root",repositoryid = "testRepo", s
 #' subj = "<www.test.com/tmp#person>"
 #' pred = "<www.test.com/tmp#hasItem>"
 #' obj= "<www.test.com/tmp#sword>"
-#' addStatement(service,catalogid = "root",reposirepositoryid = "testRepo",
+#' addStatement(service,catalogid = "root",reposirepo = "testRepo",
 #' subj = subj,pred = pred,obj = obj)
 #' }
 #' @import httr
-addStatement = function(service,catalogid = "root",repositoryid = "testRepo", subj = "<s>",
-                        pred = "<o>",obj = "<p>", context = NULL,session = NULL){
+addStatement = function(service,catalogid = "root",repo = "testRepo", subj = NULL,
+                        pred = NULL,obj = NULL, context = NULL,session = NULL){
 
   queryargs = list(subj = subj, pred = pred, obj = obj,context = context)
   body = NULL
@@ -106,18 +106,19 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
 
   if(is.null(session)){
     if(catalogid == "root"){
-      url = paste0(service$url,"repositories/",repositoryid,"/statement")
+      url = paste0(service$url,"repositories/",repo,"/statement")
     } else{
       url = paste0(service$url,"catalogs/",catalogid,
-                   "/repositories/",repositoryid,"/statement")
+                   "/repositories/",repo,"/statement")
     }
   } else{
-    port = gsub(".*:\\s*|/.*","",session$return)
-    uid = stringr::str_split_fixed(session$return,"/",5)[5]
+
     if(catalogid == "root"){
-      url = paste0(service$url,"repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/statement")
+      url = paste0(service$url,"repositories/",repo,"/session/",
+                   stringr::str_split_fixed(s$return,":",3)[,3],"/statement")
     } else{
-      url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/",port,"/sessions/",uid,"/statement")
+      url = paste0(service$url,"catalogs/",catalogid,"/repositories/",
+                   repo,"/session/",stringr::str_split_fixed(s$return,":",3)[,3],"/statement")
 
     }
   }
@@ -131,7 +132,7 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #' @param subj valid url
 #' @param pred valid url
 #' @param obj valid url
@@ -146,11 +147,11 @@ addStatement = function(service,catalogid = "root",repositoryid = "testRepo", su
 #' subj = "<www.test.com/tmp#person>"
 #' pred = "<www.test.com/tmp#hasItem>"
 #' obj= "<www.test.com/tmp#sword>"
-#' deleteStatements(service,catalogid = "root",reposirepositoryid = "testRepo",
+#' deleteStatements(service,catalogid = "root",reposirepo = "testRepo",
 #' subj = subj,pred = pred,obj = obj)
 #' }
 #' @import httr
-deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo", subj = NULL,
+deleteStatements = function(service,catalogid = "root",repo = "testRepo", subj = NULL,
                         pred = NULL,obj = NULL, context = NULL){
 
   if(missing(subj) & missing(pred) & missing(obj)){
@@ -159,10 +160,10 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
       body = NULL
       queryargs = NULL
       if(catalogid == "root"){
-        url = paste0(service$url,"repositories/",repositoryid,"/statements")
+        url = paste0(service$url,"repositories/",repo,"/statements")
       } else{
         url = paste0(service$url,"catalogs/",catalogid,
-                     "/repositories/",repositoryid,"/statements")
+                     "/repositories/",repo,"/statements")
       }
       invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
     } else{
@@ -181,10 +182,10 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
   body = NULL
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+    url = paste0(service$url,"repositories/",repo,"/statements")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements")
+                 "/repositories/",repo,"/statements")
   }
 
   invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
@@ -197,7 +198,7 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #' @param filepath File that contains your triples
 #' @param baseURI ...
 #' @param context ...
@@ -209,11 +210,11 @@ deleteStatements = function(service,catalogid = "root",repositoryid = "testRepo"
 #' @examples
 #'\dontrun{
 #' service = createService("localhost","user","password")
-#' addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
+#' addStatementsFromFile(service,catalogid = "root", repo = "testRepo",
 #' file = "path/to/file/mytriples.nq")
 #' }
 #' @import httr
-addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
+addStatementsFromFile = function(service,catalogid = "root",repo = "",
                                  filepath,baseURI = NULL,context=NULL,commitEvery = NULL){
 
   if(missing(filepath)) stop("must supply path of file to be uploaded")
@@ -228,10 +229,10 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
   }
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+    url = paste0(service$url,"repositories/",repo,"/statements")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements")
+                 "/repositories/",repo,"/statements")
   }
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
@@ -241,7 +242,7 @@ addStatementsFromFile = function(service,catalogid = "root",repositoryid = "",
 ### testing bulk loader
 
 
-agLoad = function(service,catalogid = "root",repositoryid = "",
+agLoad = function(service,catalogid = "root",repo = "",
 
                     url = NULL,
                     filepath,
@@ -265,10 +266,10 @@ agLoad = function(service,catalogid = "root",repositoryid = "",
   }
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/statements")
+    url = paste0(service$url,"repositories/",repo,"/statements")
   } else{
     url = paste0(service$url,"catalogs/",catalogid,
-                 "/repositories/",repositoryid,"/statements")
+                 "/repositories/",repo,"/statements")
   }
 
   invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))

@@ -4,14 +4,14 @@
 \alias{listNameSpaces}
 \title{listNameSpaces}
 \usage{
-listNameSpaces(service, catalogid = "root", repositoryid = "test")
+listNameSpaces(service, catalogid = "root", repo = "test")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 An ag object that includes the list of namespaces used in the specified repository.
@@ -22,7 +22,7 @@ listNameSpaces
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-listNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+listNameSpaces(service,catalogid = "root",repo = "testRepo")
 }
 }
 

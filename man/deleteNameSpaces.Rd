@@ -4,7 +4,7 @@
 \alias{deleteNameSpaces}
 \title{deleteNameSpaces}
 \usage{
-deleteNameSpaces(service, catalogid = "root", repositoryid = "testRepo",
+deleteNameSpaces(service, catalogid = "root", repo = "testRepo",
   reset = c(0, 1, "0", "1"))
 }
 \arguments{
@@ -12,7 +12,7 @@ deleteNameSpaces(service, catalogid = "root", repositoryid = "testRepo",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{reset}{Boolean, If 1, then the namespaces are reset to the default namespaces of the server.}
 }
@@ -25,7 +25,7 @@ deleteNameSpaces
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-deleteNameSpaces(service,catalogid = "root",repositoryid = "testRepo")
+deleteNameSpaces(service,catalogid = "root",repo = "testRepo")
 }
 }
 

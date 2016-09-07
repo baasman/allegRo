@@ -4,7 +4,7 @@
 \alias{createRepository}
 \title{createRepository}
 \usage{
-createRepository(service, catalogid = "root", repositoryid = "testFromR2",
+createRepository(service, catalogid = "root", repo = "testFromR2",
   expectedSize = NULL, index = NULL, override = c("true", "false",
   "if-not-open"), restore = NULL, nocommit = c("1", "0"))
 }
@@ -13,7 +13,7 @@ createRepository(service, catalogid = "root", repositoryid = "testFromR2",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{expectedSize}{Specifies the expected size of the repository.}
 
@@ -34,7 +34,7 @@ createRepository
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-createRepository(service,catalogid = "root",repositoryid = "test",
+createRepository(service,catalogid = "root",repo = "test",
 expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 }
 }

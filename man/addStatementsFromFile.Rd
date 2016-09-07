@@ -4,15 +4,15 @@
 \alias{addStatementsFromFile}
 \title{addStatementsFromFile}
 \usage{
-addStatementsFromFile(service, catalogid = "root", repositoryid = "",
-  filepath, baseURI = NULL, context = NULL, commitEvery = NULL)
+addStatementsFromFile(service, catalogid = "root", repo = "", filepath,
+  baseURI = NULL, context = NULL, commitEvery = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{filepath}{File that contains your triples}
 
@@ -31,7 +31,7 @@ addStatementsFromFile
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-addStatementsFromFile(service,catalogid = "root", repositoryid = "testRepo",
+addStatementsFromFile(service,catalogid = "root", repo = "testRepo",
 file = "path/to/file/mytriples.nq")
 }
 }

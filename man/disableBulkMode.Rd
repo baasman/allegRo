@@ -4,14 +4,14 @@
 \alias{disableBulkMode}
 \title{disableBulkMode}
 \usage{
-disableBulkMode(service, catalogid = "root", repositoryid = "")
+disableBulkMode(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 ag put object
@@ -22,7 +22,7 @@ disableBulkMode
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-disableBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+disableBulkMode(service,catalogid = "root",repo = 'testRepo')
 }
 }
 

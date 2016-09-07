@@ -4,16 +4,15 @@
 \alias{addStatement}
 \title{addStatement}
 \usage{
-addStatement(service, catalogid = "root", repositoryid = "testRepo",
-  subj = "<s>", pred = "<o>", obj = "<p>", context = NULL,
-  session = NULL)
+addStatement(service, catalogid = "root", repo = "testRepo", subj = NULL,
+  pred = NULL, obj = NULL, context = NULL, session = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{subj}{valid url}
 
@@ -38,7 +37,7 @@ service = createService("localhost","user","password")
 subj = "<www.test.com/tmp#person>"
 pred = "<www.test.com/tmp#hasItem>"
 obj= "<www.test.com/tmp#sword>"
-addStatement(service,catalogid = "root",reposirepositoryid = "testRepo",
+addStatement(service,catalogid = "root",reposirepo = "testRepo",
 subj = subj,pred = pred,obj = obj)
 }
 }

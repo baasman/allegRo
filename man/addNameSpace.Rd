@@ -4,15 +4,14 @@
 \alias{addNameSpace}
 \title{addNameSpace}
 \usage{
-addNameSpace(service, catalogid = "root", repositoryid = "newTest", prefix,
-  nsURI)
+addNameSpace(service, catalogid = "root", repo = "newTest", prefix, nsURI)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{prefix}{Prefix}
 
@@ -27,7 +26,7 @@ addNameSpace
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-addNameSpace(service,catalogid = "root",repositoryid = "testRepo",prefix = "tmp",
+addNameSpace(service,catalogid = "root",repo = "testRepo",prefix = "tmp",
              nsURI = "http://test.com/tmp#")
 }
 }

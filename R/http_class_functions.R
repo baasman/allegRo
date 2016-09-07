@@ -240,8 +240,7 @@ ag_delete = function(service, url,queryargs,body){
 
 #' @export
 print.ag_delete = function(x, ...){
-  cat("Response from AllegroGraph server \n \n")
-  print(x["return"])
+  cat("Successful response from AllegroGraph")
 }
 
 

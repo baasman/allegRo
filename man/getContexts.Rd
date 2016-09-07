@@ -4,14 +4,14 @@
 \alias{getContexts}
 \title{getContexts}
 \usage{
-getContexts(service, catalogid = "root", repositoryid = "testRepo")
+getContexts(service, catalogid = "root", repo = "testRepo")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 An ag get objects that displays all context id's
@@ -22,7 +22,7 @@ getContexts
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getSize(service,catalogid = "root",repositoryid = "testRepo")
+getSize(service,catalogid = "root",repo = "testRepo")
 }
 }
 

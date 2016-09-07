@@ -4,14 +4,14 @@
 \alias{getBulkMode}
 \title{getBulkMode}
 \usage{
-getBulkMode(service, catalogid = "root", repositoryid = "")
+getBulkMode(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 True if bulk mode is on, False otherwise
@@ -22,7 +22,7 @@ getBulkMode
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+getBulkMode(service,catalogid = "root",repo = 'testRepo')
 }
 }
 

@@ -4,9 +4,9 @@
 \alias{getStatements}
 \title{getStatements}
 \usage{
-getStatements(service, catalogid = "root", repositoryid = "testRepo",
-  subj = NULL, pred = NULL, obj = NULL, context = NULL,
-  infer = "false", limit = NULL, tripleIDs = "false", count = "false",
+getStatements(service, catalogid = "root", repo = "testRepo", subj = NULL,
+  pred = NULL, obj = NULL, context = NULL, infer = "false",
+  limit = NULL, tripleIDs = "false", count = "false",
   returnType = c("data.table", "dataframe", "matrix", "list"),
   cleanUp = FALSE, convert = FALSE)
 }
@@ -15,7 +15,7 @@ getStatements(service, catalogid = "root", repositoryid = "testRepo",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{subj}{Subject triple pattern you want to match - optional}
 
@@ -49,7 +49,7 @@ If no subject, predicate, or object supplied, all statements will be returned.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getStatements(service,catalogid = "root",repositoryid = "testRepo",
+getStatements(service,catalogid = "root",repo = "testRepo",
 pred = "<http://test.org/pred>", limit = 10)
 }
 }

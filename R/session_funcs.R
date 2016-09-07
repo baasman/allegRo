@@ -5,7 +5,7 @@
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #' @param autocommit Bolean. Specify whether or not the session should use transactions.
 #' @param lifetime The number of seconds the session can be idle before being shutdown and reclaimed.
 #' @param loadInitFile If true, then the initfile will be loaded when the session starts.
@@ -17,9 +17,9 @@
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' startSession(service,repositoryid = "testRepo",lifetime = 1000,script = "path/to/script")
+#' startSession(service,repo = "testRepo",lifetime = 1000,script = "path/to/script")
 #' }
-startSession = function(service,catalogid = "root",repositoryid = "testFromR2",
+startSession = function(service,catalogid = "root",repo = "testFromR2",
                         autocommit = NULL,lifetime = 100,loadInitFile = NULL,
                         script = NULL){
 
@@ -30,34 +30,34 @@ startSession = function(service,catalogid = "root",repositoryid = "testFromR2",
                    script = script)
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/session")
+    url = paste0(service$url,"repositories/",repo,"/session")
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session")
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session")
   }
 
   return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
 
-commit = function(service,catalogid = "root",repositoryid = "",session = NULL){
-
-  body = NULL
-  filepath = NULL
-  queryargs = NULL
-
-  if(catalogid == "root"){
-    url = paste0(service$url,"commit")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/commit")
-  }
-
-  return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-}
+# commit = function(service,catalogid = "root",repo = "",session = NULL){
+#
+#   body = NULL
+#   filepath = NULL
+#   queryargs = NULL
+#
+#   if(catalogid == "root"){
+#     url = paste0(service$url,"commit")
+#   } else{
+#     url = paste0(service$url,"catalogs/",catalogid,"/commit")
+#   }
+#
+#   return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+# }
 
 
 
 #
-# closeSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
+# closeSession = function(service,catalogid = "root",repo = "testFromR2",session){
 #
 #   body = NULL
 #   filepath = NULL
@@ -68,16 +68,16 @@ commit = function(service,catalogid = "root",repositoryid = "",session = NULL){
 #
 #
 #   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repositoryid,"/session/",uid,"/close")
+#     url = paste0(service$url,"repositories/",repo,"/session/",uid,"/close")
 #   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/",uid,"/close")
+#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session/",uid,"/close")
 #   }
 #
 #
 #   invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
 # }
 #
-# getDescSession = function(service,catalogid = "root",repositoryid = "testFromR2",session){
+# getDescSession = function(service,catalogid = "root",repo = "testFromR2",session){
 #
 #   body = NULL
 #   queryargs = NULL
@@ -85,9 +85,9 @@ commit = function(service,catalogid = "root",repositoryid = "",session = NULL){
 #   port = gsub(".*:\\s*|/.*","",s)
 #
 #   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repositoryid,"/session/",)
+#     url = paste0(service$url,"repositories/",repo,"/session/",)
 #   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/session/description")
+#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session/description")
 #   }
 #
 #   invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))

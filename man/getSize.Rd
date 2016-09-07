@@ -4,14 +4,14 @@
 \alias{getSize}
 \title{getSize}
 \usage{
-getSize(service, catalogid = "root", repositoryid = "", session = NULL)
+getSize(service, catalogid = "root", repo = "", session = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{session}{If working in a session, specify response of createSession call}
 }
@@ -24,7 +24,7 @@ getSize
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getSize(service,catalogid = "root",repositoryid = "testRepo")
+getSize(service,catalogid = "root",repo = "testRepo")
 }
 }
 

@@ -4,14 +4,14 @@
 \alias{getDuplicates}
 \title{getDuplicates}
 \usage{
-getDuplicates(service, catalogid = "root", repositoryid = "testRepo")
+getDuplicates(service, catalogid = "root", repo = "testRepo")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 A matrix containing all duplicate statements
@@ -26,7 +26,7 @@ This is slow on large repositories, even if no duplicates exits.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-print(getDuplicates(service,repositoryid = "testRepo"))
+print(getDuplicates(service,repo = "testRepo"))
 }
 }
 

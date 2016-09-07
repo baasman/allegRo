@@ -4,7 +4,7 @@
 \alias{deleteDuplicates}
 \title{deleteDuplicates}
 \usage{
-deleteDuplicates(service, catalogid = "root", repositoryid = "testRepo",
+deleteDuplicates(service, catalogid = "root", repo = "testRepo",
   mode = NULL, commit = NULL)
 }
 \arguments{
@@ -12,7 +12,7 @@ deleteDuplicates(service, catalogid = "root", repositoryid = "testRepo",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{mode}{A string (default: spog)}
 
@@ -27,7 +27,7 @@ deleteDuplicates
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-deleteDuplicates(service,repositoryid = "testRepo")
+deleteDuplicates(service,repo = "testRepo")
 }
 }
 

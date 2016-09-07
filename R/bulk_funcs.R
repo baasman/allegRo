@@ -3,7 +3,7 @@
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #'
 #' @return True if bulk mode is on, False otherwise
 #' @export
@@ -11,17 +11,17 @@
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' getBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+#' getBulkMode(service,catalogid = "root",repo = 'testRepo')
 #' }
-getBulkMode = function(service,catalogid = "root",repositoryid = ""){
+getBulkMode = function(service,catalogid = "root",repo = ""){
 
   queryargs = NULL
   body = NULL
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"repositories/",repo,"/bulkMode")
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/bulkMode")
   }
 
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
@@ -31,7 +31,7 @@ getBulkMode = function(service,catalogid = "root",repositoryid = ""){
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #'
 #' @return ag put object
 #' @export
@@ -39,17 +39,17 @@ getBulkMode = function(service,catalogid = "root",repositoryid = ""){
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' enableBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+#' enableBulkMode(service,catalogid = "root",repo = 'testRepo')
 #' }
-enableBulkMode = function(service,catalogid = "root",repositoryid = ""){
+enableBulkMode = function(service,catalogid = "root",repo = ""){
 
   queryargs = NULL
   body = NULL
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"repositories/",repo,"/bulkMode")
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/bulkMode")
   }
 
   return(ag_put(service = service,url = url,queryargs = queryargs,body = body))
@@ -59,7 +59,7 @@ enableBulkMode = function(service,catalogid = "root",repositoryid = ""){
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
-#' @param repositoryid Id for repository of interest.
+#' @param repo Id for repository of interest.
 #'
 #' @return ag put object
 #' @export
@@ -67,17 +67,17 @@ enableBulkMode = function(service,catalogid = "root",repositoryid = ""){
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' disableBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+#' disableBulkMode(service,catalogid = "root",repo = 'testRepo')
 #' }
-disableBulkMode = function(service,catalogid = "root",repositoryid = ""){
+disableBulkMode = function(service,catalogid = "root",repo = ""){
 
   queryargs = NULL
   body = NULL
 
   if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"repositories/",repo,"/bulkMode")
   } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repositoryid,"/bulkMode")
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/bulkMode")
   }
 
   return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))

@@ -4,14 +4,14 @@
 \alias{deleteRepository}
 \title{Delete a Repository}
 \usage{
-deleteRepository(service, catalogid = "root", repositoryid)
+deleteRepository(service, catalogid = "root", repo)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 True or False, denoting whether delete was successful.
@@ -22,7 +22,7 @@ Delete a Repository
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-deleteRepository(service,catalogid = "root",repositoryid = "repotodelete")
+deleteRepository(service,catalogid = "root",repo = "repotodelete")
 }
 }
 

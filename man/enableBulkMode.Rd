@@ -4,14 +4,14 @@
 \alias{enableBulkMode}
 \title{enableBulkMode}
 \usage{
-enableBulkMode(service, catalogid = "root", repositoryid = "")
+enableBulkMode(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 }
 \value{
 ag put object
@@ -22,7 +22,7 @@ enableBulkMode
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-enableBulkMode(service,catalogid = "root",repositoryid = 'testRepo')
+enableBulkMode(service,catalogid = "root",repo = 'testRepo')
 }
 }
 

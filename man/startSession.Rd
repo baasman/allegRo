@@ -4,7 +4,7 @@
 \alias{startSession}
 \title{startSession}
 \usage{
-startSession(service, catalogid = "root", repositoryid = "testFromR2",
+startSession(service, catalogid = "root", repo = "testFromR2",
   autocommit = NULL, lifetime = 100, loadInitFile = NULL, script = NULL)
 }
 \arguments{
@@ -12,7 +12,7 @@ startSession(service, catalogid = "root", repositoryid = "testFromR2",
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{autocommit}{Bolean. Specify whether or not the session should use transactions.}
 
@@ -31,7 +31,7 @@ startSession
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-startSession(service,repositoryid = "testRepo",lifetime = 1000,script = "path/to/script")
+startSession(service,repo = "testRepo",lifetime = 1000,script = "path/to/script")
 }
 }
 

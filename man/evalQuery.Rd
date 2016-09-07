@@ -4,7 +4,7 @@
 \alias{evalQuery}
 \title{evalQuery}
 \usage{
-evalQuery(service, catalogid = "root", repositoryid = "test", query,
+evalQuery(service, catalogid = "root", repo = "test", query,
   returnType = c("data.table", "dataframe", "matrix", "list"), infer = NULL,
   context = NULL, cleanUp = FALSE, namedContext = NULL, callback = NULL,
   bindings = NULL, planner = NULL, checkVariables = NULL, count = FALSE,
@@ -15,7 +15,7 @@ evalQuery(service, catalogid = "root", repositoryid = "test", query,
 
 \item{catalogid}{Id for catalog of interest.}
 
-\item{repositoryid}{Id for repository of interest.}
+\item{repo}{Id for repository of interest.}
 
 \item{query}{Sparql query to evaluate}
 
@@ -55,7 +55,7 @@ evalQuery
 \dontrun{
 query = "select ?s ?p ?o {?s ?p ?o}"
 service = createService("localhost","user","password")
-evalQuery(service,catalogid = "root",repositoryid = "testRepo",
+evalQuery(service,catalogid = "root",repo = "testRepo",
 query = query, returnType = "data.table",
 cleanUp = TRUE, limit = 10)
 }
