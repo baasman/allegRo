@@ -56,9 +56,9 @@ getStatements = function(service,catalogid = "root",repo = "testRepo", subj = NU
   }
 
   subjEnd = predEnd = objEnd = NULL
-  if(!missing(subj)) subjEnd = subj
-  if(!missing(pred)) predEnd = pred
-  if(!missing(obj)) objEnd = obj
+ # if(!missing(subj)) subjEnd = subj
+ # if(!missing(pred)) predEnd = pred
+ # if(!missing(obj)) objEnd = obj
 
 
   queryargs = convertLogical(expandUrlArgs(list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,infer = infer,
@@ -204,7 +204,7 @@ deleteStatements = function(service,catalogid = "root",repo = "testRepo", subj =
 #' @param repo Id for repository of interest.
 #' @param filepath File that contains your triples
 #' @param baseURI ...
-#' @param context ...
+#' @param context Context to attach to added triples
 #' @param commitEvery ...
 #'
 #' @return an ag object that says whether or not the push was successful.
@@ -246,7 +246,6 @@ addStatementsFromFile = function(service,catalogid = "root",repo = "",
 
 
 agLoad = function(service,catalogid = "root",repo = "",
-
                     url = NULL,
                     filepath,
                     bulkLoad = NULL,

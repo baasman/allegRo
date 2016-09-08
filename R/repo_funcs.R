@@ -33,10 +33,10 @@ listRepositories = function(service,catalogid = "root"){
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #' @param expectedSize Specifies the expected size of the repository.
-#' @param index Can be specified mulitple times. Should hold index names, and is used to configure the set of indices created for the store.
+#' @param index Can be specified mulitple times in a list. Should hold index names, and is used to configure the set of indices created for the store.
 #' @param override Override repository, 1 or 0.
 #' @param restore Restore the repository.
-#' @param nocommit ...
+#' @param nocommit Boolean
 #'
 #' @return An object of ag with the response and given url.
 #' @export
@@ -48,17 +48,14 @@ listRepositories = function(service,catalogid = "root"){
 #' expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 #' }
 #' @import httr
-createRepository = function(service,catalogid = "root",repo = "testFromR2",
-                            expectedSize = NULL,index = NULL,override = c("true","false","if-not-open"),
-                            restore = NULL,nocommit = c("1","0")){
-
-  if(missing(override)) override = NULL
-  if(missing(nocommit)) nocommit = NULL
+createRepository = function(service,catalogid = "root",repo = "",
+                            expectedSize = NULL,index = NULL,override = FALSE,
+                            restore = NULL,nocommit = NULL){
 
   body = NULL
   filepath = NULL
 
-  queryargs = list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit)
+  queryargs = convertLogical(list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit))
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repo)
   } else{

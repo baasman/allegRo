@@ -4,9 +4,9 @@
 \alias{createRepository}
 \title{createRepository}
 \usage{
-createRepository(service, catalogid = "root", repo = "testFromR2",
-  expectedSize = NULL, index = NULL, override = c("true", "false",
-  "if-not-open"), restore = NULL, nocommit = c("1", "0"))
+createRepository(service, catalogid = "root", repo = "",
+  expectedSize = NULL, index = NULL, override = FALSE, restore = NULL,
+  nocommit = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -17,13 +17,13 @@ createRepository(service, catalogid = "root", repo = "testFromR2",
 
 \item{expectedSize}{Specifies the expected size of the repository.}
 
-\item{index}{Can be specified mulitple times. Should hold index names, and is used to configure the set of indices created for the store.}
+\item{index}{Can be specified mulitple times in a list. Should hold index names, and is used to configure the set of indices created for the store.}
 
 \item{override}{Override repository, 1 or 0.}
 
 \item{restore}{Restore the repository.}
 
-\item{nocommit}{...}
+\item{nocommit}{Boolean}
 }
 \value{
 An object of ag with the response and given url.

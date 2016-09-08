@@ -18,7 +18,7 @@ addStatementsFromFile(service, catalogid = "root", repo = "", filepath,
 
 \item{baseURI}{...}
 
-\item{context}{...}
+\item{context}{Context to attach to added triples}
 
 \item{commitEvery}{...}
 }
