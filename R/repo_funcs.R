@@ -293,7 +293,7 @@ getAccess = function(service,catalogid= "root",repo = "testRepo"){
 
 
 
-#' getContexts
+#' listContexts
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
@@ -305,10 +305,10 @@ getAccess = function(service,catalogid= "root",repo = "testRepo"){
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' getSize(service,catalogid = "root",repo = "testRepo")
+#' listContexs(service,catalogid = "root",repo = "testRepo")
 #' }
 #' @import httr
-getContexts = function(service,catalogid= "root",repo = "testRepo"){
+listContexts = function(service,catalogid= "root",repo = "testRepo"){
 
   queryargs = NULL
   body = NULL
@@ -328,7 +328,7 @@ getContexts = function(service,catalogid= "root",repo = "testRepo"){
 #' getDuplicates
 #'
 #' @section Warning:
-#' This is slow on large repositories, even if no duplicates exits.
+#' This is slow on large repositories, even if no duplicates exist.
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.

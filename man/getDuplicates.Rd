@@ -21,7 +21,7 @@ getDuplicates
 }
 \section{Warning}{
 
-This is slow on large repositories, even if no duplicates exits.
+This is slow on large repositories, even if no duplicates exist.
 }
 \examples{
 \dontrun{

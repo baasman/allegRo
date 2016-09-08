@@ -5,8 +5,8 @@
 \title{getStatements}
 \usage{
 getStatements(service, catalogid = "root", repo = "testRepo", subj = NULL,
-  pred = NULL, obj = NULL, context = NULL, infer = "false",
-  limit = NULL, tripleIDs = "false", count = "false",
+  pred = NULL, obj = NULL, context = NULL, infer = FALSE,
+  limit = NULL, tripleIDs = FALSE, count = FALSE,
   returnType = c("data.table", "dataframe", "matrix", "list"),
   cleanUp = FALSE, convert = FALSE)
 }
@@ -25,7 +25,7 @@ getStatements(service, catalogid = "root", repo = "testRepo", subj = NULL,
 
 \item{context}{Context of triple pattern you want to match - optional}
 
-\item{infer}{...}
+\item{infer}{Specifies the kind of inference to use for this query. Defaults to FALSE, can also be "rdfs++" or "hasvalue"}
 
 \item{limit}{How many triples should be returned}
 

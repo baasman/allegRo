@@ -5,8 +5,7 @@
 \title{evalFreeTextSearch}
 \usage{
 evalFreeTextSearch(service, catalogid = "root", repo = "", pattern,
-  index = NULL, infer = NULL, callback = NULL, limit = NULL,
-  offset = NULL)
+  index = NULL, limit = NULL, offset = NULL, sorted = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -19,13 +18,11 @@ evalFreeTextSearch(service, catalogid = "root", repo = "", pattern,
 
 \item{index}{The index you want to see configurations for}
 
-\item{infer}{...}
-
-\item{callback}{...}
-
 \item{limit}{Number of triples to return}
 
 \item{offset}{Number of triples to skip}
+
+\item{sorted}{Boolean, defaults to FALSE}
 }
 \value{
 A list describing all configuration parametes of index of interest

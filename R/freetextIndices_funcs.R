@@ -53,20 +53,18 @@ listFreeTextIndices = function(service,catalogid = "root",repo = ""){
 #' createFreeTextIndex(service,repo = "testRepo",index = 'index',
 #' predicates = "<p>",stopWord = list("and","it"))
 #' }
-createFreeTextIndex = function(service, catalogid = "root", repo = "", index, predicates=NULL, indexLiterals=NULL, indexResources="false",
+createFreeTextIndex = function(service, catalogid = "root", repo = "", index, predicates=NULL, indexLiterals=NULL, indexResources=FALSE,
                     indexFields=NULL, minimumWordSize=NULL, stopWord=NULL, wordFilter=NULL,
                     innerChars=NULL, borderChars=NULL, tokenizer=NULL){
 
-  expandUrlArgs <- function(x) structure(do.call(c, lapply(x, function(z) as.list(z))), names=rep(names(x), sapply(x, length)))
-
-  queryargs = expandUrlArgs(list(predicates = predicates, indexLiterals = indexLiterals, indexResources = indexResources,
-                            indexFields = indexFields, minimumWordSize = minimumWordSize,stopWord = stopWord,
-                            wordFilter = wordFilter, innerChars = innerChars, borderChars = borderChars,
-                            tokenizer = tokenizer))
+  queryargs = convertLogical(expandUrlArgs(list(predicates = predicates, indexLiterals = indexLiterals, indexResources = indexResources,
+                                          indexFields = indexFields, minimumWordSize = minimumWordSize,stopWord = stopWord,
+                                          wordFilter = wordFilter, innerChars = innerChars, borderChars = borderChars,
+                                          tokenizer = tokenizer)))
   body = NULL
 
   if(length(stopWord) == 0) stopWord = ""
-  if(length(stopWord) == 0) stopWord = ""
+  if(length(indexFields) == 0) indexFields = ""
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repo,"/freetext/indices/",index)
@@ -123,10 +121,9 @@ getFreeTextIndexConfiguration = function(service,catalogid = "root",repo = "",in
 #' @param repo Id for repository of interest.
 #' @param pattern A string to match triples on
 #' @param index The index you want to see configurations for
-#' @param infer ...
-#' @param callback ...
 #' @param limit Number of triples to return
 #' @param offset Number of triples to skip
+#' @param sorted Boolean, defaults to FALSE
 #'
 #' @return A list describing all configuration parametes of index of interest
 #' @export
@@ -137,10 +134,10 @@ getFreeTextIndexConfiguration = function(service,catalogid = "root",repo = "",in
 #' createFreeTextIndex(service,repo = "testRepo",index = 'index')
 #' getFreeTextIndexConfiguration(service,catalogid = "root",repo = 'testRepo',index = "index")
 #' }
-evalFreeTextSearch = function(service,catalogid = "root",repo = "",pattern,index = NULL,infer = NULL,callback = NULL,
-                              limit = NULL,offset = NULL){
+evalFreeTextSearch = function(service,catalogid = "root",repo = "",pattern,index = NULL,
+                              limit = NULL,offset = NULL,sorted = NULL){
 
-  queryargs = list(pattern = pattern,infer = infer, limit = limit, offset = offset,index = index)
+  queryargs = convertLogical(expandUrlArgs(list(pattern = pattern, limit = limit, offset = offset,index = index, sorted = sorted)))
   body = NULL
 
   if(catalogid == "root"){

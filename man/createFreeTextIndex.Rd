@@ -5,7 +5,7 @@
 \title{createFreeTextIndex}
 \usage{
 createFreeTextIndex(service, catalogid = "root", repo = "", index,
-  predicates = NULL, indexLiterals = NULL, indexResources = "false",
+  predicates = NULL, indexLiterals = NULL, indexResources = FALSE,
   indexFields = NULL, minimumWordSize = NULL, stopWord = NULL,
   wordFilter = NULL, innerChars = NULL, borderChars = NULL,
   tokenizer = NULL)

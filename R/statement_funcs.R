@@ -11,7 +11,7 @@
 #' @param pred Predicate of triple pattern you want to match - optional
 #' @param obj Object of triple pattern you want to match - optional
 #' @param context Context of triple pattern you want to match - optional
-#' @param infer ...
+#' @param infer Specifies the kind of inference to use for this query. Defaults to FALSE, can also be "rdfs++" or "hasvalue"
 #' @param limit How many triples should be returned
 #' @param tripleIDs ...
 #' @param count ...
@@ -30,13 +30,21 @@
 #' }
 #' @import httr
 getStatements = function(service,catalogid = "root",repo = "testRepo", subj = NULL,
-                         pred = NULL,obj = NULL, context = NULL,infer = "false",
-                         limit = NULL, tripleIDs = "false",count = "false",
+                         pred = NULL,obj = NULL, context = NULL,infer = FALSE,
+                         limit = NULL, tripleIDs = FALSE,count = FALSE,
                          returnType = c("data.table","dataframe","matrix","list"),
                          cleanUp = FALSE,convert = FALSE){
 
-  if(missing(subj) & missing(pred) & missing(obj)){
-    body = NULL
+  if(missing(returnType)){
+    returnType = "matrix"
+  } else{
+    returnType = match.arg(returnType)
+  }
+
+  body = NULL
+  filepath = NULL
+
+  if(missing(subj) & missing(pred) & missing(obj) & missing(context)){
     queryargs = NULL
     if(catalogid == "root"){
       url = paste0(service$url,"repositories/",repo,"/statements")
@@ -44,8 +52,6 @@ getStatements = function(service,catalogid = "root",repo = "testRepo", subj = NU
       url = paste0(service$url,"catalogs/",catalogid,
                    "/repositories/",repo,"/statements")
     }
-    body = NULL
-    queryargs = NULL
     return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
   }
 
@@ -55,11 +61,8 @@ getStatements = function(service,catalogid = "root",repo = "testRepo", subj = NU
   if(!missing(obj)) objEnd = obj
 
 
-  queryargs = list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,infer = infer,
-                   limit = limit,tripleIDs = tripleIDs,count = count)
-
-  body = NULL
-  filepath = NULL
+  queryargs = convertLogical(expandUrlArgs(list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,infer = infer,
+                            limit = limit,tripleIDs = tripleIDs,count = count)))
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repo,"/statements")
@@ -115,10 +118,10 @@ addStatement = function(service,catalogid = "root",repo = "testRepo", subj = NUL
 
     if(catalogid == "root"){
       url = paste0(service$url,"repositories/",repo,"/session/",
-                   stringr::str_split_fixed(s$return,":",3)[,3],"/statement")
+                   stringr::str_split_fixed(session$return,":",3)[,3],"/statement")
     } else{
       url = paste0(service$url,"catalogs/",catalogid,"/repositories/",
-                   repo,"/session/",stringr::str_split_fixed(s$return,":",3)[,3],"/statement")
+                   repo,"/session/",stringr::str_split_fixed(session$return,":",3)[,3],"/statement")
 
     }
   }
