@@ -2,7 +2,7 @@
 % Please edit documentation in R/repo_funcs.R
 \name{getAccess}
 \alias{getAccess}
-\title{getAccess}
+\title{Repository access}
 \usage{
 getAccess(service, catalogid = "root", repo = "testRepo")
 }
@@ -17,7 +17,7 @@ getAccess(service, catalogid = "root", repo = "testRepo")
 An ag get object shows the kind of access the user has on this repository
 }
 \description{
-getAccess
+Return the access permissions the current user has for this repository.
 }
 \examples{
 \dontrun{

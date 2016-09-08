@@ -2,7 +2,7 @@
 % Please edit documentation in R/statement_funcs.R
 \name{addStatementsFromFile}
 \alias{addStatementsFromFile}
-\title{addStatementsFromFile}
+\title{Add statements from a file}
 \usage{
 addStatementsFromFile(service, catalogid = "root", repo = "", filepath,
   baseURI = NULL, context = NULL, commitEvery = NULL)
@@ -26,7 +26,7 @@ addStatementsFromFile(service, catalogid = "root", repo = "", filepath,
 an ag object that says whether or not the push was successful.
 }
 \description{
-addStatementsFromFile
+To be added
 }
 \examples{
 \dontrun{

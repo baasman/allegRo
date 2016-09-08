@@ -2,7 +2,7 @@
 % Please edit documentation in R/repo_funcs.R
 \name{listNameSpaces}
 \alias{listNameSpaces}
-\title{listNameSpaces}
+\title{Return all namespaces in repository}
 \usage{
 listNameSpaces(service, catalogid = "root", repo = "test")
 }
@@ -17,7 +17,7 @@ listNameSpaces(service, catalogid = "root", repo = "test")
 An ag object that includes the list of namespaces used in the specified repository.
 }
 \description{
-listNameSpaces
+Return the currently active namespaces for your user in this repository
 }
 \examples{
 \dontrun{

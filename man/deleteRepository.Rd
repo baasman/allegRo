@@ -4,7 +4,7 @@
 \alias{deleteRepository}
 \title{Delete a Repository}
 \usage{
-deleteRepository(service, catalogid = "root", repo)
+deleteRepository(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -17,7 +17,7 @@ deleteRepository(service, catalogid = "root", repo)
 True or False, denoting whether delete was successful.
 }
 \description{
-Delete a Repository
+Delete the specified repository. This can fail if the repository is being accessed by another client.
 }
 \examples{
 \dontrun{

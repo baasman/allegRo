@@ -29,7 +29,12 @@ You'll need to use sessionCommit() to integrate your additions.}
 Return: successful push or not
 }
 \description{
-addStatement
+Add a triple to the repository.
+The subj, pred, and obj arguments must be supplied and are used to fill in the subject, predicate and object parts of the triple. The context argument is used to fill in the triple's graph but may be left off. In this case, the triple's graph will be the default graph of the repository.
+
+The subj, pred, obj, and context (if supplied) arguments must all be in URI encoded N-Triples notation.
+
+The service returns the triple-ID of the newly added triple.
 }
 \examples{
 \dontrun{

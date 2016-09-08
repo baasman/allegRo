@@ -2,9 +2,10 @@
 % Please edit documentation in R/repo_funcs.R
 \name{getSize}
 \alias{getSize}
-\title{getSize}
+\title{Return the size of a repository}
 \usage{
-getSize(service, catalogid = "root", repo = "", session = NULL)
+getSize(service, catalogid = "root", repo = "", context = NULL,
+  session = NULL)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -13,13 +14,15 @@ getSize(service, catalogid = "root", repo = "", session = NULL)
 
 \item{repo}{Id for repository of interest.}
 
+\item{context}{Can be a list. If supplied, the count is only for the specified named graphs}
+
 \item{session}{If working in a session, specify response of createSession call}
 }
 \value{
 An ag get object that shows how many triples are in the repository
 }
 \description{
-getSize
+Return the size of a repository
 }
 \examples{
 \dontrun{

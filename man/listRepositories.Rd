@@ -15,12 +15,12 @@ listRepositories(service, catalogid = "root")
 ag object
 }
 \description{
-List all repositories in chosen catalog
+Return a list of repositories available in the catalog.
 }
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-listCatalogs(service)
+listRepositories(service)
 }
 }
 

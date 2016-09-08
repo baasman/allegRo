@@ -2,9 +2,9 @@
 % Please edit documentation in R/repo_funcs.R
 \name{addNameSpace}
 \alias{addNameSpace}
-\title{addNameSpace}
+\title{Add a nameSpace}
 \usage{
-addNameSpace(service, catalogid = "root", repo = "newTest", prefix, nsURI)
+addNameSpace(service, catalogid = "root", repo = "", prefix, nsURI)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -21,7 +21,7 @@ addNameSpace(service, catalogid = "root", repo = "newTest", prefix, nsURI)
 ag put object that states whether or not push was successful
 }
 \description{
-addNameSpace
+Add a namespace for the current user in this repository
 }
 \examples{
 \dontrun{

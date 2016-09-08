@@ -2,7 +2,7 @@
 % Please edit documentation in R/statement_funcs.R
 \name{deleteStatements}
 \alias{deleteStatements}
-\title{deleteStatements}
+\title{Delete matching statements}
 \usage{
 deleteStatements(service, catalogid = "root", repo = "testRepo",
   subj = NULL, pred = NULL, obj = NULL, context = NULL)
@@ -26,7 +26,9 @@ deleteStatements(service, catalogid = "root", repo = "testRepo",
 Return: successful push or not
 }
 \description{
-deleteStatements
+Delete statements (triples) by matching against their components.
+All parameters are optional -- when none are given, every statement in the store is deleted.
+The patterns to match come in pairs for subject, predicate, object, and graph. When given, they should be specified in N-triples notation.
 }
 \examples{
 \dontrun{

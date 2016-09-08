@@ -5,7 +5,7 @@
 \title{deleteNameSpaces}
 \usage{
 deleteNameSpaces(service, catalogid = "root", repo = "testRepo",
-  reset = c(0, 1, "0", "1"))
+  reset = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -14,13 +14,13 @@ deleteNameSpaces(service, catalogid = "root", repo = "testRepo",
 
 \item{repo}{Id for repository of interest.}
 
-\item{reset}{Boolean, If 1, then the namespaces are reset to the default namespaces of the server.}
+\item{reset}{Defaults to FALSE. If TRUE,then the namespaces are reset to the default namespaces of the server.}
 }
 \value{
 An ag delete object that states whether delete was successful or not
 }
 \description{
-deleteNameSpaces
+Deletes all namespaces in this repository for the current user.
 }
 \examples{
 \dontrun{

@@ -2,10 +2,10 @@
 % Please edit documentation in R/repo_funcs.R
 \name{createRepository}
 \alias{createRepository}
-\title{createRepository}
+\title{Create a repository}
 \usage{
 createRepository(service, catalogid = "root", repo = "",
-  expectedSize = NULL, index = NULL, override = FALSE, restore = NULL,
+  expectedSize = NULL, index = NULL, override = TRUE, restore = NULL,
   nocommit = NULL)
 }
 \arguments{
@@ -19,7 +19,7 @@ createRepository(service, catalogid = "root", repo = "",
 
 \item{index}{Can be specified mulitple times in a list. Should hold index names, and is used to configure the set of indices created for the store.}
 
-\item{override}{Override repository, 1 or 0.}
+\item{override}{TRUE or FALSE. Defaults to TRUE}
 
 \item{restore}{Restore the repository.}
 
@@ -29,7 +29,8 @@ createRepository(service, catalogid = "root", repo = "",
 An object of ag with the response and given url.
 }
 \description{
-createRepository
+Creates a new, empty repository.
+When a repository with the given name already exists, it is overwritten, unless a parameter override with value FALSE is passed.
 }
 \examples{
 \dontrun{
