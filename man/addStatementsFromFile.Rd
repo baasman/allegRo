@@ -30,9 +30,9 @@ To be added
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-addStatementsFromFile(service,catalogid = "root", repo = "testRepo",
-file = "path/to/file/mytriples.nq")
+service = createService('localhost','user','password')
+addStatementsFromFile(service,catalogid = 'root', repo = 'testRepo',
+file = 'path/to/file/mytriples.nq')
 }
 }
 

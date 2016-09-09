@@ -2,7 +2,7 @@
 % Please edit documentation in R/freetextIndices_funcs.R
 \name{getFreeTextIndexConfiguration}
 \alias{getFreeTextIndexConfiguration}
-\title{getFreeTextIndexConfiguration}
+\title{Return free-text index configuration}
 \usage{
 getFreeTextIndexConfiguration(service, catalogid = "root", repo = "", index)
 }
@@ -19,13 +19,13 @@ getFreeTextIndexConfiguration(service, catalogid = "root", repo = "", index)
 A list describing all configuration parametes of index of interest
 }
 \description{
-getFreeTextIndexConfiguration
+Return information on the freetext-index named indexName.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-createFreeTextIndex(service,repo = "testRepo",index = 'index')
-getFreeTextIndexConfiguration(service,catalogid = "root",repo = 'testRepo',index = "index")
+service = createService('localhost','user','password')
+createFreeTextIndex(service,repo = 'testRepo',index = 'index')
+getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
 }
 }
 

@@ -19,7 +19,7 @@ getSize(service, catalogid = "root", repo = "", context = NULL,
 \item{session}{If working in a session, specify response of createSession call}
 }
 \value{
-An ag get object that shows how many triples are in the repository
+Number of triples in store
 }
 \description{
 Return the size of a repository

@@ -4,7 +4,8 @@
 #'
 #' @param service Service object containing service url, username, and password
 #' @param catalogid id for catalog of interest
-#' @return ag object
+#' @param all Default FALSE. If TRUE, then all repositories of all catalogs will be returned
+#' @return A list of all repositories in the catalog. Will show all repositories if all is set to TRUE
 #' @export
 #' @examples
 #' \dontrun{
@@ -12,9 +13,9 @@
 #' listRepositories(service)
 #' }
 #' @import httr
-listRepositories = function(service,catalogid = "root"){
+listRepositories = function(service,catalogid = "root",all = FALSE){
 
-  queryargs = NULL
+  queryargs = convertLogical(list(all = all))
   body = NULL
 
   if(catalogid == "root"){
@@ -40,7 +41,7 @@ listRepositories = function(service,catalogid = "root"){
 #' @param repo Id for repository of interest.
 #' @param expectedSize Specifies the expected size of the repository.
 #' @param index Can be specified mulitple times in a list. Should hold index names, and is used to configure the set of indices created for the store.
-#' @param override TRUE or FALSE. Defaults to TRUE
+#' @param override Default TRUE
 #' @param restore Restore the repository.
 #' @param nocommit Boolean
 #'
@@ -58,10 +59,10 @@ createRepository = function(service,catalogid = "root",repo = "",
                             expectedSize = NULL,index = NULL,override = TRUE,
                             restore = NULL,nocommit = NULL){
 
+  queryargs = convertLogical(list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit))
   body = NULL
   filepath = NULL
 
-  queryargs = convertLogical(list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit))
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repo)
   } else{
@@ -81,12 +82,13 @@ createRepository = function(service,catalogid = "root",repo = "",
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
-#' @return True or False, denoting whether delete was successful.
+#' @return Logical statement in which TRUE implies a successful deletion (invisible)
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
+#' createRepository(service,catalogid = "root",repo = "repotodelete")
 #' deleteRepository(service,catalogid = "root",repo = "repotodelete")
 #' }
 #' @import httr
@@ -112,7 +114,7 @@ deleteRepository = function(service, catalogid = "root",repo = ""){
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #' @param backupName character value, name of backup repository
-#'
+#' @return AllegroGraph default reponse
 #' @export
 #'
 #' @examples
@@ -142,12 +144,12 @@ backupRepository = function(service, catalogid = "root",repo = "", backupName){
 
 #' Return a list of scripts
 #'
-#' @description Return the list of scripts that have been added to this repository.
+#' @description Return the list of scripts that have been added to this repository. These scripts can either be in Lisp or Javascript code.
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
-#' @return ag get object containing init file
+#' @return list of scripts that have been added to this repository
 #' @export
 #' @examples
 #' \dontrun{
@@ -197,7 +199,7 @@ listNameSpaces = function(service,catalogid= "root",repo = "test"){
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
-#' deleteNameSpaces
+#' Delete all namespaces in repository
 #'
 #' @description Deletes all namespaces in this repository for the current user.
 #'
@@ -206,22 +208,18 @@ listNameSpaces = function(service,catalogid= "root",repo = "test"){
 #' @param repo Id for repository of interest.
 #' @param reset Defaults to FALSE. If TRUE,then the namespaces are reset to the default namespaces of the server.
 #'
-#' @return An ag delete object that states whether delete was successful or not
+#' @return An ag delete object that states whether delete was successful or not (invisible)
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' service = createService("localhost","user","password")
-#' deleteNameSpaces(service,catalogid = "root",repo = "testRepo")
+#' deleteAllNameSpaces(service,catalogid = "root",repo = "testRepo")
 #' }
 #' @import httr
-deleteNameSpaces = function(service,catalogid= "root",repo = "testRepo",reset = FALSE){
+deleteAllNameSpaces = function(service,catalogid= "root",repo = "",reset = FALSE){
 
-  if(!missing(reset)) reset = match.arg(reset)
-  if(is.numeric(reset)) reset = as.character(reset)
-
-  queryargs = list(reset = reset)
-
+  queryargs = convertLogical(list(reset = reset))
   body = NULL
 
   if(catalogid == "root"){
@@ -230,12 +228,43 @@ deleteNameSpaces = function(service,catalogid= "root",repo = "testRepo",reset = 
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/namespaces")
   }
 
-  return(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+  invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
+}
+
+#' Delete a namespace in repository
+#'
+#' @description Deletes a namespace in this repository for the current user.
+#'
+#' @param service Service object containing service url, username, and password.
+#' @param catalogid Id for catalog of interest.
+#' @param repo Id for repository of interest.
+#'
+#' @return An ag delete object that states whether delete was successful or not (invisible)
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' deleteNameSpace(service,catalogid = "root",repo = "testRepo")
+#' }
+#' @import httr
+deleteNameSpace = function(service,catalogid= "root",repo = "",namespace){
+
+  queryargs = NULL
+  body = NULL
+
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repo,"/namespaces/",namespace)
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/namespaces/",namespace)
+  }
+
+  invisible(ag_delete(service = service,url = url,queryargs = queryargs,body = body))
 }
 
 
 
-#' Add a nameSpace
+#' Add a namespace to the repository
 #'
 #' @description Add a namespace for the current user in this repository
 #'
@@ -245,7 +274,7 @@ deleteNameSpaces = function(service,catalogid= "root",repo = "testRepo",reset = 
 #' @param prefix Prefix
 #' @param nsURI Namespace URI
 #'
-#' @return ag put object that states whether or not push was successful
+#' @return ag put object that states whether or not push was successful (invisible)
 #' @export
 #'
 #' @examples
@@ -284,7 +313,7 @@ addNameSpace = function(service,
 #' @param context Can be a list. If supplied, the count is only for the specified named graphs
 #' @param session If working in a session, specify response of createSession call
 #'
-#' @return An ag get object that shows how many triples are in the repository
+#' @return Number of triples in store
 #' @export
 #'
 #' @examples
@@ -295,7 +324,7 @@ addNameSpace = function(service,
 #' @import httr
 getSize = function(service,catalogid= "root",repo = "",context = NULL,session = NULL){
 
-  queryargs = list(context = context)
+  queryargs = expandUrlArgs(list(context = context))
   body = NULL
 
   if(is.null(session)){
@@ -321,7 +350,7 @@ getSize = function(service,catalogid= "root",repo = "",context = NULL,session = 
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #'
-#' @return An ag get object shows the kind of access the user has on this repository
+#' @return String describing access of user.
 #' @export
 #'
 #' @examples
@@ -346,13 +375,13 @@ getAccess = function(service,catalogid= "root",repo = "testRepo"){
 
 
 
-#' listContexts
+#' List all contexts in repository
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #'
-#' @return An ag get objects that displays all context id's
+#' @return list of all contexts
 #' @export
 #'
 #' @examples
@@ -361,7 +390,7 @@ getAccess = function(service,catalogid= "root",repo = "testRepo"){
 #' listContexs(service,catalogid = "root",repo = "testRepo")
 #' }
 #' @import httr
-listContexts = function(service,catalogid= "root",repo = "testRepo"){
+listContexts = function(service,catalogid= "root",repo = ""){
 
   queryargs = NULL
   body = NULL
@@ -378,7 +407,7 @@ listContexts = function(service,catalogid= "root",repo = "testRepo"){
 
 
 
-#' getDuplicates
+#' Get all duplicate statements
 #'
 #' @section Warning:
 #' This is slow on large repositories, even if no duplicates exist.
@@ -395,7 +424,7 @@ listContexts = function(service,catalogid= "root",repo = "testRepo"){
 #' service = createService("localhost","user","password")
 #' print(getDuplicates(service,repo = "testRepo"))
 #' }
-getDuplicates = function(service,catalogid = "root",repo = "testRepo"){
+getDuplicates = function(service,catalogid = "root",repo = ""){
 
   queryargs = NULL
   body = NULL
@@ -407,18 +436,20 @@ getDuplicates = function(service,catalogid = "root",repo = "testRepo"){
                  "/repositories/",repo,"/statements/duplicates")
   }
 
-  invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
-#' deleteDuplicates
+#' Delete all duplicate statements
+#'
+#' @description Remove duplicate triples from the repository
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #' @param mode A string (default: spog)
-#' @param commit A string
+#' @param commit Commit defaults to true if the connection has autocommit mode on.
 #'
-#' @return An ag delete object
+#' @return An ag delete object that states whether delete was successful or not (invisible)
 #' @export
 #'
 #' @examples
@@ -428,7 +459,7 @@ getDuplicates = function(service,catalogid = "root",repo = "testRepo"){
 #' }
 deleteDuplicates = function(service,catalogid = "root",repo = "testRepo",mode = NULL,commit = NULL){
 
-  queryargs = list(mode = mode,commit = commit)
+  queryargs = convertLogical(list(mode = mode,commit = commit))
   body = NULL
 
   if(catalogid == "root"){
@@ -501,18 +532,18 @@ evalQuery = function(service,catalogid = "root",repo = "test",query,returnType =
 }
 
 
-#does not work yet
-# evalStoredQueries = function(service,catalogid = "root",repo = "",queryName = "",bound = NULL,limit = NULL,offset = NULL,
-#                              cleanUp = FALSE, convert = FALSE,session = NULL){
-#   queryargs = list(bound = bound,limit = limit,offset = offset)
-#   body = NULL
-#   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repo,"/queries/",queryName)
-#   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/queries/",queryName)
-#   }
-#   return(ag_data(service = service,url = url,queryargs = queryargs,body = body,cleanUp = cleanUp,convert = convert))
-# }
+
+evalStoredQueries = function(service,catalogid = "root",repo = "",queryName = "statements",bound = NULL,limit = NULL,offset = NULL,
+                             cleanUp = FALSE, convert = FALSE,session = NULL){
+  queryargs = list(bound = bound,limit = limit,offset = offset)
+  body = NULL
+  if(catalogid == "root"){
+    url = paste0(service$url,"repositories/",repo,"/queries/",queryName)
+  } else{
+    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/queries/",queryName)
+  }
+  return(ag_data(service = service,url = url,queryargs = queryargs,body = body,cleanUp = cleanUp,convert = convert))
+}
 
 
 

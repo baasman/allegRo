@@ -14,10 +14,10 @@ listScripts(service, catalogid = "root", repo = "")
 \item{repo}{Id for repository of interest.}
 }
 \value{
-ag get object containing init file
+list of scripts that have been added to this repository
 }
 \description{
-Return the list of scripts that have been added to this repository.
+Return the list of scripts that have been added to this repository. These scripts can either be in Lisp or Javascript code.
 }
 \examples{
 \dontrun{

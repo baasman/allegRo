@@ -19,7 +19,7 @@ createRepository(service, catalogid = "root", repo = "",
 
 \item{index}{Can be specified mulitple times in a list. Should hold index names, and is used to configure the set of indices created for the store.}
 
-\item{override}{TRUE or FALSE. Defaults to TRUE}
+\item{override}{Default TRUE}
 
 \item{restore}{Restore the repository.}
 

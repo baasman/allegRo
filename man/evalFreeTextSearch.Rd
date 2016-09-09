@@ -2,7 +2,7 @@
 % Please edit documentation in R/freetextIndices_funcs.R
 \name{evalFreeTextSearch}
 \alias{evalFreeTextSearch}
-\title{evalFreeTextSearch}
+\title{Query using free-text indices}
 \usage{
 evalFreeTextSearch(service, catalogid = "root", repo = "", pattern,
   index = NULL, limit = NULL, offset = NULL, sorted = NULL)
@@ -16,25 +16,25 @@ evalFreeTextSearch(service, catalogid = "root", repo = "", pattern,
 
 \item{pattern}{A string to match triples on}
 
-\item{index}{The index you want to see configurations for}
+\item{index}{The index you want to use}
 
-\item{limit}{Number of triples to return}
+\item{limit}{Integer, number of triples to return}
 
-\item{offset}{Number of triples to skip}
+\item{offset}{Integer, number of triples to skip}
 
-\item{sorted}{Boolean, defaults to FALSE}
+\item{sorted}{TRUE or FALSE, defaults to FALSE}
 }
 \value{
 A list describing all configuration parametes of index of interest
 }
 \description{
-evalFreeTextSearch
+Query the repository using a free-text index
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-createFreeTextIndex(service,repo = "testRepo",index = 'index')
-getFreeTextIndexConfiguration(service,catalogid = "root",repo = 'testRepo',index = "index")
+service = createService('localhost','user','password')
+createFreeTextIndex(service,repo = 'testRepo',index = 'index')
+getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
 }
 }
 

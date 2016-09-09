@@ -4,15 +4,17 @@
 \alias{listRepositories}
 \title{List all repositories in chosen catalog}
 \usage{
-listRepositories(service, catalogid = "root")
+listRepositories(service, catalogid = "root", all = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password}
 
 \item{catalogid}{id for catalog of interest}
+
+\item{all}{Default FALSE. If TRUE, then all repositories of all catalogs will be returned}
 }
 \value{
-ag object
+A list of all repositories in the catalog. Will show all repositories if all is set to TRUE
 }
 \description{
 Return a list of repositories available in the catalog.

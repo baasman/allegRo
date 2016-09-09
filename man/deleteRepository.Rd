@@ -14,7 +14,7 @@ deleteRepository(service, catalogid = "root", repo = "")
 \item{repo}{Id for repository of interest.}
 }
 \value{
-True or False, denoting whether delete was successful.
+Logical statement in which TRUE implies a successful deletion (invisible)
 }
 \description{
 Delete the specified repository. This can fail if the repository is being accessed by another client.
@@ -22,6 +22,7 @@ Delete the specified repository. This can fail if the repository is being access
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
+createRepository(service,catalogid = "root",repo = "repotodelete")
 deleteRepository(service,catalogid = "root",repo = "repotodelete")
 }
 }

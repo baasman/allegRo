@@ -15,6 +15,9 @@ backupRepository(service, catalogid = "root", repo = "", backupName)
 
 \item{backupName}{character value, name of backup repository}
 }
+\value{
+AllegroGraph default reponse
+}
 \description{
 Create a backup of the repository.
 }

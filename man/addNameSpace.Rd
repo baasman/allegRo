@@ -2,7 +2,7 @@
 % Please edit documentation in R/repo_funcs.R
 \name{addNameSpace}
 \alias{addNameSpace}
-\title{Add a nameSpace}
+\title{Add a namespace to the repository}
 \usage{
 addNameSpace(service, catalogid = "root", repo = "", prefix, nsURI)
 }
@@ -18,7 +18,7 @@ addNameSpace(service, catalogid = "root", repo = "", prefix, nsURI)
 \item{nsURI}{Namespace URI}
 }
 \value{
-ag put object that states whether or not push was successful
+ag put object that states whether or not push was successful (invisible)
 }
 \description{
 Add a namespace for the current user in this repository

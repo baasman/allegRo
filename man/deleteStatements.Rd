@@ -32,11 +32,11 @@ The patterns to match come in pairs for subject, predicate, object, and graph. W
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-subj = "<www.test.com/tmp#person>"
-pred = "<www.test.com/tmp#hasItem>"
-obj= "<www.test.com/tmp#sword>"
-deleteStatements(service,catalogid = "root",reposirepo = "testRepo",
+service = createService('localhost','user','password')
+subj = '<www.test.com/tmp#person>'
+pred = '<www.test.com/tmp#hasItem>'
+obj= '<www.test.com/tmp#sword>'
+deleteStatements(service,catalogid = 'root',reposirepo = 'testRepo',
 subj = subj,pred = pred,obj = obj)
 }
 }

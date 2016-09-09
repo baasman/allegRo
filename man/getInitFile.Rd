@@ -2,7 +2,7 @@
 % Please edit documentation in R/service_funcs.R
 \name{getInitFile}
 \alias{getInitFile}
-\title{getInitFile}
+\title{Find the contents of the Initialization file}
 \usage{
 getInitFile(service)
 }
@@ -10,10 +10,11 @@ getInitFile(service)
 \item{service}{Service object containing service url, username, and password}
 }
 \value{
-ag get object containing init file
+The text contained in your Initialization file
 }
 \description{
-getInitFile
+Retrieve the server's initialization file.
+The initialization-file is a collection of Common Lisp code that is executed on every shared back-end when it starts
 }
 \examples{
 \dontrun{

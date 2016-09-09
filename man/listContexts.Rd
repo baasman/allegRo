@@ -2,9 +2,9 @@
 % Please edit documentation in R/repo_funcs.R
 \name{listContexts}
 \alias{listContexts}
-\title{listContexts}
+\title{List all contexts in repository}
 \usage{
-listContexts(service, catalogid = "root", repo = "testRepo")
+listContexts(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -14,10 +14,10 @@ listContexts(service, catalogid = "root", repo = "testRepo")
 \item{repo}{Id for repository of interest.}
 }
 \value{
-An ag get objects that displays all context id's
+list of all contexts
 }
 \description{
-listContexts
+List all contexts in repository
 }
 \examples{
 \dontrun{

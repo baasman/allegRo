@@ -2,9 +2,9 @@
 % Please edit documentation in R/repo_funcs.R
 \name{getDuplicates}
 \alias{getDuplicates}
-\title{getDuplicates}
+\title{Get all duplicate statements}
 \usage{
-getDuplicates(service, catalogid = "root", repo = "testRepo")
+getDuplicates(service, catalogid = "root", repo = "")
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password.}
@@ -17,7 +17,7 @@ getDuplicates(service, catalogid = "root", repo = "testRepo")
 A matrix containing all duplicate statements
 }
 \description{
-getDuplicates
+Get all duplicate statements
 }
 \section{Warning}{
 

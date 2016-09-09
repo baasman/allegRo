@@ -2,7 +2,7 @@
 % Please edit documentation in R/freetextIndices_funcs.R
 \name{listFreeTextIndices}
 \alias{listFreeTextIndices}
-\title{listFreeTextIndices}
+\title{List free-text indices}
 \usage{
 listFreeTextIndices(service, catalogid = "root", repo = "")
 }
@@ -17,12 +17,12 @@ listFreeTextIndices(service, catalogid = "root", repo = "")
 A matrix of all active free text indices
 }
 \description{
-listFreeTextIndices
+Return a list of freetext indices defined on the store
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-listFreeTextIndices(service,catalogid = "root",repo = 'testRepo')
+service = createService('localhost','user','password')
+listFreeTextIndices(service,catalogid = 'root',repo = 'testRepo')
 }
 }
 

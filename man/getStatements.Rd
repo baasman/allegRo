@@ -25,7 +25,7 @@ getStatements(service, catalogid = "root", repo = "testRepo", subj = NULL,
 
 \item{context}{Context of triple pattern you want to match - optional}
 
-\item{infer}{Specifies the kind of inference to use for this query. Defaults to FALSE, can also be "rdfs++" or "hasvalue"}
+\item{infer}{Specifies the kind of inference to use for this query. Defaults to FALSE, can also be 'rdfs++' or 'hasvalue'}
 
 \item{limit}{How many triples should be returned}
 
@@ -48,9 +48,9 @@ If no subject, predicate, or object supplied, all statements will be returned.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-getStatements(service,catalogid = "root",repo = "testRepo",
-pred = "<http://test.org/pred>", limit = 10)
+service = createService('localhost','user','password')
+getStatements(service,catalogid = 'root',repo = 'testRepo',
+pred = '<http://test.org/pred>', limit = 10)
 }
 }
 

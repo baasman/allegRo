@@ -14,7 +14,7 @@ getAccess(service, catalogid = "root", repo = "testRepo")
 \item{repo}{Id for repository of interest.}
 }
 \value{
-An ag get object shows the kind of access the user has on this repository
+String describing access of user.
 }
 \description{
 Return the access permissions the current user has for this repository.

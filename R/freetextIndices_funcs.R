@@ -1,6 +1,8 @@
 ### FREE TEXT INDICES
 
-#' listFreeTextIndices
+#' List free-text indices
+#'
+#' @description Return a list of freetext indices defined on the store
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
@@ -11,29 +13,34 @@
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
-#' listFreeTextIndices(service,catalogid = "root",repo = 'testRepo')
+#' service = createService('localhost','user','password')
+#' listFreeTextIndices(service,catalogid = 'root',repo = 'testRepo')
 #' }
-listFreeTextIndices = function(service,catalogid = "root",repo = ""){
+listFreeTextIndices = function(service, catalogid = "root", repo = "") {
 
   queryargs = NULL
   body = NULL
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repo,"/freetext/indices")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/freetext/indices")
+  if (catalogid == "root") {
+    url = paste0(service$url, "repositories/", repo, "/freetext/indices")
+  } else {
+    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
+                 repo, "/freetext/indices")
   }
 
-  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  return(ag_get(service = service, url = url, queryargs = queryargs,
+                body = body))
 }
 
-#' createFreeTextIndex
+#' Create a free-text index
+#'
+#' @description Create or modify a freetext-index. I suggest reading the official documentation at
+#' http://franz.com/agraph/support/documentation/current/text-index.html
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
-#' @param index Name of index of interest
+#' @param indexName Name of index of interest
 #' @param predicates Can be a list. Indicates the predicates that should be indexed. When not given, all predicates are indexed.
 #' @param indexLiterals A boolean (defaults to true) that determines whether literal are indexed.
 #' @param indexResources Can be given the values true, false, or short. Default is false. short means to index only the part of the resource after the last # or / character.
@@ -49,34 +56,43 @@ listFreeTextIndices = function(service,catalogid = "root",repo = ""){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
-#' createFreeTextIndex(service,repo = "testRepo",index = 'index',
-#' predicates = "<p>",stopWord = list("and","it"))
+#' service = createService('localhost','user','password')
+#' createFreeTextIndex(service,repo = 'testRepo',indexName = 'index',
+#' predicates = '<p>',stopWord = list('and','it'))
 #' }
-createFreeTextIndex = function(service, catalogid = "root", repo = "", index, predicates=NULL, indexLiterals=NULL, indexResources=FALSE,
-                    indexFields=NULL, minimumWordSize=NULL, stopWord=NULL, wordFilter=NULL,
-                    innerChars=NULL, borderChars=NULL, tokenizer=NULL){
+createFreeTextIndex = function(service, catalogid = "root", repo = "",
+                               indexName, predicates = NULL, indexLiterals = NULL, indexResources = FALSE,
+                               indexFields = NULL, minimumWordSize = NULL, stopWord = NULL, wordFilter = NULL,
+                               innerChars = NULL, borderChars = NULL, tokenizer = NULL) {
 
-  queryargs = convertLogical(expandUrlArgs(list(predicates = predicates, indexLiterals = indexLiterals, indexResources = indexResources,
-                                          indexFields = indexFields, minimumWordSize = minimumWordSize,stopWord = stopWord,
-                                          wordFilter = wordFilter, innerChars = innerChars, borderChars = borderChars,
-                                          tokenizer = tokenizer)))
+  queryargs = convertLogical(expandUrlArgs(list(predicates = predicates,
+                                                indexLiterals = indexLiterals, indexResources = indexResources,
+                                                indexFields = indexFields, minimumWordSize = minimumWordSize, stopWord = stopWord,
+                                                wordFilter = wordFilter, innerChars = innerChars, borderChars = borderChars,
+                                                tokenizer = tokenizer)))
   body = NULL
 
-  if(length(stopWord) == 0) stopWord = ""
-  if(length(indexFields) == 0) indexFields = ""
+  if (length(stopWord) == 0)
+    stopWord = ""
+  if (length(indexFields) == 0)
+    indexFields = ""
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repo,"/freetext/indices/",index)
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/freetext/indices/",index)
+  if (catalogid == "root") {
+    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",
+                 indexName)
+  } else {
+    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
+                 repo, "/freetext/indices/", indexName)
   }
 
-  invisible(ag_put(service = service,url = url,queryargs = queryargs,body = body))
+  invisible(ag_put(service = service, url = url, queryargs = queryargs,
+                   body = body))
 }
 
 
-#' getFreeTextIndexConfiguration
+#' Return free-text index configuration
+#'
+#' @description Return information on the freetext-index named indexName.
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
@@ -88,65 +104,75 @@ createFreeTextIndex = function(service, catalogid = "root", repo = "", index, pr
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
-#' createFreeTextIndex(service,repo = "testRepo",index = 'index')
-#' getFreeTextIndexConfiguration(service,catalogid = "root",repo = 'testRepo',index = "index")
+#' service = createService('localhost','user','password')
+#' createFreeTextIndex(service,repo = 'testRepo',index = 'index')
+#' getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
 #' }
-getFreeTextIndexConfiguration = function(service,catalogid = "root",repo = "",index){
+getFreeTextIndexConfiguration = function(service, catalogid = "root", repo = "",
+                                         index) {
 
-  if(missing(index)){
+  if (missing(index)) {
     cat("No index entered. These are the following free-text-indices currently present: \n \n")
-    return(listFreeTextIndices(service,catalogid = catalogid,repo = repo))
+    return(listFreeTextIndices(service, catalogid = catalogid, repo = repo))
   }
 
   queryargs = NULL
   body = NULL
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repo,"/freetext/indices/",index)
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/freetext/indices/",index)
+  if (catalogid == "root") {
+    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",
+                 index)
+  } else {
+    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
+                 repo, "/freetext/indices/", index)
   }
 
-  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  return(ag_get(service = service, url = url, queryargs = queryargs,
+                body = body))
 }
 
 
 
 
-#' evalFreeTextSearch
+#' Query using free-text indices
+#'
+#' @description Query the repository using a free-text index
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
 #' @param pattern A string to match triples on
-#' @param index The index you want to see configurations for
-#' @param limit Number of triples to return
-#' @param offset Number of triples to skip
-#' @param sorted Boolean, defaults to FALSE
+#' @param index The index you want to use
+#' @param limit Integer, number of triples to return
+#' @param offset Integer, number of triples to skip
+#' @param sorted TRUE or FALSE, defaults to FALSE
 #'
 #' @return A list describing all configuration parametes of index of interest
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
-#' createFreeTextIndex(service,repo = "testRepo",index = 'index')
-#' getFreeTextIndexConfiguration(service,catalogid = "root",repo = 'testRepo',index = "index")
+#' service = createService('localhost','user','password')
+#' createFreeTextIndex(service,repo = 'testRepo',index = 'index')
+#' getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
 #' }
-evalFreeTextSearch = function(service,catalogid = "root",repo = "",pattern,index = NULL,
-                              limit = NULL,offset = NULL,sorted = NULL){
+evalFreeTextSearch = function(service, catalogid = "root", repo = "", pattern,
+                              index = NULL, limit = NULL, offset = NULL, sorted = NULL) {
 
-  queryargs = convertLogical(expandUrlArgs(list(pattern = pattern, limit = limit, offset = offset,index = index, sorted = sorted)))
+  queryargs = convertLogical(expandUrlArgs(list(pattern = pattern, limit = limit,
+                                                offset = offset, index = index, sorted = sorted)))
   body = NULL
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repo,"/freetext")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/freetext")
+  if (catalogid == "root") {
+    url = paste0(service$url, "repositories/", repo, "/freetext")
+  } else {
+    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
+                 repo, "/freetext")
   }
 
-  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  return(ag_get(service = service, url = url, queryargs = queryargs,
+                body = body))
 }
+
 
 

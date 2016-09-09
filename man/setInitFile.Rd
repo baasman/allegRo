@@ -2,22 +2,22 @@
 % Please edit documentation in R/service_funcs.R
 \name{setInitFile}
 \alias{setInitFile}
-\title{setInitFile}
+\title{Set the initialization file}
 \usage{
-setInitFile(service, filepath, restart = "0")
+setInitFile(service, filepath, restart = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password}
 
 \item{filepath}{The filepath to your initFile (text)}
 
-\item{restart}{Boolean. If true, then any running shared backends will be restarted.}
+\item{restart}{Defaults to FALSE. If TRUE, then any running shared backends will be restarted. This ensures that subsequent requests will use the new initialization file.}
 }
 \value{
-ag put object: successful push or not
+ag put object stating the success of the push, or not (invisible)
 }
 \description{
-setInitFile
+Replace the current initialization file
 }
 \examples{
 \dontrun{

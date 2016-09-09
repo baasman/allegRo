@@ -2,20 +2,20 @@
 % Please edit documentation in R/service_funcs.R
 \name{getVersion}
 \alias{getVersion}
-\title{getVersion}
+\title{Find the AllegroGraph server version}
 \usage{
-getVersion(service, complex = TRUE)
+getVersion(service, complex = FALSE)
 }
 \arguments{
 \item{service}{Service object containing service url, username, and password}
 
-\item{complex}{Default TRUE. Will return all version related info. If FALSE, will just return version number}
+\item{complex}{Default FALSE. Will return all version related info. If FALSE, will just return version number}
 }
 \value{
 Version of allegroGraph
 }
 \description{
-getVersion
+Returns the version of the AllegroGraph server, as a string.
 }
 \examples{
 \dontrun{

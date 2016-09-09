@@ -1,6 +1,10 @@
-#' getInitFile
+#' Find the contents of the Initialization file
+#'
+#' @description Retrieve the server's initialization file.
+#' The initialization-file is a collection of Common Lisp code that is executed on every shared back-end when it starts
+#'
 #' @param service Service object containing service url, username, and password
-#' @return ag get object containing init file
+#' @return The text contained in your Initialization file
 #' @export
 #' @examples
 #' \dontrun{
@@ -15,11 +19,14 @@ getInitFile = function(service){
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
-#' setInitFile
+#' Set the initialization file
+#'
+#' @description Replace the current initialization file
+#'
 #' @param service Service object containing service url, username, and password
 #' @param filepath The filepath to your initFile (text)
-#' @param restart Boolean. If true, then any running shared backends will be restarted.
-#' @return ag put object: successful push or not
+#' @param restart Defaults to FALSE. If TRUE, then any running shared backends will be restarted. This ensures that subsequent requests will use the new initialization file.
+#' @return ag put object stating the success of the push, or not (invisible)
 #' @export
 #' @examples
 #' \dontrun{
@@ -27,7 +34,7 @@ getInitFile = function(service){
 #' setInitFile(service,filepath = "path/to/directory/initFile.txt")
 #' }
 #' @import httr
-setInitFile = function(service,filepath,restart = "0"){
+setInitFile = function(service,filepath,restart = FALSE){
 
   if(missing(filepath)) stop("must supply path to txt file")
   if(tools::file_ext(filepath) != "txt") stop("file must be a txt file")
@@ -40,10 +47,12 @@ setInitFile = function(service,filepath,restart = "0"){
 }
 
 
-#' getVersion
+#' Find the AllegroGraph server version
+#'
+#' @description Returns the version of the AllegroGraph server, as a string.
 #'
 #' @param service Service object containing service url, username, and password
-#' @param complex Default TRUE. Will return all version related info. If FALSE, will just return version number
+#' @param complex Default FALSE. Will return all version related info. If FALSE, will just return version number
 #'
 #' @return Version of allegroGraph
 #' @export
@@ -54,7 +63,7 @@ setInitFile = function(service,filepath,restart = "0"){
 #' getVersion(service)
 #' }
 #' @import httr
-getVersion = function(service, complex = TRUE){
+getVersion = function(service, complex = FALSE){
   queryargs = NULL
   body = NULL
   if(complex){
@@ -68,8 +77,12 @@ getVersion = function(service, complex = TRUE){
 
 
 #' List all catalogs
-#' @param service Service object containing service url, username, and password
-#' @return ag object
+#'
+#' @description Returns a set of catalogs that are available on this server.
+#'
+#' @param service Service object containing server url, username, and password
+#' @return For each catalog, id and uri properties are returned, giving respectively the name of the catalog and the URL under which it is found.
+#' Properties named readable and writable indicate, for each catalog, whether the current user has read or write access to it.
 #' @export
 #' @examples
 #' \dontrun{
@@ -86,5 +99,9 @@ listCatalogs = function(service){
 
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
+
+
+shell(paste("C:/Users/baasman/spark-2.0.0-bin-hadoop2.7/bin/spark-submit.cmd","sparkr-shell",
+             "ports.out"))
 
 

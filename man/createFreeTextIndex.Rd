@@ -2,9 +2,9 @@
 % Please edit documentation in R/freetextIndices_funcs.R
 \name{createFreeTextIndex}
 \alias{createFreeTextIndex}
-\title{createFreeTextIndex}
+\title{Create a free-text index}
 \usage{
-createFreeTextIndex(service, catalogid = "root", repo = "", index,
+createFreeTextIndex(service, catalogid = "root", repo = "", indexName,
   predicates = NULL, indexLiterals = NULL, indexResources = FALSE,
   indexFields = NULL, minimumWordSize = NULL, stopWord = NULL,
   wordFilter = NULL, innerChars = NULL, borderChars = NULL,
@@ -17,7 +17,7 @@ createFreeTextIndex(service, catalogid = "root", repo = "", index,
 
 \item{repo}{Id for repository of interest.}
 
-\item{index}{Name of index of interest}
+\item{indexName}{Name of index of interest}
 
 \item{predicates}{Can be a list. Indicates the predicates that should be indexed. When not given, all predicates are indexed.}
 
@@ -40,13 +40,14 @@ createFreeTextIndex(service, catalogid = "root", repo = "", index,
 \item{tokenizer}{...}
 }
 \description{
-createFreeTextIndex
+Create or modify a freetext-index. I suggest reading the official documentation at
+http://franz.com/agraph/support/documentation/current/text-index.html
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-createFreeTextIndex(service,repo = "testRepo",index = 'index',
-predicates = "<p>",stopWord = list("and","it"))
+service = createService('localhost','user','password')
+createFreeTextIndex(service,repo = 'testRepo',indexName = 'index',
+predicates = '<p>',stopWord = list('and','it'))
 }
 }
 

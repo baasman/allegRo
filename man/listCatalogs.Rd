@@ -7,13 +7,14 @@
 listCatalogs(service)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password}
+\item{service}{Service object containing server url, username, and password}
 }
 \value{
-ag object
+For each catalog, id and uri properties are returned, giving respectively the name of the catalog and the URL under which it is found.
+Properties named readable and writable indicate, for each catalog, whether the current user has read or write access to it.
 }
 \description{
-List all catalogs
+Returns a set of catalogs that are available on this server.
 }
 \examples{
 \dontrun{
