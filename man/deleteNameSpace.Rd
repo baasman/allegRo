@@ -12,6 +12,8 @@ deleteNameSpace(service, catalogid = "root", repo = "", namespace)
 \item{catalogid}{Id for catalog of interest.}
 
 \item{repo}{Id for repository of interest.}
+
+\item{namespace}{Namespace id to delete}
 }
 \value{
 An ag delete object that states whether delete was successful or not (invisible)

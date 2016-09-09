@@ -15,3 +15,4 @@ test_that("testing various functions that operate on service object",{
   expect_equal(getSize(service,repo = "testRepo")$return,1)
   deleteRepository(service,repo = "testRepo")
 })
+

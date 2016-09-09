@@ -238,6 +238,7 @@ deleteAllNameSpaces = function(service,catalogid= "root",repo = "",reset = FALSE
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
 #' @param repo Id for repository of interest.
+#' @param namespace Namespace id to delete
 #'
 #' @return An ag delete object that states whether delete was successful or not (invisible)
 #' @export
