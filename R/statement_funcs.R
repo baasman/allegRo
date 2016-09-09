@@ -136,7 +136,7 @@ addStatement = function(service, catalogid = "root", repo = "testRepo",
 
     }
   }
-
+  print(url)
   invisible(ag_put(service = service, url = url, queryargs = queryargs,
                    body = body, filepath = filepath))
 }

@@ -1,7 +1,7 @@
 
 
 
-#' startSession
+#' Start a session to work on
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
@@ -11,7 +11,7 @@
 #' @param loadInitFile If true, then the initfile will be loaded when the session starts.
 #' @param script The name of a script file to load; may be specified multiple times.
 #'
-#' @return ag_post object containing the url of the session on the server
+#' @return A new service object that points to the newly created session, belonging to current user
 #' @export
 #'
 #' @examples
@@ -19,15 +19,15 @@
 #' service = createService("localhost","user","password")
 #' startSession(service,repo = "testRepo",lifetime = 1000,script = "path/to/script")
 #' }
-startSession = function(service,catalogid = "root",repo = "testFromR2",
-                        autocommit = NULL,lifetime = 100,loadInitFile = NULL,
+startSession = function(service,catalogid = "root",repo = "",
+                        autocommit = FALSE,lifetime = 100,loadInitFile = FALSE,
                         script = NULL){
 
   body = NULL
   filepath = NULL
 
-  queryargs = list(autocommit = autocommit, lifetime = lifetime,loadInitFile = loadInitFile,
-                   script = script)
+  queryargs = convertLogical(list(autocommit = autocommit, lifetime = lifetime,loadInitFile = loadInitFile,
+                   script = script))
 
   if(catalogid == "root"){
     url = paste0(service$url,"repositories/",repo,"/session")
@@ -35,60 +35,58 @@ startSession = function(service,catalogid = "root",repo = "testFromR2",
     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session")
   }
 
-  return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+  post = ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath)
+  print(stringr::str_split_fixed(post$return,
+                                 ":", 3)[, 3])
+
+  serviceSession = createService(url = paste0(service$url,"session/",
+                                              stringr::str_split_fixed(post$return,
+                                              ":", 3)[, 3]),user = "baasman",password = "Aa20!bbb4")
+
+  return(serviceSession)
 }
 
 
-# commit = function(service,catalogid = "root",repo = "",session = NULL){
-#
-#   body = NULL
-#   filepath = NULL
-#   queryargs = NULL
-#
-#   if(catalogid == "root"){
-#     url = paste0(service$url,"commit")
-#   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/commit")
-#   }
-#
-#   return(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-# }
+commit = function(service){
+  if(!grepl("session",service$url)) stop("Must use response from startSession to commit to repository")
+  body = NULL
+  filepath = NULL
+  queryargs = NULL
+  url = paste0(service$url,"commit")
+  invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
 
+closeSession = function(service){
+   body = NULL
+   filepath = NULL
+   queryargs = NULL
+   url = paste0(service$url,"session/close")
+   invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
 
+getDescriptionSession = function(service){
+    body = NULL
+    filepath = NULL
+    queryargs = NULL
+    url = paste0(service$url,"session/description")
+    return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
 
-#
-# closeSession = function(service,catalogid = "root",repo = "testFromR2",session){
-#
-#   body = NULL
-#   filepath = NULL
-#   queryargs = NULL
-#
-#   port = gsub(".*:\\s*|/.*","",session$return)
-#   uid = stringr::str_split_fixed(session$return,":",3)[3]
-#
-#
-#   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repo,"/session/",uid,"/close")
-#   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session/",uid,"/close")
-#   }
-#
-#
-#   invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
-# }
-#
-# getDescSession = function(service,catalogid = "root",repo = "testFromR2",session){
-#
-#   body = NULL
-#   queryargs = NULL
-#
-#   port = gsub(".*:\\s*|/.*","",s)
-#
-#   if(catalogid == "root"){
-#     url = paste0(service$url,"repositories/",repo,"/session/",)
-#   } else{
-#     url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session/description")
-#   }
-#
-#   invisible(ag_get(service = service,url = url,queryargs = queryargs,body = body))
-# }
+isActiveSession = function(service){
+  body = NULL
+  filepath = NULL
+  queryargs = NULL
+  url = paste0(service$url,"session/isActive")
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
+
+pingSession = function(service){
+  url = paste0(service$url,"session/isActive")
+  return(ag_get(service = service,url = url,queryargs = NULL,body = NULL))
+}
+
+maintainSession = function(session){
+
+}
+
+x= "hey"
