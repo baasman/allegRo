@@ -4,14 +4,10 @@
 \alias{deleteAllNameSpaces}
 \title{Delete all namespaces in repository}
 \usage{
-deleteAllNameSpaces(service, catalogid = "root", repo = "", reset = FALSE)
+deleteAllNameSpaces(repository, reset = FALSE)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{reset}{Defaults to FALSE. If TRUE,then the namespaces are reset to the default namespaces of the server.}
 }
@@ -24,7 +20,8 @@ Deletes all namespaces in this repository for the current user.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-deleteAllNameSpaces(service,catalogid = "root",repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+deleteAllNameSpaces(rep,reset = TRUE)
 }
 }
 

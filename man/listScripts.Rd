@@ -4,14 +4,10 @@
 \alias{listScripts}
 \title{Return a list of scripts}
 \usage{
-listScripts(service, catalogid = "root", repo = "")
+listScripts(repository)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
 list of scripts that have been added to this repository
@@ -22,7 +18,8 @@ Return the list of scripts that have been added to this repository. These script
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-listScripts(service,repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+listScripts(rep)
 }
 }
 

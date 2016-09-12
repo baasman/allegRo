@@ -4,14 +4,10 @@
 \alias{listContexts}
 \title{List all contexts in repository}
 \usage{
-listContexts(service, catalogid = "root", repo = "")
+listContexts(repository)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
 list of all contexts
@@ -22,7 +18,8 @@ List all contexts in repository
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-listContexs(service,catalogid = "root",repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+listContexs(rep)
 }
 }
 

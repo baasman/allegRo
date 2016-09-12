@@ -4,14 +4,10 @@
 \alias{getAccess}
 \title{Repository access}
 \usage{
-getAccess(service, catalogid = "root", repo = "testRepo")
+getAccess(repository)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
 String describing access of user.
@@ -22,7 +18,8 @@ Return the access permissions the current user has for this repository.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getAccess(service,catalogid = "root",repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+getAccess(rep)
 }
 }
 

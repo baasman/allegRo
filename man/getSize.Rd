@@ -4,19 +4,12 @@
 \alias{getSize}
 \title{Return the size of a repository}
 \usage{
-getSize(service, catalogid = "root", repo = "", context = NULL,
-  session = NULL)
+getSize(repository, context = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{context}{Can be a list. If supplied, the count is only for the specified named graphs}
-
-\item{session}{If working in a session, specify response of createSession call}
 }
 \value{
 Number of triples in store
@@ -27,7 +20,8 @@ Return the size of a repository
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-getSize(service,catalogid = "root",repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+getSize(rep)
 }
 }
 

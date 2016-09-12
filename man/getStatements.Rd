@@ -2,20 +2,15 @@
 % Please edit documentation in R/statement_funcs.R
 \name{getStatements}
 \alias{getStatements}
-\title{getStatements}
+\title{Get statements}
 \usage{
-getStatements(service, catalogid = "root", repo = "testRepo", subj = NULL,
-  pred = NULL, obj = NULL, context = NULL, infer = FALSE,
-  limit = NULL, tripleIDs = FALSE, count = FALSE,
-  returnType = c("data.table", "dataframe", "matrix", "list"),
-  cleanUp = FALSE, convert = FALSE)
+getStatements(repository, subj = NULL, pred = NULL, obj = NULL,
+  context = NULL, infer = FALSE, limit = NULL, tripleIDs = FALSE,
+  count = FALSE, returnType = c("data.table", "dataframe", "matrix",
+  "list"), cleanUp = FALSE, convert = FALSE)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{subj}{Subject triple pattern you want to match - optional}
 
@@ -48,8 +43,9 @@ If no subject, predicate, or object supplied, all statements will be returned.
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
-getStatements(service,catalogid = 'root',repo = 'testRepo',
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+getStatements(rep,
 pred = '<http://test.org/pred>', limit = 10)
 }
 }

@@ -4,15 +4,10 @@
 \alias{optimizeIndices}
 \title{Optimize the indices}
 \usage{
-optimizeIndices(service, catalogid = "root", repo = "", level = 2,
-  wait = FALSE, index = NULL)
+optimizeIndices(repository, level = 2, wait = FALSE, index = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{level}{Specifies how aggressive the optimization will be (more aggression, more optimization, but takes more time). Has to be a positive integer (Defaults to 2)}
 
@@ -25,8 +20,9 @@ Optimize the triple-store indices
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
-optimizeIndices(service,repo = "testRepo",index = list("gspoi","i"),level = 2,wait = TRUE)
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+optimizeIndices(rep,index = list("gspoi","i"),level = 2,wait = TRUE)
 }
 }
 

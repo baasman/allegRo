@@ -4,16 +4,13 @@
 \alias{createRepository}
 \title{Create a repository}
 \usage{
-createRepository(service, catalogid = "root", repo = "",
-  expectedSize = NULL, index = NULL, override = TRUE, restore = NULL,
-  nocommit = NULL)
+createRepository(catalog, repo, expectedSize = NULL, index = NULL,
+  override = TRUE, restore = NULL, nocommit = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
+\item{catalog}{Catalog object specifying username, password, and catalog to work on.}
 
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repo}{Id for repository you want to create.}
 
 \item{expectedSize}{Specifies the expected size of the repository.}
 
@@ -35,7 +32,8 @@ When a repository with the given name already exists, it is overwritten, unless 
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-createRepository(service,catalogid = "root",repo = "test",
+cat = catalog(service,"root")
+createRepository(cat,repo = "test",
 expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
 }
 }

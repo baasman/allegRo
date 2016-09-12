@@ -4,14 +4,10 @@
 \alias{backupRepository}
 \title{Create a backup for the  repository}
 \usage{
-backupRepository(service, catalogid = "root", repo = "", backupName)
+backupRepository(repository, backupName)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{backupName}{character value, name of backup repository}
 }
@@ -24,7 +20,8 @@ Create a backup of the repository.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-backupRepository(service,catalogid = "root",repo = "testRepo",backupName = "backup_testRepo")
+rep = repository(catalog(service,"root"),"test")
+backupRepository(,backupName = "backup_testRepo")
 }
 }
 

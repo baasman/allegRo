@@ -4,14 +4,10 @@
 \alias{deleteNameSpace}
 \title{Delete a namespace in repository}
 \usage{
-deleteNameSpace(service, catalogid = "root", repo = "", namespace)
+deleteNameSpace(repository, namespace)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{namespace}{Namespace id to delete}
 }
@@ -24,7 +20,8 @@ Deletes a namespace in this repository for the current user.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-deleteNameSpace(service,catalogid = "root",repo = "testRepo")
+rep = repository(catalog(service,"root"),"test")
+deleteNameSpace(service,catalogid = "root",repo = "testRepo",namespace = "foaf")
 }
 }
 

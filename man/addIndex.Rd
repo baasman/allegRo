@@ -4,14 +4,10 @@
 \alias{addIndex}
 \title{Add index to repository}
 \usage{
-addIndex(service, catalogid = "root", repo = "", type, style = c(0, 1, 2))
+addIndex(repository, type, style = c(0, 1, 2))
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{type}{Type of index. Use listIndices(...,valid = TRUE) to see all possible indices}
 
@@ -25,8 +21,9 @@ Add the index type from the triple-store.
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
-addIndex(service,repo = "testRepo",type = "gspoi",style = 0)
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+addIndex(rep,type = "gspoi",style = 0)
 }
 }
 

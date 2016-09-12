@@ -4,12 +4,10 @@
 \alias{listRepositories}
 \title{List all repositories in chosen catalog}
 \usage{
-listRepositories(service, catalogid = "root", all = FALSE)
+listRepositories(catalog, all = FALSE)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password}
-
-\item{catalogid}{id for catalog of interest}
+\item{catalog}{Catalog object specifying username, password, and catalog to work on.}
 
 \item{all}{Default FALSE. If TRUE, then all repositories of all catalogs will be returned}
 }
@@ -22,7 +20,8 @@ Return a list of repositories available in the catalog.
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-listRepositories(service)
+cat = catalog(service,"root")
+listRepositories(cat)
 }
 }
 

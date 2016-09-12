@@ -1,10 +1,4 @@
-
-###class specifications
-
-
-######SERVICE
-
-#' createService
+#' Create a service object
 #'
 #' @param url The url for your AllegroGraph server
 #' @param user Username for user accessing store, if necessary
@@ -14,7 +8,7 @@
 #' @export
 #' @examples
 #' createService("localhost","user","password",testConnection = FALSE)
-createService = function(url,user = NULL,password = NULL,testConnection = FALSE){
+service = function(url,user = NULL,password = NULL,testConnection = FALSE){
 
   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
   if(!missing(user) & !is.character(user)) stop("user should be a character value")
@@ -44,7 +38,8 @@ createService = function(url,user = NULL,password = NULL,testConnection = FALSE)
 
 #' @export
 print.service = function(x, ...){
-  cat("Service specifications: \n")
+  cat(paste0("Using port: ",gsub("[^0-9]","",service$url)))
+  cat("\n \n")
   print(x["url"])
   print(x["user"])
   print(x["password"])
@@ -68,13 +63,24 @@ testConnection = function(s){
                                                               and/or ssh connection")
 }
 
-#########################
 
 
 ### CATALOG
 
+
+
+#' Create a catalog object
+#'
+#' @param service Object of type service on which your catalog is located
+#' @param catalog Character string specifying your catalog
+#' @return S3 Object of type "catalog", which states the url, username, and password and catalog
+#' @export
+#' @examples
+#' service = createService("localhost","user","password",testConnection = FALSE)
+#' cat = catalog(service,"root")
 catalog = function(service,catalog){
 
+  if(!("service" %in% class(catalog))) stop("service object should be of class 'service'")
   if(!is.character(catalog)& ! missing(catalog)) stop("catalog has to be supplied, and should be a character")
 
   if(stringr::str_sub(catalog,start = -1) != "/"){
@@ -101,7 +107,7 @@ catalog = function(service,catalog){
 
 #' @export
 print.catalog = function(x, ...){
-  cat(paste0("Using port: ",gsub("[^0-9]","",service$url)))
+  cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
   cat("\n \n")
   print(x["catalog"])
   print(x["user"])
@@ -110,4 +116,37 @@ print.catalog = function(x, ...){
 }
 
 
+### REPOSITORY FUNCTIONS
+
+
+repository = function(catalog,repository){
+
+  if(!("catalog" %in% class(catalog))) stop("catalog should be of class 'catalog'")
+  if(!is.character(repository)& ! missing(repository)) stop("repository has to be supplied, and should be a character")
+
+  if(stringr::str_sub(repository,start = -1) != "/"){
+    repourl = paste0(catalog$url,"repositories/",repository,"/")
+  }
+
+  obj = structure(
+    list(
+      url = repourl,
+      user = service$user,
+      password = service$password,
+      catalog = catalog$catalog,
+      repository = repository
+    ),
+    class = c("repository","catalog","service")
+  )
+  return(obj)
+}
+
+print.repository = function(x, ...){
+  cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
+  cat("\n \n")
+  print(x["catalog"])
+  print(x["repository"])
+  print(x["user"])
+  print(x["password"])
+}
 

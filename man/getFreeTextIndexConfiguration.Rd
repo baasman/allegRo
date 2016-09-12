@@ -4,14 +4,10 @@
 \alias{getFreeTextIndexConfiguration}
 \title{Return free-text index configuration}
 \usage{
-getFreeTextIndexConfiguration(service, catalogid = "root", repo = "", index)
+getFreeTextIndexConfiguration(repository, index)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{index}{The index you want to see configurations for}
 }
@@ -23,9 +19,10 @@ Return information on the freetext-index named indexName.
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
 createFreeTextIndex(service,repo = 'testRepo',index = 'index')
-getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
+getFreeTextIndexConfiguration(rep,repo = 'testRepo',index = 'index')
 }
 }
 

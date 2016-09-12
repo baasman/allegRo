@@ -4,15 +4,11 @@
 \alias{deleteStatements}
 \title{Delete matching statements}
 \usage{
-deleteStatements(service, catalogid = "root", repo = "testRepo",
-  subj = NULL, pred = NULL, obj = NULL, context = NULL)
+deleteStatements(repository, subj = NULL, pred = NULL, obj = NULL,
+  context = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{subj}{valid url}
 
@@ -32,11 +28,12 @@ The patterns to match come in pairs for subject, predicate, object, and graph. W
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
 subj = '<www.test.com/tmp#person>'
 pred = '<www.test.com/tmp#hasItem>'
 obj= '<www.test.com/tmp#sword>'
-deleteStatements(service,catalogid = 'root',reposirepo = 'testRepo',
+deleteStatements(rep,
 subj = subj,pred = pred,obj = obj)
 }
 }

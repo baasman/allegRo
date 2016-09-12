@@ -4,14 +4,10 @@
 \alias{listIndices}
 \title{Return indices in repository}
 \usage{
-listIndices(service, catalogid = "root", repo = "", valid = FALSE)
+listIndices(repository, valid = FALSE)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{valid}{Default FALSE. If true, then all possible index flavors are returned rather than just the ones that are currently defined.}
 }

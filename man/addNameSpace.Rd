@@ -4,14 +4,10 @@
 \alias{addNameSpace}
 \title{Add a namespace to the repository}
 \usage{
-addNameSpace(service, catalogid = "root", repo = "", prefix, nsURI)
+addNameSpace(repository, prefix, nsURI)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{prefix}{Prefix}
 
@@ -26,8 +22,9 @@ Add a namespace for the current user in this repository
 \examples{
 \dontrun{
 service = createService("localhost","user","password")
-addNameSpace(service,catalogid = "root",repo = "testRepo",prefix = "tmp",
-             nsURI = "http://test.com/tmp#")
+rep = repository(catalog(service,"root"),"test")
+addNameSpace(service,catalogid = "root",repo = "testRepo",prefix = "foaf",
+nsURI = "http://xmlns.com/foaf/0.1/")
 }
 }
 
