@@ -110,33 +110,25 @@ getStatements = function(service, catalogid = "root", repo = "testRepo",
 #' }
 #' @import httr
 addStatement = function(service, catalogid = "root", repo = "testRepo",
-                        subj = NULL, pred = NULL, obj = NULL, context = NULL, session = NULL) {
+                        subj = NULL, pred = NULL, obj = NULL, context = NULL) {
 
   queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
   body = NULL
   filepath = NULL
 
-  if (is.null(session)) {
+  if(grepl("session",service$url)){
+    url = paste0(service$url,"statement")
+  } else{
     if (catalogid == "root") {
       url = paste0(service$url, "repositories/", repo, "/statement")
     } else {
       url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
                    repo, "/statement")
     }
-  } else {
-
-    if (catalogid == "root") {
-      url = paste0(service$url, "repositories/", repo, "/session/",
-                   stringr::str_split_fixed(session$return, ":", 3)[, 3],
-                   "/statement")
-    } else {
-      url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                   repo, "/session/", stringr::str_split_fixed(session$return,
-                                                               ":", 3)[, 3], "/statement")
-
-    }
   }
-  print(url)
+
+
+
   invisible(ag_put(service = service, url = url, queryargs = queryargs,
                    body = body, filepath = filepath))
 }

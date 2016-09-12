@@ -1,7 +1,9 @@
 
 
 
-#' Start a session to work on
+#' Working with sessions
+#'
+#' @name Sessions
 #'
 #' @param service Service object containing service url, username, and password.
 #' @param catalogid Id for catalog of interest.
@@ -39,9 +41,9 @@ startSession = function(service,catalogid = "root",repo = "",
   print(stringr::str_split_fixed(post$return,
                                  ":", 3)[, 3])
 
-  serviceSession = createService(url = paste0(service$url,"session/",
+  serviceSession = createService(url = paste0(url = service$url,"session/",
                                               stringr::str_split_fixed(post$return,
-                                              ":", 3)[, 3]),user = "baasman",password = "Aa20!bbb4")
+                                              ":", 3)[, 3]),user = service$user,password = service$password)
 
   return(serviceSession)
 }
@@ -85,8 +87,4 @@ pingSession = function(service){
   return(ag_get(service = service,url = url,queryargs = NULL,body = NULL))
 }
 
-maintainSession = function(session){
 
-}
-
-x= "hey"
