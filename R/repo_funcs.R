@@ -27,6 +27,12 @@ listRepositories = function(service,catalogid = "root",all = FALSE){
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
+listRepositories = function(service,all = FALSE){
+  queryargs = convertLogical(list(all = all))
+  body = NULL
+  url = paste0(service$url,"repositories")
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
 
 
 

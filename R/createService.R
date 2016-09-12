@@ -1,6 +1,9 @@
 
 ###class specifications
 
+
+######SERVICE
+
 #' createService
 #'
 #' @param url The url for your AllegroGraph server
@@ -65,44 +68,46 @@ testConnection = function(s){
                                                               and/or ssh connection")
 }
 
+#########################
+
+
+### CATALOG
+
+catalog = function(service,catalog){
+
+  if(!is.character(catalog)& ! missing(catalog)) stop("catalog has to be supplied, and should be a character")
+
+  if(stringr::str_sub(catalog,start = -1) != "/"){
+    catalogurl = paste0(catalog,"/")
+  }
+
+  if(catalog == "root"){
+    catalogurl = service$url
+  } else{
+    catalogurl = paste0(service$url,"catalogs/",catalogurl)
+  }
+
+  obj = structure(
+    list(
+      url = catalogurl,
+      user = service$user,
+      password = service$password,
+      catalog = catalog
+    ),
+    class = c("catalog","service")
+  )
+  return(obj)
+}
+
+#' @export
+print.catalog = function(x, ...){
+  cat(paste0("Using port: ",gsub("[^0-9]","",service$url)))
+  cat("\n \n")
+  print(x["catalog"])
+  print(x["user"])
+  print(x["password"])
+
+}
 
 
 
-# createService = function(url,user = NULL,password = NULL,testConnection = FALSE){
-#
-#   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
-#   if(!is.na(user) & !is.character(user)) stop("user should be a character value")
-#   if(!is.na(password) & !is.character(password)) stop("password should be a character value")
-#
-#   if(stringr::str_sub(url,start = -1) != "/"){
-#     url = paste0(url,"/")
-#   }
-#
-#   obj = structure(
-#     list(
-#       url = url,
-#       user = user,
-#       password = password
-#     ),
-#     class = c("service","list")
-#   )
-#
-#   if(testConnection){
-#     tryCatch(
-#       {
-#         testConnection(obj)
-#         p = "produced no error!"
-#       },
-#       warning = function(cond){
-#         message("There seemed to be a problem with the connection.")
-#         message("The error message: ",content(resp))
-#         p = "produced an error"
-#       },
-#       finally = {
-#         message("server url - ",obj["url"]," ",p)
-#       }
-#     )
-#   }
-#
-#   invisible(obj)
-# }
