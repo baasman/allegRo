@@ -30,7 +30,6 @@ listRepositories = function(service,catalogid = "root",all = FALSE){
 
 
 
-
 #' Create a repository
 #'
 #' @description Creates a new, empty repository.
