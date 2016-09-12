@@ -1,12 +1,11 @@
-#' getStatements
+
+#' Get statements
 #'
 #' @description Can specify any part of statement, and all matches will be returned.
 #' If no subject, predicate, or object supplied, all statements will be returned.
 #'
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param subj Subject triple pattern you want to match - optional
 #' @param pred Predicate of triple pattern you want to match - optional
 #' @param obj Object of triple pattern you want to match - optional
@@ -24,12 +23,13 @@
 #'
 #' @examples
 #'\dontrun{
-#' service = createService('localhost','user','password')
-#' getStatements(service,catalogid = 'root',repo = 'testRepo',
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' getStatements(rep,
 #' pred = '<http://test.org/pred>', limit = 10)
 #' }
 #' @import httr
-getStatements = function(service, catalogid = "root", repo = "testRepo",
+getStatements = function(repository,
                          subj = NULL, pred = NULL, obj = NULL, context = NULL, infer = FALSE,
                          limit = NULL, tripleIDs = FALSE, count = FALSE, returnType = c("data.table",
                                                                                         "dataframe", "matrix", "list"), cleanUp = FALSE, convert = FALSE) {
@@ -45,13 +45,8 @@ getStatements = function(service, catalogid = "root", repo = "testRepo",
 
   if (missing(subj) & missing(pred) & missing(obj) & missing(context)) {
     queryargs = NULL
-    if (catalogid == "root") {
-      url = paste0(service$url, "repositories/", repo, "/statements")
-    } else {
-      url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                   repo, "/statements")
-    }
-    return(ag_get(service = service, url = url, queryargs = queryargs,
+    url = paste0(repository$url, "statements")
+    return(ag_get(service = repository, url = url, queryargs = queryargs,
                   body = body))
   }
 
@@ -65,19 +60,15 @@ getStatements = function(service, catalogid = "root", repo = "testRepo",
                                                 pred = pred, predEnd = predEnd, obj = obj, objEnd = objEnd, context = context,
                                                 infer = infer, limit = limit, tripleIDs = tripleIDs, count = count)))
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/statements")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/statements")
-  }
+  url = paste0(repository$url, "statements")
 
-  invisible(ag_statements(service = service, url = url, queryargs = queryargs,
+
+  invisible(ag_statements(service = repository, url = url, queryargs = queryargs,
                           body = body, returnType = returnType, cleanUp = cleanUp, convert = convert))
 }
 
 
-#' addStatement
+#' Add a statement
 #'
 #' @description Add a triple to the repository.
 #'The subj, pred, and obj arguments must be supplied and are used to fill in the subject, predicate and object parts of the triple. The context argument is used to fill in the triple's graph but may be left off. In this case, the triple's graph will be the default graph of the repository.
@@ -86,50 +77,36 @@ getStatements = function(service, catalogid = "root", repo = "testRepo",
 #'
 #'The service returns the triple-ID of the newly added triple.
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param subj valid url
 #' @param pred valid url
 #' @param obj valid url
 #' @param context context of triple
-#' @param session Your session object. If specified, this function will only make changes within the session.
-#'                You'll need to use sessionCommit() to integrate your additions.
 #'
 #' @return Return: successful push or not
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
 #' subj = '<www.test.com/tmp#person>'
 #' pred = '<www.test.com/tmp#hasItem>'
 #' obj= '<www.test.com/tmp#sword>'
-#' addStatement(service,catalogid = 'root',reposirepo = 'testRepo',
+#' addStatement(rep,
 #' subj = subj,pred = pred,obj = obj)
 #' }
 #' @import httr
-addStatement = function(service, catalogid = "root", repo = "testRepo",
+addStatement = function(repository,
                         subj = NULL, pred = NULL, obj = NULL, context = NULL) {
 
   queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
   body = NULL
   filepath = NULL
 
-  if(grepl("session",service$url)){
-    url = paste0(service$url,"statement")
-  } else{
-    if (catalogid == "root") {
-      url = paste0(service$url, "repositories/", repo, "/statement")
-    } else {
-      url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                   repo, "/statement")
-    }
-  }
+  url = paste0(repository$url, "statement")
 
-
-
-  invisible(ag_put(service = service, url = url, queryargs = queryargs,
+  invisible(ag_put(service = repository, url = url, queryargs = queryargs,
                    body = body, filepath = filepath))
 }
 
@@ -141,9 +118,7 @@ addStatement = function(service, catalogid = "root", repo = "testRepo",
 #'All parameters are optional -- when none are given, every statement in the store is deleted.
 #'The patterns to match come in pairs for subject, predicate, object, and graph. When given, they should be specified in N-triples notation.
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param subj valid url
 #' @param pred valid url
 #' @param obj valid url
@@ -154,28 +129,24 @@ addStatement = function(service, catalogid = "root", repo = "testRepo",
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
 #' subj = '<www.test.com/tmp#person>'
 #' pred = '<www.test.com/tmp#hasItem>'
 #' obj= '<www.test.com/tmp#sword>'
-#' deleteStatements(service,catalogid = 'root',reposirepo = 'testRepo',
+#' deleteStatements(rep,
 #' subj = subj,pred = pred,obj = obj)
 #' }
 #' @import httr
-deleteStatements = function(service, catalogid = "root", repo = "testRepo",
+deleteStatements = function(repository,
                             subj = NULL, pred = NULL, obj = NULL, context = NULL) {
 
-  if (missing(subj) & missing(pred) & missing(obj)) {
+  if (missing(subj) & missing(pred) & missing(obj) & missing(context)) {
     if (readline("Since no patterns were specified, all statements will be deleted. Is this what you wanted? Type yes or no: ") ==
         "yes") {
       body = NULL
       queryargs = NULL
-      if (catalogid == "root") {
-        url = paste0(service$url, "repositories/", repo, "/statements")
-      } else {
-        url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                     repo, "/statements")
-      }
+      url = paste0(repository$url, "statements")
       invisible(ag_delete(service = service, url = url, queryargs = queryargs,
                           body = body))
     } else {
@@ -184,27 +155,21 @@ deleteStatements = function(service, catalogid = "root", repo = "testRepo",
   }
 
   subjEnd = predEnd = objEnd = NULL
-  if (!missing(subj))
-    subjEnd = subj
-  if (!missing(pred))
-    predEnd = pred
-  if (!missing(obj))
-    objEnd = obj
+  # if (!missing(subj))
+  #   subjEnd = subj
+  # if (!missing(pred))
+  #   predEnd = pred
+  # if (!missing(obj))
+  #   objEnd = obj
 
 
   queryargs = list(subj = subj, subjEnd = subjEnd, pred = pred, predEnd = predEnd,
                    obj = obj, objEnd = objEnd, context = context)
 
   body = NULL
+  url = paste0(repository$url, "statements")
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/statements")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/statements")
-  }
-
-  invisible(ag_delete(service = service, url = url, queryargs = queryargs,
+  invisible(ag_delete(service = repository, url = url, queryargs = queryargs,
                       body = body))
 }
 
@@ -215,9 +180,7 @@ deleteStatements = function(service, catalogid = "root", repo = "testRepo",
 #'
 #' @description To be added
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param filepath File that contains your triples
 #' @param baseURI ...
 #' @param context Context to attach to added triples
@@ -228,12 +191,13 @@ deleteStatements = function(service, catalogid = "root", repo = "testRepo",
 #'
 #' @examples
 #'\dontrun{
-#' service = createService('localhost','user','password')
-#' addStatementsFromFile(service,catalogid = 'root', repo = 'testRepo',
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' addStatementsFromFile(rep,
 #' file = 'path/to/file/mytriples.nq')
 #' }
 #' @import httr
-addStatementsFromFile = function(service, catalogid = "root", repo = "",
+addStatementsFromFile = function(repository,
                                  filepath, baseURI = NULL, context = NULL, commitEvery = NULL) {
 
   if (missing(filepath))
@@ -248,45 +212,109 @@ addStatementsFromFile = function(service, catalogid = "root", repo = "",
     body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
   }
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/statements")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/statements")
-  }
+  url = paste0(repository$url, "statements")
 
-  invisible(ag_put(service = service, url = url, queryargs = queryargs,
+  invisible(ag_put(service = repository, url = url, queryargs = queryargs,
                    body = body, filepath = filepath))
 }
+
+
+
+
+#' Get all duplicate statements
+#'
+#' @section Warning:
+#' This is slow on large repositories, even if no duplicates exist.
+#'
+#' @param repository Object of type repository specifying server details and repository to work on.
+#'
+#' @return A matrix containing all duplicate statements
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' getDuplicates(rep)
+#' }
+getDuplicates = function(repository){
+
+  queryargs = NULL
+  body = NULL
+  url = paste0(repository$url,"statements/duplicates")
+
+  return(ag_get(service = repository,url = url,queryargs = queryargs,body = body))
+}
+
+#' Delete all duplicate statements
+#'
+#' @description Remove duplicate triples from the repository
+#'
+#' @param repository Object of type repository specifying server details and repository to work on.
+#' @param mode A string (default: spog)
+#' @param commit Commit defaults to true if the connection has autocommit mode on.
+#'
+#' @return An ag delete object that states whether delete was successful or not (invisible)
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' deleteDuplicates(rep)
+#' }
+deleteDuplicates = function(repository,mode = NULL,commit = NULL){
+
+  queryargs = convertLogical(list(mode = mode,commit = commit))
+  body = NULL
+
+  url = paste0(repository$url,"statements/duplicates")
+
+  invisible(ag_delete(service = repository,url = url,queryargs = queryargs,body = body))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### testing bulk loader
 
-
-agLoad = function(service, catalogid = "root", repo = "", url = NULL, filepath,
-                  bulkLoad = NULL, bulkLoaders = NULL, externalReferences = NULL, baseURI = NULL,
-                  context = NULL) {
-
-  if (missing(filepath))
-    stop("must supply path of file to be uploaded")
-
-  queryargs = list(url = url, filepath = filepath, bulkLoad = bulkLoad,
-                   bulkLoaders = bulkLoaders, externalReferences = externalReferences,
-                   baseURI = baseURI, context = context, useAgload = "1")
-
-  if (grepl("nq", filepath) | grepl("nt", filepath)) {
-    body = quote(upload_file(path = filepath, type = "text/plain"))
-  } else if (grepl("rdf", filepath) | grepl("xml", filepath)) {
-    body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
-  }
-
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/statements")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/statements")
-  }
-
-  invisible(ag_put(service = service, url = url, queryargs = queryargs,
-                   body = body, filepath = filepath))
-}
+#
+# agLoad = function(service, catalogid = "root", repo = "", url = NULL, filepath,
+#                   bulkLoad = NULL, bulkLoaders = NULL, externalReferences = NULL, baseURI = NULL,
+#                   context = NULL) {
+#
+#   if (missing(filepath))
+#     stop("must supply path of file to be uploaded")
+#
+#   queryargs = list(url = url, filepath = filepath, bulkLoad = bulkLoad,
+#                    bulkLoaders = bulkLoaders, externalReferences = externalReferences,
+#                    baseURI = baseURI, context = context, useAgload = "1")
+#
+#   if (grepl("nq", filepath) | grepl("nt", filepath)) {
+#     body = quote(upload_file(path = filepath, type = "text/plain"))
+#   } else if (grepl("rdf", filepath) | grepl("xml", filepath)) {
+#     body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
+#   }
+#
+#   if (catalogid == "root") {
+#     url = paste0(service$url, "repositories/", repo, "/statements")
+#   } else {
+#     url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
+#                  repo, "/statements")
+#   }
+#
+#   invisible(ag_put(service = service, url = url, queryargs = queryargs,
+#                    body = body, filepath = filepath))
+# }

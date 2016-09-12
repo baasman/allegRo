@@ -21,7 +21,7 @@ Replace the current initialization file
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 setInitFile(service,filepath = "path/to/directory/initFile.txt")
 }
 }

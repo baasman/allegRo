@@ -18,7 +18,7 @@ Returns a set of catalogs that are available on this server.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 listCatalogs(service)
 }
 }

@@ -2,17 +2,13 @@
 % Please edit documentation in R/statement_funcs.R
 \name{addStatement}
 \alias{addStatement}
-\title{addStatement}
+\title{Add a statement}
 \usage{
-addStatement(service, catalogid = "root", repo = "testRepo", subj = NULL,
-  pred = NULL, obj = NULL, context = NULL, session = NULL)
+addStatement(repository, subj = NULL, pred = NULL, obj = NULL,
+  context = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{subj}{valid url}
 
@@ -21,9 +17,6 @@ addStatement(service, catalogid = "root", repo = "testRepo", subj = NULL,
 \item{obj}{valid url}
 
 \item{context}{context of triple}
-
-\item{session}{Your session object. If specified, this function will only make changes within the session.
-You'll need to use sessionCommit() to integrate your additions.}
 }
 \value{
 Return: successful push or not
@@ -38,11 +31,12 @@ The service returns the triple-ID of the newly added triple.
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
+service = createService("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
 subj = '<www.test.com/tmp#person>'
 pred = '<www.test.com/tmp#hasItem>'
 obj= '<www.test.com/tmp#sword>'
-addStatement(service,catalogid = 'root',reposirepo = 'testRepo',
+addStatement(rep,
 subj = subj,pred = pred,obj = obj)
 }
 }

@@ -4,15 +4,11 @@
 \alias{evalFreeTextSearch}
 \title{Query using free-text indices}
 \usage{
-evalFreeTextSearch(service, catalogid = "root", repo = "", pattern,
-  index = NULL, limit = NULL, offset = NULL, sorted = NULL)
+evalFreeTextSearch(repository, pattern, index = NULL, limit = NULL,
+  offset = NULL, sorted = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{pattern}{A string to match triples on}
 
@@ -32,9 +28,9 @@ Query the repository using a free-text index
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
-createFreeTextIndex(service,repo = 'testRepo',index = 'index')
-getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+getFreeTextIndexConfiguration(rep,repo = 'testRepo',index = 'index')
 }
 }
 

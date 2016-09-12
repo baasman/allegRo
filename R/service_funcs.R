@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' getInitFile(service)
 #' }
 #' @import httr
@@ -30,7 +30,7 @@ getInitFile = function(service){
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' setInitFile(service,filepath = "path/to/directory/initFile.txt")
 #' }
 #' @import httr
@@ -59,7 +59,7 @@ setInitFile = function(service,filepath,restart = FALSE){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' getVersion(service)
 #' }
 #' @import httr
@@ -86,7 +86,7 @@ getVersion = function(service, complex = FALSE){
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' listCatalogs(service)
 #' }
 #' @import httr
@@ -101,7 +101,5 @@ listCatalogs = function(service){
 }
 
 
-shell(paste("C:/Users/baasman/spark-2.0.0-bin-hadoop2.7/bin/spark-submit.cmd","sparkr-shell",
-             "ports.out"))
 
 

@@ -18,7 +18,7 @@ The initialization-file is a collection of Common Lisp code that is executed on 
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 getInitFile(service)
 }
 }

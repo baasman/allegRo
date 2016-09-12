@@ -4,14 +4,10 @@
 \alias{listNameSpaces}
 \title{Return all namespaces in repository}
 \usage{
-listNameSpaces(service, catalogid = "root", repo = "test")
+listNameSpaces(repository)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
 An ag object that includes the list of namespaces used in the specified repository.
@@ -21,8 +17,9 @@ Return the currently active namespaces for your user in this repository
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-listNameSpaces(service,catalogid = "root",repo = "testRepo")
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+listNameSpaces(rep)
 }
 }
 

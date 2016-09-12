@@ -4,18 +4,13 @@
 \alias{createFreeTextIndex}
 \title{Create a free-text index}
 \usage{
-createFreeTextIndex(service, catalogid = "root", repo = "", indexName,
-  predicate, indexLiterals = NULL, indexResources = FALSE,
-  indexFields = NULL, minimumWordSize = NULL, stopWords = NULL,
-  wordFilter = NULL, innerChars = NULL, borderChars = NULL,
-  tokenizer = NULL, reIndex = NULL)
+createFreeTextIndex(repository, indexName, predicate, indexLiterals = NULL,
+  indexResources = FALSE, indexFields = NULL, minimumWordSize = NULL,
+  stopWords = NULL, wordFilter = NULL, innerChars = NULL,
+  borderChars = NULL, tokenizer = NULL, reIndex = NULL)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
+\item{repository}{Object of type repository specifying server details and repository to work on.}
 
 \item{indexName}{Name of index of interest}
 
@@ -47,8 +42,9 @@ http://franz.com/agraph/support/documentation/current/text-index.html
 }
 \examples{
 \dontrun{
-service = createService('localhost','user','password')
-createFreeTextIndex(service,repo = 'testRepo',indexName = 'index',
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+createFreeTextIndex(rep,indexName = 'index',
 predicate = '<p>',stopWords = list('and','it'))
 }
 }

@@ -4,31 +4,25 @@
 #'
 #' @description Return a list of freetext indices defined on the store
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #'
 #' @return A matrix of all active free text indices
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' listFreeTextIndices(service,catalogid = 'root',repo = 'testRepo')
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' listFreeTextIndices(rep)
 #' }
-listFreeTextIndices = function(service, catalogid = "root", repo = "") {
+listFreeTextIndices = function(repository) {
 
   queryargs = NULL
   body = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext/indices")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext/indices")
-  }
+  url = paste0(repository$url, "freetext/indices")
 
-  return(ag_get(service = service, url = url, queryargs = queryargs,
+  return(ag_get(service = repository, url = url, queryargs = queryargs,
                 body = body))
 }
 
@@ -37,9 +31,7 @@ listFreeTextIndices = function(service, catalogid = "root", repo = "") {
 #' @description Create or modify a freetext-index. I suggest reading the official documentation at
 #' http://franz.com/agraph/support/documentation/current/text-index.html
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param indexName Name of index of interest
 #' @param predicate Can be a list. Indicates the predicates that should be indexed. When not given, all predicates are indexed.
 #' @param indexLiterals A boolean (defaults to true) that determines whether literal are indexed.
@@ -57,11 +49,12 @@ listFreeTextIndices = function(service, catalogid = "root", repo = "") {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' createFreeTextIndex(service,repo = 'testRepo',indexName = 'index',
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' createFreeTextIndex(rep,indexName = 'index',
 #' predicate = '<p>',stopWords = list('and','it'))
 #' }
-createFreeTextIndex = function(service, catalogid = "root", repo = "",
+createFreeTextIndex = function(repository,
                                indexName, predicate, indexLiterals = NULL, indexResources = FALSE,
                                indexFields = NULL, minimumWordSize = NULL, stopWords = NULL, wordFilter = NULL,
                                innerChars = NULL, borderChars = NULL, tokenizer = NULL,reIndex = NULL) {
@@ -80,20 +73,16 @@ createFreeTextIndex = function(service, catalogid = "root", repo = "",
   if (is.list(indexFields) & length(indexFields) == 0)
     indexFields = ""
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",
-                 indexName)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext/indices/", indexName)
-  }
 
-  invisible(ag_put(service = service, url = url, queryargs = queryargs,
+    url = paste0(repository$url, "freetext/indices/",indexName)
+
+
+  invisible(ag_put(service = repository, url = url, queryargs = queryargs,
                    body = body))
 }
 
 
-modifyFreeTextIndex = function(service, catalogid = "root", repo = "",
+modifyFreeTextIndex = function(repository,
                                indexName, predicate = NULL, indexLiterals = NULL, indexResources = FALSE,
                                indexFields = NULL, minimumWordSize = NULL, stopWords = NULL, wordFilter = NULL,
                                innerChars = NULL, borderChars = NULL, tokenizer = NULL,reIndex = NULL) {
@@ -117,15 +106,11 @@ modifyFreeTextIndex = function(service, catalogid = "root", repo = "",
   if (is.list(wordFilter) & length(wordFilter) == 0)
     wordFilter = ""
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",
-                 indexName)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext/indices/", indexName)
-  }
 
-  invisible(ag_post(service = service, url = url, queryargs = queryargs,
+  url = paste0(repository$url, "freetext/indices/",
+                 indexName)
+
+  invisible(ag_post(service = repository, url = url, queryargs = queryargs,
                    body = body,filepath = NULL))
 }
 
@@ -135,9 +120,7 @@ modifyFreeTextIndex = function(service, catalogid = "root", repo = "",
 #'
 #' @description Return information on the freetext-index named indexName.
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param index The index you want to see configurations for
 #'
 #' @return A list describing all configuration parametes of index of interest
@@ -145,30 +128,28 @@ modifyFreeTextIndex = function(service, catalogid = "root", repo = "",
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' createFreeTextIndex(service,repo = 'testRepo',index = 'index')
-#' getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' createFreeTextIndex(rep,index = 'index')
+#' getFreeTextIndexConfiguration(rep,index = 'index')
 #' }
-getFreeTextIndexConfiguration = function(service, catalogid = "root", repo = "",
+getFreeTextIndexConfiguration = function(repository,
                                          index) {
 
   if (missing(index)) {
     cat("No index entered. These are the following free-text-indices currently present: \n \n")
-    return(listFreeTextIndices(service, catalogid = catalogid, repo = repo))
+    return(listFreeTextIndices(rep))
   }
 
   queryargs = NULL
   body = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",
-                 index)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext/indices/", index)
-  }
 
-  return(ag_get(service = service, url = url, queryargs = queryargs,
+    url = paste0(repository$url, "freetext/indices/",
+                 index)
+
+
+  return(ag_get(service = repository, url = url, queryargs = queryargs,
                 body = body))
 }
 
@@ -179,9 +160,7 @@ getFreeTextIndexConfiguration = function(service, catalogid = "root", repo = "",
 #'
 #' @description Query the repository using a free-text index
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param pattern A string to match triples on
 #' @param index The index you want to use
 #' @param limit Integer, number of triples to return
@@ -193,25 +172,22 @@ getFreeTextIndexConfiguration = function(service, catalogid = "root", repo = "",
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' createFreeTextIndex(service,repo = 'testRepo',index = 'index')
-#' getFreeTextIndexConfiguration(service,catalogid = 'root',repo = 'testRepo',index = 'index')
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' getFreeTextIndexConfiguration(rep,repo = 'testRepo',index = 'index')
 #' }
-evalFreeTextSearch = function(service, catalogid = "root", repo = "", pattern,
+evalFreeTextSearch = function(repository, pattern,
                               index = NULL, limit = NULL, offset = NULL, sorted = NULL) {
 
   queryargs = convertLogical(expandUrlArgs(list(pattern = pattern, limit = limit,
                                                 offset = offset, index = index, sorted = sorted)))
   body = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext")
-  }
 
-  return(ag_get(service = service, url = url, queryargs = queryargs,
+    url = paste0(repository$url, "freetext")
+
+
+  return(ag_get(service = repository, url = url, queryargs = queryargs,
                 body = body))
 }
 
@@ -219,9 +195,7 @@ evalFreeTextSearch = function(service, catalogid = "root", repo = "", pattern,
 #'
 #' @description Return a list of freetext indices defined on the store
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param indexName Name of index to delete
 #'
 #' @return TRUE or FALSE depending on success of deletion
@@ -229,22 +203,17 @@ evalFreeTextSearch = function(service, catalogid = "root", repo = "", pattern,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' deleteFreeTextIndex(service,catalogid = 'root',repo = 'testRepo')
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' deleteFreeTextIndex(rep,repo = 'testRepo')
 #' }
-deleteFreeTextIndex = function(service, catalogid = "root", repo = "",indexName) {
+deleteFreeTextIndex = function(repository,indexName) {
 
   queryargs = NULL
   body = NULL
+  url = paste0(repository$url, "freetext/indices/",indexName)
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/freetext/indices/",indexName)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/",
-                 repo, "/freetext/indices/",indexName)
-  }
-
-  invisible(ag_delete(service = service, url = url, queryargs = queryargs,
+  invisible(ag_delete(service = repository, url = url, queryargs = queryargs,
                 body = body))
 }
 
@@ -258,26 +227,19 @@ deleteFreeTextIndex = function(service, catalogid = "root", repo = "",indexName)
 #'
 #' @description Return a list of indices defined on the triple-store
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param valid Default FALSE. If true, then all possible index flavors are returned rather than just the ones that are currently defined.
 #'
 #' @return List of active indices, or all possible valid indices if 'valid' is set to TRUE
 #' @export
-listIndices = function(service, catalogid = "root", repo = "",valid = FALSE) {
+listIndices = function(repository,valid = FALSE) {
 
   queryargs = convertLogical(list(listValid = valid))
   body = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/indices")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/indices")
+  url = paste0(repository$url, "indices")
 
-  }
-
-  return(ag_get(service = service, url = url, queryargs = queryargs,
+  return(ag_get(service = repository, url = url, queryargs = queryargs,
                 body = body))
 }
 
@@ -285,9 +247,7 @@ listIndices = function(service, catalogid = "root", repo = "",valid = FALSE) {
 #'
 #' @description Add the index type from the triple-store.
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param type Type of index. Use listIndices(...,valid = TRUE) to see all possible indices
 #' @param style Specifies the chunk style of the new index. Can be 0, 1 or 2
 #'
@@ -296,23 +256,21 @@ listIndices = function(service, catalogid = "root", repo = "",valid = FALSE) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' addIndex(service,repo = "testRepo",type = "gspoi",style = 0)
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' addIndex(rep,type = "gspoi",style = 0)
 #' }
-addIndex = function(service, catalogid = "root", repo = "", type, style = c(0,1,2)) {
+addIndex = function(repository, type, style = c(0,1,2)) {
 
 
   queryargs = convertLogical(list(style = style))
   body = NULL
   filepath = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/indices/",type)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/indices/",type)
-  }
+  url = paste0(repository$url, "indices/",type)
 
-  invisible(ag_put(service = service, url = url, queryargs = queryargs,
+
+  invisible(ag_put(service = repository, url = url, queryargs = queryargs,
                 body = body,filepath = filepath))
 }
 
@@ -320,9 +278,7 @@ addIndex = function(service, catalogid = "root", repo = "", type, style = c(0,1,
 #'
 #' @description Drop the index type from the triple-store.
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param type Type of index. Use listIndices(...,valid = TRUE) to see all possible indices
 #'
 #' @return TRUE or FALSE stating whether or not deletion was successful (invisible)
@@ -330,22 +286,17 @@ addIndex = function(service, catalogid = "root", repo = "", type, style = c(0,1,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' dropIndex(service,repo = "testRepo",type = "gspoi",style = 0)
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' dropIndex(rep,type = "gspoi",style = 0)
 #' }
-dropIndex = function(service, catalogid = "root", repo = "", type) {
-
+dropIndex = function(repository, type) {
 
   queryargs = NULL
   body = NULL
+  url = paste0(repository$url, "indices/",type)
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/indices/",type)
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/indices/",type)
-  }
-
-  invisible(ag_delete(service = service, url = url, queryargs = queryargs,
+  invisible(ag_delete(service = repository, url = url, queryargs = queryargs,
                    body = body))
 }
 
@@ -353,9 +304,7 @@ dropIndex = function(service, catalogid = "root", repo = "", type) {
 #'
 #' @description Optimize the triple-store indices
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
+#' @param repository Object of type repository specifying server details and repository to work on.
 #' @param level Specifies how aggressive the optimization will be (more aggression, more optimization, but takes more time). Has to be a positive integer (Defaults to 2)
 #' @param wait Default FALSE. If TRUE, then the service does not return until the optimization is complete
 #' @param index The name of the index to operate on; this can be specified multiple times in a list
@@ -364,10 +313,11 @@ dropIndex = function(service, catalogid = "root", repo = "", type) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService('localhost','user','password')
-#' optimizeIndices(service,repo = "testRepo",index = list("gspoi","i"),level = 2,wait = TRUE)
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' optimizeIndices(rep,index = list("gspoi","i"),level = 2,wait = TRUE)
 #' }
-optimizeIndices = function(service, catalogid = "root", repo = "", level = 2,wait = FALSE,index = NULL) {
+optimizeIndices = function(repository, level = 2,wait = FALSE,index = NULL) {
 
   if(level <= 0) stop('level must be NULL, or a positive integer')
 
@@ -375,12 +325,10 @@ optimizeIndices = function(service, catalogid = "root", repo = "", level = 2,wai
   body = NULL
   filepath = NULL
 
-  if (catalogid == "root") {
-    url = paste0(service$url, "repositories/", repo, "/indices/optimize")
-  } else {
-    url = paste0(service$url, "catalogs/", catalogid, "/repositories/indices/optimize")
-  }
 
-  invisible(ag_post(service = service, url = url, queryargs = queryargs,
+    url = paste0(repository$url, "indices/optimize")
+
+
+  invisible(ag_post(service = repository, url = url, queryargs = queryargs,
                    body = body,filepath = filepath))
 }
