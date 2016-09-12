@@ -19,7 +19,7 @@ Drop the index type from the triple-store.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 dropIndex(rep,type = "gspoi",style = 0)
 }

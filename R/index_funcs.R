@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' listFreeTextIndices(rep)
 #' }
@@ -49,7 +49,7 @@ listFreeTextIndices = function(repository) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' createFreeTextIndex(rep,indexName = 'index',
 #' predicate = '<p>',stopWords = list('and','it'))
@@ -128,7 +128,7 @@ modifyFreeTextIndex = function(repository,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' createFreeTextIndex(rep,index = 'index')
 #' getFreeTextIndexConfiguration(rep,index = 'index')
@@ -138,7 +138,7 @@ getFreeTextIndexConfiguration = function(repository,
 
   if (missing(index)) {
     cat("No index entered. These are the following free-text-indices currently present: \n \n")
-    return(listFreeTextIndices(service, catalogid = catalogid, repo = repo))
+    return(listFreeTextIndices(rep))
   }
 
   queryargs = NULL
@@ -172,9 +172,8 @@ getFreeTextIndexConfiguration = function(repository,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
-#' createFreeTextIndex(service,repo = 'testRepo',index = 'index')
 #' getFreeTextIndexConfiguration(rep,repo = 'testRepo',index = 'index')
 #' }
 evalFreeTextSearch = function(repository, pattern,
@@ -204,7 +203,7 @@ evalFreeTextSearch = function(repository, pattern,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' deleteFreeTextIndex(rep,repo = 'testRepo')
 #' }
@@ -257,7 +256,7 @@ listIndices = function(repository,valid = FALSE) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' addIndex(rep,type = "gspoi",style = 0)
 #' }
@@ -287,7 +286,7 @@ addIndex = function(repository, type, style = c(0,1,2)) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' dropIndex(rep,type = "gspoi",style = 0)
 #' }
@@ -314,7 +313,7 @@ dropIndex = function(repository, type) {
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' optimizeIndices(rep,index = list("gspoi","i"),level = 2,wait = TRUE)
 #' }

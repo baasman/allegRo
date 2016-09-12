@@ -19,7 +19,7 @@ Return a list of repositories available in the catalog.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 cat = catalog(service,"root")
 listRepositories(cat)
 }

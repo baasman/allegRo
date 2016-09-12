@@ -19,7 +19,7 @@ Delete the specified repository. This can fail if the repository is being access
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 cat = catalog(service,"root")
 createRepository(cat,repo = "repotodelete")
 deleteRepository(cat,repo = "repotodelete")

@@ -42,7 +42,7 @@ http://franz.com/agraph/support/documentation/current/text-index.html
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 createFreeTextIndex(rep,indexName = 'index',
 predicate = '<p>',stopWords = list('and','it'))

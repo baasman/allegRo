@@ -21,7 +21,7 @@ Add a namespace for the current user in this repository
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 addNameSpace(service,catalogid = "root",repo = "testRepo",prefix = "foaf",
 nsURI = "http://xmlns.com/foaf/0.1/")

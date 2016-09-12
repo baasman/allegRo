@@ -5,10 +5,9 @@
 #'
 #' @name Sessions
 #'
-#' @param service Service object containing service url, username, and password.
-#' @param catalogid Id for catalog of interest.
-#' @param repo Id for repository of interest.
-#' @param autocommit Bolean. Specify whether or not the session should use transactions.
+#' @param Service Object of type repository specifying server details and repository to work on.
+#' @param Session Session object created by the startSession function
+#' @param autocommit Defaults to FALSE. Specify whether or not the session should use transactions.
 #' @param lifetime The number of seconds the session can be idle before being shutdown and reclaimed.
 #' @param loadInitFile If true, then the initfile will be loaded when the session starts.
 #' @param script The name of a script file to load; may be specified multiple times.
@@ -18,10 +17,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
-#' startSession(service,repo = "testRepo",lifetime = 1000,script = "path/to/script")
+#' service = service("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' startSession(rep,lifetime = 1000,script = "path/to/script")
 #' }
-startSession = function(service,catalogid = "root",repo = "",
+startSession = function(repository,
                         autocommit = FALSE,lifetime = 100,loadInitFile = FALSE,
                         script = NULL){
 
@@ -31,60 +31,59 @@ startSession = function(service,catalogid = "root",repo = "",
   queryargs = convertLogical(list(autocommit = autocommit, lifetime = lifetime,loadInitFile = loadInitFile,
                    script = script))
 
-  if(catalogid == "root"){
-    url = paste0(service$url,"repositories/",repo,"/session")
-  } else{
-    url = paste0(service$url,"catalogs/",catalogid,"/repositories/",repo,"/session")
-  }
 
-  post = ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath)
-  print(stringr::str_split_fixed(post$return,
-                                 ":", 3)[, 3])
+    url = paste0(repository$url,"session")
 
-  serviceSession = createService(url = paste0(url = service$url,"session/",
+
+  post = ag_post(service = repository,url = url,queryargs = queryargs,body = body,filepath = filepath)
+  serviceSession = service(url = paste0(url = service$url,"session/",
                                               stringr::str_split_fixed(post$return,
                                               ":", 3)[, 3]),user = service$user,password = service$password)
 
-  return(serviceSession)
+  invisible(serviceSession)
 }
 
-
-commit = function(service){
-  if(!grepl("session",service$url)) stop("Must use response from startSession to commit to repository")
+#' @rdname Sessions
+commit = function(Session){
+  if(!grepl("session",Session$url)) stop("Must use response from startSession to commit to repository")
   body = NULL
   filepath = NULL
   queryargs = NULL
-  url = paste0(service$url,"commit")
-  invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+  url = paste0(Session$url,"commit")
+  invisible(ag_post(service = Session,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
-closeSession = function(service){
+#' @rdname Sessions
+closeSession = function(Session){
    body = NULL
    filepath = NULL
    queryargs = NULL
-   url = paste0(service$url,"session/close")
-   invisible(ag_post(service = service,url = url,queryargs = queryargs,body = body,filepath = filepath))
+   url = paste0(Session$url,"session/close")
+   invisible(ag_post(service = Session,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
-getDescriptionSession = function(service){
+#' @rdname Sessions
+getDescriptionSession = function(Session){
     body = NULL
     filepath = NULL
     queryargs = NULL
-    url = paste0(service$url,"session/description")
-    return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+    url = paste0(Session$url,"session/description")
+    return(ag_get(service = Session,url = url,queryargs = queryargs,body = body))
 }
 
-isActiveSession = function(service){
+#' @rdname Sessions
+isActiveSession = function(Session){
   body = NULL
   filepath = NULL
   queryargs = NULL
-  url = paste0(service$url,"session/isActive")
-  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+  url = paste0(Session$url,"session/isActive")
+  return(ag_get(service = Session,url = url,queryargs = queryargs,body = body))
 }
 
-pingSession = function(service){
-  url = paste0(service$url,"session/isActive")
-  return(ag_get(service = service,url = url,queryargs = NULL,body = NULL))
+#' @rdname Sessions
+pingSession = function(Session){
+  url = paste0(Session$url,"session/isActive")
+  return(ag_get(service = Session,url = url,queryargs = NULL,body = NULL))
 }
 
 

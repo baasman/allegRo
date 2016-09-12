@@ -2,26 +2,39 @@
 % Please edit documentation in R/session_funcs.R
 \name{Sessions}
 \alias{Sessions}
+\alias{closeSession}
+\alias{commit}
+\alias{getDescriptionSession}
+\alias{isActiveSession}
+\alias{pingSession}
 \alias{startSession}
 \title{Working with sessions}
 \usage{
-startSession(service, catalogid = "root", repo = "", autocommit = FALSE,
-  lifetime = 100, loadInitFile = FALSE, script = NULL)
+startSession(repository, autocommit = FALSE, lifetime = 100,
+  loadInitFile = FALSE, script = NULL)
+
+commit(Session)
+
+closeSession(Session)
+
+getDescriptionSession(Session)
+
+isActiveSession(Session)
+
+pingSession(Session)
 }
 \arguments{
-\item{service}{Service object containing service url, username, and password.}
-
-\item{catalogid}{Id for catalog of interest.}
-
-\item{repo}{Id for repository of interest.}
-
-\item{autocommit}{Bolean. Specify whether or not the session should use transactions.}
+\item{autocommit}{Defaults to FALSE. Specify whether or not the session should use transactions.}
 
 \item{lifetime}{The number of seconds the session can be idle before being shutdown and reclaimed.}
 
 \item{loadInitFile}{If true, then the initfile will be loaded when the session starts.}
 
 \item{script}{The name of a script file to load; may be specified multiple times.}
+
+\item{Session}{Session object created by the startSession function}
+
+\item{Service}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
 A new service object that points to the newly created session, belonging to current user
@@ -31,8 +44,9 @@ Working with sessions
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
-startSession(service,repo = "testRepo",lifetime = 1000,script = "path/to/script")
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+startSession(rep,lifetime = 1000,script = "path/to/script")
 }
 }
 

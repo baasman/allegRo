@@ -17,7 +17,7 @@ deleteUser(service, name)
 changeUserPassword(service, name, password)
 }
 \arguments{
-\item{service}{The service object}
+\item{service}{The service object specifying port,username, and password}
 
 \item{name}{Username}
 
@@ -28,7 +28,7 @@ Collection of functions to operate on different users on the server
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 listUsers(service)
 }
 }

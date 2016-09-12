@@ -19,7 +19,7 @@ Deletes a namespace in this repository for the current user.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 deleteNameSpace(service,catalogid = "root",repo = "testRepo",namespace = "foaf")
 }

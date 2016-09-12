@@ -17,7 +17,7 @@ Return a list of freetext indices defined on the store
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 listFreeTextIndices(rep)
 }

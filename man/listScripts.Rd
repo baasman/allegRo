@@ -17,7 +17,7 @@ Return the list of scripts that have been added to this repository. These script
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 listScripts(rep)
 }

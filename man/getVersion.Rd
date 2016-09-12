@@ -19,7 +19,7 @@ Returns the version of the AllegroGraph server, as a string.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 getVersion(service)
 }
 }

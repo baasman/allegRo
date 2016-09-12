@@ -17,7 +17,7 @@ Return the access permissions the current user has for this repository.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 getAccess(rep)
 }

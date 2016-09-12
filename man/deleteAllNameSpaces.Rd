@@ -19,7 +19,7 @@ Deletes all namespaces in this repository for the current user.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 deleteAllNameSpaces(rep,reset = TRUE)
 }

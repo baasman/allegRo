@@ -19,10 +19,10 @@ Return information on the freetext-index named indexName.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
-createFreeTextIndex(service,repo = 'testRepo',index = 'index')
-getFreeTextIndexConfiguration(rep,repo = 'testRepo',index = 'index')
+createFreeTextIndex(rep,index = 'index')
+getFreeTextIndexConfiguration(rep,index = 'index')
 }
 }
 

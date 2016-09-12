@@ -5,13 +5,13 @@
 #'
 #' @description Collection of functions to operate on different users on the server
 #'
-#' @param service The service object
+#' @param service The service object specifying port,username, and password
 #' @param name Username
 #' @param password Password associated with username
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' listUsers(service)
 #' }
 NULL

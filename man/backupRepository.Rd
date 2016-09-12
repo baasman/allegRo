@@ -19,7 +19,7 @@ Create a backup of the repository.
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 backupRepository(,backupName = "backup_testRepo")
 }

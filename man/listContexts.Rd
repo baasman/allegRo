@@ -17,7 +17,7 @@ List all contexts in repository
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 listContexs(rep)
 }

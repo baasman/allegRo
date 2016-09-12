@@ -17,7 +17,7 @@ Return the currently active namespaces for your user in this repository
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 listNameSpaces(rep)
 }

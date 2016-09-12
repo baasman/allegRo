@@ -50,7 +50,7 @@ evalQuery
 \examples{
 \dontrun{
 query = "select ?s ?p ?o {?s ?p ?o}"
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"root")
 evalQuery(rep,
 query = query, returnType = "data.table",

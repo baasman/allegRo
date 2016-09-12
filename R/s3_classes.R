@@ -7,7 +7,9 @@
 #' @return S3 Object of type "service", which states the url, username, and password for the user
 #' @export
 #' @examples
-#' createService("localhost","user","password",testConnection = FALSE)
+#' \dontrun{
+#' service("localhost","user","password",testConnection = FALSE)
+#' }
 service = function(url,user = NULL,password = NULL,testConnection = FALSE){
 
   if(!is.character(url)& ! missing(url)) stop("url has to be supplied, and should be type character")
@@ -76,12 +78,14 @@ testConnection = function(s){
 #' @return S3 Object of type "catalog", which states the url, username, and password and catalog
 #' @export
 #' @examples
-#' service = createService("localhost","user","password",testConnection = FALSE)
+#' \dontrun{
+#' service = service("localhost","user","password",testConnection = FALSE)
 #' cat = catalog(service,"root")
+#' }
 catalog = function(service,catalog){
 
-  if(!("service" %in% class(catalog))) stop("service object should be of class 'service'")
-  if(!is.character(catalog)& ! missing(catalog)) stop("catalog has to be supplied, and should be a character")
+  if(!("service" %in% class(service))) stop("service object should be of class 'service'")
+  if(!is.character(catalog)) stop("catalog has to be supplied, and should be a character")
 
   if(stringr::str_sub(catalog,start = -1) != "/"){
     catalogurl = paste0(catalog,"/")
@@ -119,10 +123,11 @@ print.catalog = function(x, ...){
 ### REPOSITORY FUNCTIONS
 
 
+#' @export
 repository = function(catalog,repository){
 
   if(!("catalog" %in% class(catalog))) stop("catalog should be of class 'catalog'")
-  if(!is.character(repository)& ! missing(repository)) stop("repository has to be supplied, and should be a character")
+  if(!is.character(repository)) stop("Repository should be a character")
 
   if(stringr::str_sub(repository,start = -1) != "/"){
     repourl = paste0(catalog$url,"repositories/",repository,"/")
@@ -131,12 +136,12 @@ repository = function(catalog,repository){
   obj = structure(
     list(
       url = repourl,
-      user = service$user,
-      password = service$password,
+      user = catalog$user,
+      password = catalog$password,
       catalog = catalog$catalog,
       repository = repository
     ),
-    class = c("repository","catalog","service")
+    class = c("repository")
   )
   return(obj)
 }

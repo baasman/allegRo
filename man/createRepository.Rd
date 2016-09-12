@@ -31,7 +31,7 @@ When a repository with the given name already exists, it is overwritten, unless 
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 cat = catalog(service,"root")
 createRepository(cat,repo = "test",
 expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)

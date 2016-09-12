@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' cat = catalog(service,"root")
 #' listRepositories(cat)
 #' }
@@ -16,8 +16,8 @@
 listRepositories = function(catalog,all = FALSE){
   queryargs = convertLogical(list(all = all))
   body = NULL
-  url = paste0(service$url,"repositories")
-  return(ag_get(service = cat,url = url,queryargs = queryargs,body = body))
+  url = paste0(catalog$url,"repositories")
+  return(ag_get(service = catalog,url = url,queryargs = queryargs,body = body))
 }
 
 
@@ -40,7 +40,7 @@ listRepositories = function(catalog,all = FALSE){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' cat = catalog(service,"root")
 #' createRepository(cat,repo = "test",
 #' expectedSize = 100,index = NULL,override = "true",restore = NULL,nocommit = 1)
@@ -72,7 +72,7 @@ createRepository = function(catalog, repo,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' cat = catalog(service,"root")
 #' createRepository(cat,repo = "repotodelete")
 #' deleteRepository(cat,repo = "repotodelete")
@@ -98,7 +98,7 @@ deleteRepository = function(catalog,repo){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' backupRepository(,backupName = "backup_testRepo")
 #' }
@@ -125,7 +125,7 @@ backupRepository = function(repository, backupName){
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' listScripts(rep)
 #' }
@@ -145,7 +145,7 @@ listScripts = function(repository){
 #' @export
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' listNameSpaces(rep)
 #' }
@@ -168,7 +168,7 @@ listNameSpaces = function(repository){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' deleteAllNameSpaces(rep,reset = TRUE)
 #' }
@@ -194,7 +194,7 @@ deleteAllNameSpaces = function(repository,reset = FALSE){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' deleteNameSpace(service,catalogid = "root",repo = "testRepo",namespace = "foaf")
 #' }
@@ -223,7 +223,7 @@ deleteNameSpace = function(repository,namespace){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' addNameSpace(service,catalogid = "root",repo = "testRepo",prefix = "foaf",
 #' nsURI = "http://xmlns.com/foaf/0.1/")
@@ -253,7 +253,7 @@ addNameSpace = function(repository,
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' getSize(rep)
 #' }
@@ -280,7 +280,7 @@ getSize = function(repository,context = NULL){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' getAccess(rep)
 #' }
@@ -305,7 +305,7 @@ getAccess = function(repository){
 #'
 #' @examples
 #' \dontrun{
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"test")
 #' listContexs(rep)
 #' }
@@ -345,7 +345,7 @@ listContexts = function(repository){
 #' @examples
 #' \dontrun{
 #' query = "select ?s ?p ?o {?s ?p ?o}"
-#' service = createService("localhost","user","password")
+#' service = service("localhost","user","password")
 #' rep = repository(catalog(service,"root"),"root")
 #' evalQuery(rep,
 #' query = query, returnType = "data.table",

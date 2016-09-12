@@ -19,7 +19,7 @@ Return the size of a repository
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 getSize(rep)
 }

@@ -20,7 +20,7 @@ Optimize the triple-store indices
 }
 \examples{
 \dontrun{
-service = createService("localhost","user","password")
+service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
 optimizeIndices(rep,index = list("gspoi","i"),level = 2,wait = TRUE)
 }
