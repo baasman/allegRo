@@ -60,6 +60,7 @@ startSession = function(catalog, repo,
   post = ag_post(service = catalog,url = url,queryargs = queryargs,body = body,filepath = filepath)
 
   host = sub("rep.*","",catalog$url)
+  host = sub("cat.*","",catalog$url)
   serviceSession = repository(catalog = catalog,repository = repo)
   serviceSession$url = paste0(host,"session/",
                        stringr::str_split_fixed(post$return,":", 3)[, 3],"/")
@@ -73,7 +74,7 @@ startSession = function(catalog, repo,
 #' @export
 isActive = function(Session){
   active = NULL
-  active = tryCatch({ag_get(service = Session,url = paste0(Session$url,"/session/isActive"),queryargs = NULL,body = NULL)
+  active = tryCatch({ag_get(service = Session,url = paste0(Session$url,"session/isActive"),queryargs = NULL,body = NULL)
                     active = TRUE},
            error = function(e) active = FALSE,
            warning = function(e) active = FALSE)
