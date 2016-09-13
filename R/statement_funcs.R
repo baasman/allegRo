@@ -63,7 +63,7 @@ getStatements = function(repository,
   url = paste0(repository$url, "statements")
 
 
-  invisible(ag_statements(service = repository, url = url, queryargs = queryargs,
+  return(ag_statements(service = repository, url = url, queryargs = queryargs,
                           body = body, returnType = returnType, cleanUp = cleanUp, convert = convert))
 }
 

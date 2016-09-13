@@ -19,7 +19,7 @@ Create a repository object
 }
 \examples{
 \dontrun{
-service = service("localhost","user","password",testConnection = FALSE)
+service = service("localhost","user","password",testConnection = TRUE)
 cat = catalog(service,"root")
 rep = repository(rep,"test")
 }

@@ -157,6 +157,7 @@ repository = function(catalog,repository){
   return(obj)
 }
 
+#' @export
 print.repository = function(x, ...){
   cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
   cat("\n \n")
