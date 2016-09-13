@@ -40,7 +40,7 @@ service = function(url,user = NULL,password = NULL,testConnection = FALSE){
 
 #' @export
 print.service = function(x, ...){
-  cat(paste0("Using port: ",gsub("[^0-9]","",service$url)))
+  cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
   cat("\n \n")
   print(x["url"])
   print(x["user"])

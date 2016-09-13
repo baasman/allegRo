@@ -147,7 +147,7 @@ deleteStatements = function(repository,
       body = NULL
       queryargs = NULL
       url = paste0(repository$url, "statements")
-      invisible(ag_delete(service = service, url = url, queryargs = queryargs,
+      invisible(ag_delete(service = repository, url = url, queryargs = queryargs,
                           body = body))
     } else {
       stop("To delete matching statements, include either the subject, predicate, object, or graph")

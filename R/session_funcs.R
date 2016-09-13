@@ -96,6 +96,7 @@ commit = function(Session){
 
 
 #' @rdname Sessions
+#' @export
 closeSession = function(Session){
    stopifnot(isActive(Session))
    body = NULL
