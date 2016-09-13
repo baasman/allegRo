@@ -19,3 +19,11 @@ convertLogical = function(args) {
   args[names] = lapply(args[names], encodeURLArgs)
   return(args)
 }
+
+checkFormat = function(filepath){
+  if (grepl("nq", filepath) | grepl("nt", filepath)) {
+    body = quote(upload_file(path = filepath, type = "text/plain"))
+  } else if (grepl("rdf", filepath) | grepl("xml", filepath)) {
+    body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
+  }
+}

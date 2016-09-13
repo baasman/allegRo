@@ -98,11 +98,20 @@ getStatements = function(repository,
 #' }
 #' @import httr
 addStatement = function(repository,
-                        subj = NULL, pred = NULL, obj = NULL, context = NULL) {
+                        subj = NULL, pred = NULL, obj = NULL, context = NULL,json = NULL) {
 
-  queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
+  if(!is.null(json)){
+    queryargs = fromJSON(json)
+
+  } else{
+    queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
+  }
+
+
   body = NULL
   filepath = NULL
+
+
 
   url = paste0(repository$url, "statement")
 
@@ -110,7 +119,10 @@ addStatement = function(repository,
                    body = body, filepath = filepath))
 }
 
+url = paste0(rep$url, "statement")
 
+ag_put(service = rep, url = url, queryargs = toJSON(queryargs),
+       body = body, filepath = filepath)
 
 #' Delete matching statements
 #'
@@ -206,11 +218,7 @@ addStatementsFromFile = function(repository,
 
   queryargs = list(context = context, baseURI = baseURI, commit = commitEvery)
 
-  if (grepl("nq", filepath) | grepl("nt", filepath)) {
-    body = quote(upload_file(path = filepath, type = "text/plain"))
-  } else if (grepl("rdf", filepath) | grepl("xml", filepath)) {
-    body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
-  }
+  body = checkFormat(filepath)
 
   url = paste0(repository$url, "statements")
 
