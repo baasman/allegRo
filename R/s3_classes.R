@@ -123,7 +123,18 @@ print.catalog = function(x, ...){
 ### REPOSITORY FUNCTIONS
 
 
+#' Create a repository object
+#'
+#' @param catalog Object of type catalog on which your repository is located
+#' @param repository Character string specifying your repository
+#' @return S3 Object of type "repository", which states the url, username, password, catalog and repository you are working on
 #' @export
+#' @examples
+#' \dontrun{
+#' service = service("localhost","user","password",testConnection = TRUE)
+#' cat = catalog(service,"root")
+#' rep = repository(rep,"test")
+#' }
 repository = function(catalog,repository){
 
   if(!("catalog" %in% class(catalog))) stop("catalog should be of class 'catalog'")

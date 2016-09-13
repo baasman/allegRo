@@ -5,13 +5,15 @@
 \alias{closeSession}
 \alias{commit}
 \alias{getDescriptionSession}
-\alias{isActiveSession}
-\alias{pingSession}
+\alias{isActive}
+\alias{ping}
 \alias{startSession}
 \title{Working with sessions}
 \usage{
-startSession(repository, autocommit = FALSE, lifetime = 100,
+startSession(catalog, repo, autocommit = FALSE, lifetime = 100,
   loadInitFile = FALSE, script = NULL)
+
+isActive(Session)
 
 commit(Session)
 
@@ -19,11 +21,13 @@ closeSession(Session)
 
 getDescriptionSession(Session)
 
-isActiveSession(Session)
-
-pingSession(Session)
+ping(Session)
 }
 \arguments{
+\item{catalog}{Object of type catalog specifying server details and catalog to work in}
+
+\item{repo}{String that specifies what repository to start session on}
+
 \item{autocommit}{Defaults to FALSE. Specify whether or not the session should use transactions.}
 
 \item{lifetime}{The number of seconds the session can be idle before being shutdown and reclaimed.}
@@ -33,20 +37,42 @@ pingSession(Session)
 \item{script}{The name of a script file to load; may be specified multiple times.}
 
 \item{Session}{Session object created by the startSession function}
-
-\item{Service}{Object of type repository specifying server details and repository to work on.}
 }
 \value{
-A new service object that points to the newly created session, belonging to current user
+A new repository object that points to the newly created session, belonging to current user. This session object can be substituted
+for any function in which you were using the repository object.
 }
 \description{
 Working with sessions
 }
 \examples{
 \dontrun{
+
+#Starting a session
 service = service("localhost","user","password")
 rep = repository(catalog(service,"root"),"test")
-startSession(rep,lifetime = 1000,script = "path/to/script")
+session = startSession(rep,lifetime = 1000,script = "path/to/script")
+}
+
+\dontrun{
+
+#Committing transactions to the repository
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+session = startSession(rep,lifetime = 1000)
+commit(session)
+}
+
+\dontrun{
+
+#Other useful functions
+service = service("localhost","user","password")
+rep = repository(catalog(service,"root"),"test")
+session = startSession(rep,lifetime = 100)
+getDescriptionSession(session)
+isActive(session)
+pring(session)
+closeSession(session)
 }
 }
 
