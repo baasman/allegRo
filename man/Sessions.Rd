@@ -7,6 +7,7 @@
 \alias{getDescriptionSession}
 \alias{isActive}
 \alias{ping}
+\alias{rollback}
 \alias{startSession}
 \title{Working with sessions}
 \usage{
@@ -16,6 +17,8 @@ startSession(catalog, repo, autocommit = FALSE, lifetime = 100,
 isActive(Session)
 
 commit(Session)
+
+rollback(Session)
 
 closeSession(Session)
 

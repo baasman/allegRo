@@ -75,6 +75,7 @@ testConnection = function(s){
 #'
 #' @param service Object of type service on which your catalog is located
 #' @param catalog Character string specifying your catalog
+#' @param testConnection Defaults to FALSE. If TRUE, will try to perform a simple command to test connection
 #' @return S3 Object of type "catalog", which states the url, username, and password and catalog
 #' @export
 #' @examples
@@ -82,7 +83,7 @@ testConnection = function(s){
 #' service = service("localhost","user","password",testConnection = FALSE)
 #' cat = catalog(service,"root")
 #' }
-catalog = function(service,catalog){
+catalog = function(service,catalog,testConnection = FALSE){
 
   if(!("service" %in% class(service))) stop("service object should be of class 'service'")
   if(!is.character(catalog)) stop("catalog has to be supplied, and should be a character")
@@ -106,6 +107,12 @@ catalog = function(service,catalog){
     ),
     class = c("catalog","service")
   )
+
+  if(testConnection){
+    listRepositories(obj)
+    cat("Successful connection to catalog:",catalog)
+  }
+
   return(obj)
 }
 
@@ -127,6 +134,7 @@ print.catalog = function(x, ...){
 #'
 #' @param catalog Object of type catalog on which your repository is located
 #' @param repository Character string specifying your repository
+#' @param testConnection Defaults to FALSE. If TRUE, will try to perform a simple command to test connection
 #' @return S3 Object of type "repository", which states the url, username, password, catalog and repository you are working on
 #' @export
 #' @examples
@@ -135,7 +143,7 @@ print.catalog = function(x, ...){
 #' cat = catalog(service,"root")
 #' rep = repository(rep,"test")
 #' }
-repository = function(catalog,repository){
+repository = function(catalog,repository,testConnection = FALSE){
 
   if(!("catalog" %in% class(catalog))) stop("catalog should be of class 'catalog'")
   if(!is.character(repository)) stop("Repository should be a character")
@@ -154,6 +162,12 @@ repository = function(catalog,repository){
     ),
     class = c("repository")
   )
+
+  if(testConnection){
+    getSize(obj)
+    cat("Successful connection to repository:",repository)
+  }
+
   return(obj)
 }
 

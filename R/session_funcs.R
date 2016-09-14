@@ -95,6 +95,16 @@ commit = function(Session){
   invisible(ag_post(service = Session,url = url,queryargs = queryargs,body = body,filepath = filepath))
 }
 
+#' @rdname Sessions
+#' @export
+rollback = function(Session){
+  body = NULL
+  filepath = NULL
+  queryargs = NULL
+  url = paste0(Session$url,"rollback")
+  invisible(ag_post(service = Session,url = url,queryargs = queryargs,body = body,filepath = filepath))
+}
+
 
 #' @rdname Sessions
 #' @export

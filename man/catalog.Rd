@@ -4,12 +4,14 @@
 \alias{catalog}
 \title{Create a catalog object}
 \usage{
-catalog(service, catalog)
+catalog(service, catalog, testConnection = FALSE)
 }
 \arguments{
 \item{service}{Object of type service on which your catalog is located}
 
 \item{catalog}{Character string specifying your catalog}
+
+\item{testConnection}{Defaults to FALSE. If TRUE, will try to perform a simple command to test connection}
 }
 \value{
 S3 Object of type "catalog", which states the url, username, and password and catalog

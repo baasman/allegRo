@@ -5,7 +5,7 @@
 \title{Add a statement}
 \usage{
 addStatement(repository, subj = NULL, pred = NULL, obj = NULL,
-  context = NULL)
+  context = NULL, json = NULL)
 }
 \arguments{
 \item{repository}{Object of type repository specifying server details and repository to work on.}

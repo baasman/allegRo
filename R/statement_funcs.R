@@ -98,20 +98,12 @@ getStatements = function(repository,
 #' }
 #' @import httr
 addStatement = function(repository,
-                        subj = NULL, pred = NULL, obj = NULL, context = NULL,json = NULL) {
+                        subj = NULL, pred = NULL, obj = NULL, context = NULL) {
 
-  if(!is.null(json)){
-    queryargs = fromJSON(json)
-
-  } else{
-    queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
-  }
-
+  queryargs = list(subj = subj, pred = pred, obj = obj, context = context)
 
   body = NULL
   filepath = NULL
-
-
 
   url = paste0(repository$url, "statement")
 
@@ -119,10 +111,6 @@ addStatement = function(repository,
                    body = body, filepath = filepath))
 }
 
-url = paste0(rep$url, "statement")
-
-ag_put(service = rep, url = url, queryargs = toJSON(queryargs),
-       body = body, filepath = filepath)
 
 #' Delete matching statements
 #'

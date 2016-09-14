@@ -4,12 +4,14 @@
 \alias{repository}
 \title{Create a repository object}
 \usage{
-repository(catalog, repository)
+repository(catalog, repository, testConnection = FALSE)
 }
 \arguments{
 \item{catalog}{Object of type catalog on which your repository is located}
 
 \item{repository}{Character string specifying your repository}
+
+\item{testConnection}{Defaults to FALSE. If TRUE, will try to perform a simple command to test connection}
 }
 \value{
 S3 Object of type "repository", which states the url, username, password, catalog and repository you are working on
