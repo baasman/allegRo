@@ -19,6 +19,25 @@ getInitFile = function(service){
   return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
 }
 
+#' Retrieve information about active sessions
+#'
+#' @description Retrieve information about the currently running sessions.
+#'
+#' @param service Service object containing service url, username, and password
+#' @export
+#' @examples
+#' \dontrun{
+#' service = service("localhost","user","password")
+#' listActiveSessions
+#' }
+#' @import httr
+listActiveSessions = function(service){
+  queryargs = NULL
+  body = NULL
+  url = paste0(service$url,"session")
+  return(ag_get(service = service,url = url,queryargs = queryargs,body = body))
+}
+
 #' Set the initialization file
 #'
 #' @description Replace the current initialization file

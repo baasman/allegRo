@@ -29,7 +29,16 @@ checkFormat = function(filepath){
   }
 }
 
+
+#' Upload a data.table from a file
+#' @description Upload a matrix in nquads format (matrix that is n x 3 or n x 4). Is it a wrapper around the
+#' addStatementFile that efficiently writes out the triples to a temp file using data.table's fwrite, and
+#' imports it into the repository
+#' @param rep Repository object
+#' @param triples data.table containing triples as three columns.
+#' @param context graph name
 #' @export
+#'
 uploadMatrix = function(rep,triples,context = NULL){
 
   stopifnot(packageVersion("data.table")>="1.9.7")

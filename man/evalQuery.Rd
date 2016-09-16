@@ -6,9 +6,8 @@
 \usage{
 evalQuery(repository, query, returnType = c("data.table", "dataframe",
   "matrix", "list"), infer = NULL, context = NULL, cleanUp = FALSE,
-  namedContext = NULL, callback = NULL, bindings = NULL, planner = NULL,
-  checkVariables = NULL, count = FALSE, accept = NULL, limit = 100,
-  convert = FALSE)
+  namedContext = NULL, bindings = NULL, planner = NULL,
+  checkVariables = NULL, limit = NULL, convert = FALSE)
 }
 \arguments{
 \item{repository}{Object of type repository specifying server details and repository to work on.}
@@ -19,13 +18,11 @@ evalQuery(repository, query, returnType = c("data.table", "dataframe",
 
 \item{infer}{...}
 
-\item{context}{...}
+\item{context}{Can be a list. Specifies the contexts from which you want to query}
 
 \item{cleanUp}{If TRUE, removes the XML types of all variables. Currently for this to work, the return type needs to be a data.table. However, this is recommended either way.}
 
 \item{namedContext}{...}
-
-\item{callback}{...}
 
 \item{bindings}{...}
 
@@ -33,19 +30,15 @@ evalQuery(repository, query, returnType = c("data.table", "dataframe",
 
 \item{checkVariables}{...}
 
-\item{count}{...}
-
-\item{accept}{...}
-
-\item{limit}{...}
+\item{limit}{How many triples to return}
 
 \item{convert}{Convert variable to R type}
 }
 \value{
-an ag object, which includes the triples in matrix format
+Triples in matrix form
 }
 \description{
-evalQuery
+Execute a SPARQL select query
 }
 \examples{
 \dontrun{

@@ -173,11 +173,14 @@ repository = function(catalog,repository,testConnection = FALSE){
 
 #' @export
 print.repository = function(x, ...){
-  cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
+  cat(paste0("Using port: ",gsub("[^0-9]","",stringr::str_split_fixed(x$url,"session",2)[,1])))
   cat("\n \n")
   print(x["catalog"])
   print(x["repository"])
   print(x["user"])
   print(x["password"])
+  if(grepl("session",x$url)){
+    cat("active session: ",isActive(x))
+  }
 }
 

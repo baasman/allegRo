@@ -46,7 +46,7 @@ listRepositories = function(catalog,all = FALSE){
 #' }
 #' @import httr
 createRepository = function(catalog, repo,
-                            expectedSize = NULL,index = NULL,override = TRUE,
+                            expectedSize = NULL,index = NULL,override = FALSE,
                             restore = NULL,nocommit = NULL){
 
   queryargs = convertLogical(list(expectedSize=expectedSize,index = index,override = override,restore = restore,nocommit = nocommit))
@@ -322,23 +322,22 @@ listContexts = function(repository){
 
 #' evalQuery
 #'
+#' @description Execute a SPARQL select query
+#'
 #' @param repository Object of type repository specifying server details and repository to work on.
 #' @param query Sparql query to evaluate
 #' @param returnType In what format should the triples be returned. Can choose between "dataframe","matrix","list". Defaults to "list
 #' @param cleanUp If TRUE, removes the XML types of all variables. Currently for this to work, the return type needs to be a data.table. However, this is recommended either way.
+#' @param convert Convert variable to R type
 #' @param infer ...
-#' @param context ...
+#' @param context Can be a list. Specifies the contexts from which you want to query
 #' @param namedContext ...
-#' @param callback ...
 #' @param bindings ...
 #' @param planner ...
 #' @param checkVariables ...
-#' @param count ...
-#' @param accept ...
-#' @param limit ...
-#' @param convert Convert variable to R type
+#' @param limit How many triples to return
 #'
-#' @return an ag object, which includes the triples in matrix format
+#' @return Triples in matrix form
 #' @export
 #'
 #' @examples
@@ -354,8 +353,8 @@ listContexts = function(repository){
 #' @import data.table
 #' @import utils
 evalQuery = function(repository,query,returnType = c("data.table","dataframe","matrix","list"),
-                     infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,
-                     checkVariables = NULL, count = FALSE,accept = NULL,limit = 100,convert = FALSE){
+                     infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,bindings = NULL,planner = NULL,
+                     checkVariables = NULL,limit = NULL,convert = FALSE){
 
   returnType = match.arg(returnType)
   if(returnType=="data.table"){

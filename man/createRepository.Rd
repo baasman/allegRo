@@ -5,7 +5,7 @@
 \title{Create a repository}
 \usage{
 createRepository(catalog, repo, expectedSize = NULL, index = NULL,
-  override = TRUE, restore = NULL, nocommit = NULL)
+  override = FALSE, restore = NULL, nocommit = NULL)
 }
 \arguments{
 \item{catalog}{Catalog object specifying username, password, and catalog to work on.}
