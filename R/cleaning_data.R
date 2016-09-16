@@ -31,6 +31,7 @@ removeXMLSchema = function(df,convert){
         type = stringr::str_split(df[,ind][1],pattern = "\\^\\^")[[1]][2]
         df[grepl("XMLSchema",df[,ind]),ind] = stringr::str_split_fixed(df[grepl("XMLSchema",df[,ind]),ind],pattern = '"',3)[,2]
         if(convert){
+          if("matrix" %in% class(df)) warning("Matrices have to be one type. Consider switching to a dataframe")
           if(type == "<http://www.w3.org/2001/XMLSchema#int>" | type == "<http://www.w3.org/2001/XMLSchema#integer>"
              | type == "<http://www.w3.org/2001/XMLSchema#float>" | type == "<http://www.w3.org/2001/XMLSchema#double>"){
             df[,ind] = as.numeric(df[,ind])

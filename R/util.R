@@ -20,6 +20,7 @@ convertLogical = function(args) {
   return(args)
 }
 
+#check format for uploading files
 checkFormat = function(filepath){
   if (grepl("nq", filepath) | grepl("nt", filepath)) {
     body = quote(upload_file(path = filepath, type = "text/plain"))
@@ -27,3 +28,28 @@ checkFormat = function(filepath){
     body = quote(upload_file(path = filepath, type = "application/rdf+xml"))
   }
 }
+
+uploadMatrix = function(rep,triples,context = NULL){
+
+  stopifnot(packageVersion("data.table")>="1.9.7")
+  dim = dim(triples)
+  stopifnot(dim[2] == 3)
+  tmp = tempfile(pattern = "triples",tmpdir = tempdir(),fileext = ".nq")
+  if(dim[2] == 4){
+    if(triples[1,4,with = FALSE] != "."){
+      m[,"." := "."]
+    }
+  }
+  data.table::fwrite(x = m,file.path = tmp,col.names = FALSE,sep = " ")
+
+  addStatementsFromFile(rep,tmp,context = context)
+}
+
+
+
+
+a =  rep("<http:a>",1E6)
+b =  rep("<http:b>",1E6)
+c =  rep("<http:c>",1E6)
+
+m = data.table(a,b,c)

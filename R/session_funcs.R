@@ -42,7 +42,7 @@
 #' session = startSession(rep,lifetime = 100)
 #' getDescriptionSession(session)
 #' isActive(session)
-#' pring(session)
+#' ping(session)
 #' closeSession(session)
 #' }
 startSession = function(catalog, repo,

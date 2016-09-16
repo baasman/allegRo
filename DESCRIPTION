@@ -1,7 +1,7 @@
 Package: allegRo
 Type: Package
 Title: This package provides an interface for interacting with an Allegro Graph server
-Version: 0.1.4
+Version: 0.2.0
 Author: Boudewijn Aasman
 Maintainer: Boudewijn Aasman <boudeyz@gmail.com>
 Description: This is an API for allegrograph. It uses the REST interface to perform actions such as creating repositories, evaluating sparql queries, and handling the server.

@@ -111,6 +111,32 @@ addStatement = function(repository,
                    body = body, filepath = filepath))
 }
 
+#' Add a list of triples
+#'
+#' @param repository Object of type repository specifying server details and repository to work on.
+#' @param quads A list of character vectors, where each vector representes a triples and has 4 elements.
+#' The graph component can be NULL or ""
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' service = createService("localhost","user","password")
+#' rep = repository(catalog(service,"root"),"test")
+#' triples = list(c("<a>","<b>","<c>","<g1>"),
+#'                c("<a>","<b>","<c>","<g2>"))
+#' addStatements(rep,triples)
+#' }
+addStatements = function(repository,
+                        quads) {
+  queryargs = NULL
+  body = jsonlite::toJSON(quads)
+  filepath = NULL
+  url = paste0(repository$url, "statements")
+  invisible(ag_post(service = repository, url = url, queryargs = queryargs,
+                   body = body, filepath = filepath,type = TRUE))
+}
+
 
 #' Delete matching statements
 #'

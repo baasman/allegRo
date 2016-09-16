@@ -246,9 +246,17 @@ print.ag_delete = function(x, ...){
 
 
 
-ag_post = function(service, url,queryargs,body,filepath){
+ag_post = function(service, url,queryargs,body,filepath,type = FALSE){
 
-  resp = POST(url,authenticate(service$user,service$password),body = eval(body),query = queryargs)
+  if(type){
+    #will add different encodings later
+    content = ".json"
+    encoding = "json"
+    resp = POST(url,authenticate(service$user,service$password),body = eval(body),query = queryargs,
+                encoding = encoding, content_type(content) )
+  } else{
+    resp = POST(url,authenticate(service$user,service$password),body = eval(body),query = queryargs )
+  }
 
   if (http_error(resp) ) {
     stop(

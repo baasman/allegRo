@@ -352,6 +352,7 @@ listContexts = function(repository){
 #' }
 #' @import httr
 #' @import data.table
+#' @import utils
 evalQuery = function(repository,query,returnType = c("data.table","dataframe","matrix","list"),
                      infer = NULL,context = NULL, cleanUp = FALSE,namedContext = NULL,callback = NULL,bindings = NULL,planner = NULL,
                      checkVariables = NULL, count = FALSE,accept = NULL,limit = 100,convert = FALSE){
