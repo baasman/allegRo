@@ -130,7 +130,7 @@ addStatement = function(repository,
 addStatements = function(repository,
                         quads) {
   queryargs = NULL
-  body = jsonlite::toJSON(quads)
+  body = ifelse(class(quads) == "json",quads,jsonlite::toJSON(quads))
   filepath = NULL
   url = paste0(repository$url, "statements")
   invisible(ag_post(service = repository, url = url, queryargs = queryargs,

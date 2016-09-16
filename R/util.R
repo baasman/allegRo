@@ -29,27 +29,24 @@ checkFormat = function(filepath){
   }
 }
 
+#' @export
 uploadMatrix = function(rep,triples,context = NULL){
 
   stopifnot(packageVersion("data.table")>="1.9.7")
   dim = dim(triples)
-  stopifnot(dim[2] == 3)
+  stopifnot(dim[2] %in% c(3,4))
   tmp = tempfile(pattern = "triples",tmpdir = tempdir(),fileext = ".nq")
   if(dim[2] == 4){
     if(triples[1,4,with = FALSE] != "."){
-      m[,"." := "."]
+      stop("4th is not correct")
     }
+  } else{
+    triples[,"." := "."]
   }
-  data.table::fwrite(x = m,file.path = tmp,col.names = FALSE,sep = " ")
+  data.table::fwrite(x = triples,file.path = tmp,col.names = FALSE,sep = " ")
 
   addStatementsFromFile(rep,tmp,context = context)
 }
 
 
 
-
-a =  rep("<http:a>",1E6)
-b =  rep("<http:b>",1E6)
-c =  rep("<http:c>",1E6)
-
-m = data.table(a,b,c)

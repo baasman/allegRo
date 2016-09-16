@@ -364,8 +364,8 @@ evalQuery = function(repository,query,returnType = c("data.table","dataframe","m
 
   body = NULL
 
-  queryargs = list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
-                   planner = planner, checkVariables = checkVariables)
+  queryargs = convertLogical(expandUrlArgs(list(query = query,limit = limit,infer = infer, context = context, namedContext = namedContext,
+                   planner = planner, checkVariables = checkVariables)))
 
   url = repository$url
 
