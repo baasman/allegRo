@@ -118,7 +118,7 @@ catalog = function(service,catalog,testConnection = FALSE){
 
 #' @export
 print.catalog = function(x, ...){
-  cat(paste0("Using port: ",gsub("[^0-9]","",x$url)))
+  cat(paste0("Using port: ",gsub("[^0-9]","",stringr::str_split_fixed(x$url,"session",2)[,1])))
   cat("\n \n")
   print(x["catalog"])
   print(x["user"])

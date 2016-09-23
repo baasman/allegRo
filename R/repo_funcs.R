@@ -334,7 +334,7 @@ listContexts = function(repository){
 #' @param namedContext ...
 #' @param bindings ...
 #' @param planner ...
-#' @param checkVariables ...
+#' @param checkVariables If yes, then query warnings will cause the query to stop executing and fail.
 #' @param limit How many triples to return
 #'
 #' @return Triples in matrix form
@@ -370,6 +370,9 @@ evalQuery = function(repository,query,returnType = c("data.table","dataframe","m
 
   return(ag_data(service = repository,url = url,queryargs = queryargs,body = body,returnType = returnType,cleanUp = cleanUp,convert = convert))
 }
+
+
+
 
 
 #does not work yet

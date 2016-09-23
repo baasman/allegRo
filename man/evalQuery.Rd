@@ -28,7 +28,7 @@ evalQuery(repository, query, returnType = c("data.table", "dataframe",
 
 \item{planner}{...}
 
-\item{checkVariables}{...}
+\item{checkVariables}{If yes, then query warnings will cause the query to stop executing and fail.}
 
 \item{limit}{How many triples to return}
 

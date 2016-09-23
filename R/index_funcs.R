@@ -81,7 +81,9 @@ createFreeTextIndex = function(repository,
                    body = body))
 }
 
-
+#' @description To modify, use same parameters as the function to create a free text index. However, using this allows you
+#' to modify an existing index by naming the indexName you want to work on
+#' @rdname createFreeTextIndex
 modifyFreeTextIndex = function(repository,
                                indexName, predicate = NULL, indexLiterals = NULL, indexResources = FALSE,
                                indexFields = NULL, minimumWordSize = NULL, stopWords = NULL, wordFilter = NULL,

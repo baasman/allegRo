@@ -2,12 +2,19 @@
 % Please edit documentation in R/index_funcs.R
 \name{createFreeTextIndex}
 \alias{createFreeTextIndex}
+\alias{modifyFreeTextIndex}
 \title{Create a free-text index}
 \usage{
 createFreeTextIndex(repository, indexName, predicate, indexLiterals = NULL,
   indexResources = FALSE, indexFields = NULL, minimumWordSize = NULL,
   stopWords = NULL, wordFilter = NULL, innerChars = NULL,
   borderChars = NULL, tokenizer = NULL, reIndex = NULL)
+
+modifyFreeTextIndex(repository, indexName, predicate = NULL,
+  indexLiterals = NULL, indexResources = FALSE, indexFields = NULL,
+  minimumWordSize = NULL, stopWords = NULL, wordFilter = NULL,
+  innerChars = NULL, borderChars = NULL, tokenizer = NULL,
+  reIndex = NULL)
 }
 \arguments{
 \item{repository}{Object of type repository specifying server details and repository to work on.}
@@ -39,6 +46,9 @@ createFreeTextIndex(repository, indexName, predicate, indexLiterals = NULL,
 \description{
 Create or modify a freetext-index. I suggest reading the official documentation at
 http://franz.com/agraph/support/documentation/current/text-index.html
+
+To modify, use same parameters as the function to create a free text index. However, using this allows you
+to modify an existing index by naming the indexName you want to work on
 }
 \examples{
 \dontrun{

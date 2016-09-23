@@ -14,5 +14,5 @@ NULL
 .packageName = "allegRo"
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to allegRo, the R package to interact with AllegroGraph. \nTo start working with RDF data and AllegroGraph, install the latest version of AllegroGraph at http://franz.com/agraph/downloads/")
+  packageStartupMessage("\n Welcome to allegRo, the R package to interact with AllegroGraph. \nTo start working with RDF data and AllegroGraph, install the latest version of AllegroGraph at http://franz.com/agraph/downloads/")
 }

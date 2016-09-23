@@ -29,6 +29,65 @@ checkFormat = function(filepath){
   }
 }
 
+#' Create a geospatial literal
+#' @description  Helper functions to create a cartesian literal using the type created with getCartesianGeoType or getSphericalGeoType
+#' @param type Type created with getCartesianGeoType() or getSphericalGeoType()
+#' @param x X coordinate
+#' @param y Y coordinate
+#' @param lat Latitude
+#' @param long longitude
+#' @param unit Defaults to 'degree'
+#' @export
+#' @name geoSpatialLiterals
+#' @keywords literals,geospatial
+createCartesianGeoLiteral = function(type,x,y){
+  x = ifelse(x>=0,paste0("+",x),x)
+  y = ifelse(y>=0,paste0("+",y),y)
+  return(paste0('"',x,y,'"',"^^",type))
+}
+
+
+asISO = function(number,digits){
+  sign = "+"
+  if(number<0){
+    sign = "-"
+    number = number*-1
+  }
+  floor = floor(number)
+  return(paste0(sign,sprintf(sprintf("%%0%dd",digits),floor),".", strsplit(as.character((number-floor)* 10000000),".",fixed = TRUE)[[1]][1]))
+}
+
+#still doesnt work :(
+asISO = function(number,digits){
+  sign = "+"
+  if(number<0){
+    sign = "-"
+    number = number*-1
+  }
+  floor = floor(number)
+  return(paste0(sign,sprintf(sprintf("%%0%dd",digits),floor),".", stringr::str_pad(((number -floor)*10000000),7,pad = "0")))
+}
+
+
+
+
+#' @rdname geoSpatialLiterals
+#' @export
+createSphericalGeoLiteral = function(type,lat,long,unit = 'degree'){
+  if(unit=='degree'){
+    conv = 1
+  } else if(unit == "radian"){
+    conv = 57.29577951308232
+  } else if(unit == 'km'){
+    conv = 0.008998159
+  } else if(unit == 'mile'){
+    conv = 0.014481134
+  } else{
+    stop("must input appropriate unit")
+  }
+  return(paste0('"',asISO(lat*conv,2),asISO(long*conv,3),'"^^',type))
+}
+
 
 #' Upload a data.table from a file
 #' @description Upload a matrix in nquads format (matrix that is n x 3 or n x 4). Is it a wrapper around the
