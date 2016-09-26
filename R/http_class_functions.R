@@ -26,7 +26,6 @@ ag_get = function(service, url,queryargs,body,cleanup = FALSE){
   structure(
     list(
       return = parsed,
-      url = url,
       response = resp
     ),
     class = "ag_get"
@@ -100,7 +99,6 @@ ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp =
   structure(
     list(
       return = ret,
-      url = url,
       response = resp
     ),
     class = c("ag_statements","ag_data")
@@ -110,7 +108,6 @@ ag_statements = function(service, url,queryargs,body,returnType = NULL,cleanUp =
 
 
 ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp,convert = FALSE){
-
 
   resp = GET(url,authenticate(service$user,service$password),body = eval(body), query = queryargs )
 
@@ -125,37 +122,42 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp,convert
     )
   }
 
-  if(http_type(resp) == "application/json"){
-
-    parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
-
-    if(length(parsed$values)==0) stop("Query did not return any results")
-
-    if(returnType == "data.table"){
-      ret = data.table::as.data.table(parsed$values,col.names = parsed$names)
-      colnames(ret) = parsed$names
-    } else if(returnType == "dataframe"){
-      ret = as.data.frame(parsed$values,stringsAsFactors = FALSE)
-      colnames(ret) = parsed$names
-    } else if(returnType == "matrix"){
-      ret = as.matrix(parsed$values)
-      colnames(ret) = parsed$names
-    } else{
-      ret = parsed$values
-    }
-
+  if(grepl("ask",tolower(queryargs$query))){
+    return(content(resp))
+  } else if(grepl("describe",tolower(queryargs$query))){
+      parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
+      if(is.integer(mean(unlist(lapply(lapply(parsed,as.list),length))))){
+        ret = do.call(rbind,parsed)
+        colnames(ret) = paste0("v",1:ncol(ret))
+      } else{
+        warning("uneven pattern lengths, can not converge to matrix")
+        ret = parsed
+        cleanUp = FALSE
+      }
+  } else if(http_type(resp) == "application/json"){
+      parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
+      if(length(parsed$values)==0) stop("Query did not return any results")
+      if(returnType == "data.table"){
+        ret = data.table::as.data.table(parsed$values,col.names = parsed$names)
+        colnames(ret) = parsed$names
+      } else if(returnType == "dataframe"){
+        ret = as.data.frame(parsed$values,stringsAsFactors = FALSE)
+        colnames(ret) = parsed$names
+      } else if(returnType == "matrix"){
+        ret = as.matrix(parsed$values)
+        colnames(ret) = parsed$names
+      } else{
+        ret = parsed$values
+      }
   } else if(http_type(resp) == "text/plain"){
-    parsed = content(resp,"text")
+      parsed = content(resp,"text")
   }
-
   if(cleanUp){
     ret = removeXMLSchema(ret,convert = convert)
   }
-
   structure(
     list(
       return = ret,
-      url = url,
       response = resp
     ),
     class = "ag_data"
@@ -196,7 +198,6 @@ ag_put = function(service, url,queryargs,body,filepath){
   structure(
     list(
       return = "Successful push",
-      url = url
     ),
     class = c("ag_put","list")
   )
@@ -231,8 +232,7 @@ ag_delete = function(service, url,queryargs,body){
 
   structure(
     list(
-      return = ret,
-      url = url
+      return = ret
     ),
     class = "ag_delete"
   )
