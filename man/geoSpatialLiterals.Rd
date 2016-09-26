@@ -24,7 +24,7 @@ createSphericalGeoLiteral(type, lat, long, unit = "degree")
 \item{unit}{Defaults to 'degree'}
 }
 \description{
-Helper function to create a cartesian literal using the type created with getCartesianGeoType or getSphericalGeoType
+Helper functions to create a cartesian literal using the type created with getCartesianGeoType or getSphericalGeoType
 }
 \keyword{literals,geospatial}
 

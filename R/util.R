@@ -47,25 +47,18 @@ createCartesianGeoLiteral = function(type,x,y){
 }
 
 
-asISO = function(number,digits){
-  sign = "+"
-  if(number<0){
-    sign = "-"
-    number = number*-1
-  }
-  floor = floor(number)
-  return(paste0(sign,sprintf(sprintf("%%0%dd",digits),floor),".", strsplit(as.character((number-floor)* 10000000),".",fixed = TRUE)[[1]][1]))
-}
 
-#still doesnt work :(
 asISO = function(number,digits){
+  if(nchar(number)>9){
+    number = as.numeric(substr(number,1,9))
+  }
   sign = "+"
   if(number<0){
     sign = "-"
     number = number*-1
   }
   floor = floor(number)
-  return(paste0(sign,sprintf(sprintf("%%0%dd",digits),floor),".", stringr::str_pad(((number -floor)*10000000),7,pad = "0")))
+  return(paste0(sign,sprintf(sprintf("%%0%dd",digits),floor),".", stringr::str_split(stringr::str_pad(((number -floor)*10000000),7,pad = "0"),"\\.",2)[[1]][1]))
 }
 
 
