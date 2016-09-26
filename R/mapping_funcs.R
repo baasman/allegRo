@@ -77,13 +77,13 @@ deleteMappedType = function(repository,type){
 
 # service = service("http://localhost:10059",user = "test",password = "xyzzy",TRUE)
 # cat = catalog(service,"root")
-# createRepository(cat,repo = "testTemp",override = TRUE)
-# rep = repository(cat,"testTemp")
-# addMappedType(rep,"<time>","<http://www.w3.org/2001/XMLSchema#dateTime>")
-# allegRo::addStatement(rep, "<x>", "<happened>", "\"2009-09-28T17:41:39\"^^<time>")
-# allegRo::addStatement(rep, "<y>", "<happened>", "\"2009-09-28T18:22:00\"^^<time>")
-# allegRo::addStatement(rep, "<z>", "<happened>", "\"2009-09-28T17:02:41\"^^<time>")
-# s = getStatements(rep,obj=list("\"2009-09-28T17:00:00\"^^<time>", "\"2009-09-28T18:00:00\"^^<time>"),cleanUp = FALSE)
+# createRepository(cat,repo = "testRepo",override = TRUE)
+# rep = repository(cat,"testRepo")
+# addMappedType(rep,"<http:time>","<http://www.w3.org/2001/XMLSchema#dateTime>")
+# addStatement(rep, '"x"', "<http:happened>", "\"2009-09-28T17:41:39\"^^<http:time>")
+# addStatement(rep, '"y"', "<http:happened>", "\"2009-09-28T18:22:00\"^^<http:time>")
+# addStatement(rep, '"z"', "<http:happened>", "\"2009-09-28T17:02:41\"^^<http:time>")
+# str(getStatements(rep,obj= list("\"2009-09-28T17:00:00\"^^<http:time>", "\"2009-09-28T19:00:00\"^^<http:time>") )$return)
 # getStatements(rep,pred = "<happened>",cleanUp = TRUE)$return
 
 
