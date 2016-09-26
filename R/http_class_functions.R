@@ -197,7 +197,7 @@ ag_put = function(service, url,queryargs,body,filepath){
 
   structure(
     list(
-      return = "Successful push",
+      return = "Successful push"
     ),
     class = c("ag_put","list")
   )
