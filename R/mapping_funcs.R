@@ -80,7 +80,7 @@ deleteMappedType = function(repository,type){
 # createRepository(cat,repo = "testRepo",override = TRUE)
 # rep = repository(cat,"testRepo")
 # addMappedType(rep,"<http:time>","<http://www.w3.org/2001/XMLSchema#dateTime>")
-# addStatement(rep, '"x"', "<http:happened>", "\"2009-09-28T17:41:39\"^^<http:time>")
+#addStatement(rep, '"x"', "<http:happened>", '\"1\"^^<http://www.w3.org/2001/XMLSchema#integer>')
 # addStatement(rep, '"y"', "<http:happened>", "\"2009-09-28T18:22:00\"^^<http:time>")
 # addStatement(rep, '"z"', "<http:happened>", "\"2009-09-28T17:02:41\"^^<http:time>")
 # str(getStatements(rep,obj= list("\"2009-09-28T17:00:00\"^^<http:time>", "\"2009-09-28T19:00:00\"^^<http:time>") )$return)

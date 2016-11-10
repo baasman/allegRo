@@ -147,7 +147,7 @@ getFreeTextIndexConfiguration = function(repository,
   body = NULL
 
 
-    url = paste0(repository$url, "freetext/indices/",
+  url = paste0(repository$url, "freetext/indices/",
                  index)
 
 

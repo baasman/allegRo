@@ -225,17 +225,11 @@ deleteStatements = function(repository,
 #' @import httr
 addStatementsFromFile = function(repository,
                                  filepath, baseURI = NULL, context = NULL, commitEvery = NULL) {
-
   if (missing(filepath))
     stop("must supply path of file to be uploaded")
-
-
   queryargs = list(context = context, baseURI = baseURI, commit = commitEvery)
-
   body = checkFormat(filepath)
-
   url = paste0(repository$url, "statements")
-
   invisible(ag_put(service = repository, url = url, queryargs = queryargs,
                    body = body, filepath = filepath))
 }
