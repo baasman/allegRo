@@ -124,6 +124,10 @@ ag_data = function(service, url,queryargs,body,returnType = NULL,cleanUp,convert
 
   if(grepl("ask",tolower(queryargs$query))){
     return(content(resp))
+# new case: a construct query
+  } else if (grepl("construct",tolower(queryargs$query))){
+    return(content(resp, "text"))
+# continue with old code; note that DESCRIBE needs also fixing.
   } else if(grepl("describe",tolower(queryargs$query))){
       parsed = jsonlite::fromJSON(content(resp,"text"),simplifyVector = TRUE)
       if(is.integer(mean(unlist(lapply(lapply(parsed,as.list),length))))){
